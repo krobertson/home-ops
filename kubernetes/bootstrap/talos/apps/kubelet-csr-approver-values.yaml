@@ -1,3 +1,3 @@
 ---
-providerRegex: ^()$
+providerRegex: ^(mini02|ts01|ts02|ts03|ts04)$
 bypassDnsResolution: true
