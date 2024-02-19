@@ -85,26 +85,11 @@ spec:
         urlPrefix: /
         ssl: false
       storage:
-        useAllNodes: false
-        useAllDevices: false
+        useAllNodes: true
+        useAllDevices: true
+        deviceFilter: nvme0n1
         config:
           osdsPerDevice: "1"
-        nodes:
-          - name: ts01
-            devices:
-              - name: /dev/nvme1n1
-          - name: ts02
-            devices:
-              - name: /dev/nvme0n1
-          - name: ts03
-            devices:
-              - name: /dev/nvme0n1
-          - name: ts04
-            devices:
-              - name: /dev/nvme0n1
-          - name: mini02
-            devices:
-              - name: /dev/nvme0n1
       placement:
         mgr: &placement
           nodeAffinity:

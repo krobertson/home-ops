@@ -6,13 +6,13 @@ talosVersion: v1.6.4
 kubernetesVersion: v1.29.2
 
 clusterName: &cluster home-kubernetes
-endpoint: https://192.168.1.140:6443
+endpoint: https://192.168.2.40:6443
 clusterPodNets:
   - "10.69.0.0/16"
 clusterSvcNets:
   - "10.96.0.0/16"
 additionalApiServerCertSans: &sans
-  - "192.168.1.140"
+  - "192.168.2.40"
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 cniConfig:
@@ -20,7 +20,7 @@ cniConfig:
 
 nodes:
   - hostname: "mini02"
-    ipAddress: "192.168.1.142"
+    ipAddress: "192.168.2.122"
     installDiskSelector:
       serial: "S3ESNX0JC58871E"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
@@ -29,15 +29,15 @@ nodes:
       - interface: eth0
         dhcp: false
         addresses:
-          - "192.168.1.142/24"
+          - "192.168.2.122/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
+            gateway: "192.168.2.1"
         vip:
-          ip: "192.168.1.140"
+          ip: "192.168.2.40"
   - hostname: "ts01"
-    ipAddress: "192.168.1.151"
+    ipAddress: "192.168.2.101"
     installDiskSelector:
       serial: "S5NYNL0WB00777F"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
@@ -46,13 +46,13 @@ nodes:
       - interface: eth0
         dhcp: false
         addresses:
-          - "192.168.1.151/24"
+          - "192.168.2.101/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
+            gateway: "192.168.2.1"
   - hostname: "ts02"
-    ipAddress: "192.168.1.152"
+    ipAddress: "192.168.2.102"
     installDiskSelector:
       serial: "S5NYNL0WB00776W"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
@@ -61,13 +61,13 @@ nodes:
       - interface: eth0
         dhcp: false
         addresses:
-          - "192.168.1.152/24"
+          - "192.168.2.102/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
+            gateway: "192.168.2.1"
   - hostname: "ts03"
-    ipAddress: "192.168.1.153"
+    ipAddress: "192.168.2.103"
     installDiskSelector:
       serial: "S5NYNL0WB00789W"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
@@ -76,13 +76,13 @@ nodes:
       - interface: eth0
         dhcp: false
         addresses:
-          - "192.168.1.153/24"
+          - "192.168.2.103/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
+            gateway: "192.168.2.1"
   - hostname: "ts04"
-    ipAddress: "192.168.1.154"
+    ipAddress: "192.168.2.104"
     installDiskSelector:
       serial: "S5NYNL0WB00780Y"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
@@ -91,11 +91,11 @@ nodes:
       - interface: eth0
         dhcp: false
         addresses:
-          - "192.168.1.154/24"
+          - "192.168.2.104/24"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.1.1"
+            gateway: "192.168.2.1"
 
 patches:
   # Configure containerd
@@ -139,7 +139,7 @@ patches:
           rotate-server-certificates: true
         nodeIP:
           validSubnets:
-            - "192.168.1.0/24"
+            - "192.168.2.0/24"
 
   # Force nameserver
   - |-
@@ -207,7 +207,7 @@ controlPlane:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
           advertisedSubnets:
-            - "192.168.1.0/24"
+            - "192.168.2.0/24"
 
     # Disable default API server admission plugins.
     - |-
