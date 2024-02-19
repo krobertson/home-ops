@@ -92,19 +92,19 @@ spec:
         nodes:
           - name: ts01
             devices:
-              - /dev/nvme1n1
+              - name: /dev/nvme1n1
           - name: ts02
             devices:
-              - /dev/nvme0n1
+              - name: /dev/nvme0n1
           - name: ts03
             devices:
-              - /dev/nvme0n1
+              - name: /dev/nvme0n1
           - name: ts04
             devices:
-              - /dev/nvme0n1
+              - name: /dev/nvme0n1
           - name: mini02
             devices:
-              - /dev/nvme0n1
+              - name: /dev/nvme0n1
       placement:
         mgr: &placement
           nodeAffinity:
