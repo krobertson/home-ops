@@ -53,7 +53,6 @@ spec:
       mgr:
         count: 1
       network:
-        provider: host
         connections:
           requireMsgr2: true
       resources:
