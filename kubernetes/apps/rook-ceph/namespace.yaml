@@ -5,3 +5,5 @@ metadata:
   name: rook-ceph
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
+    volsync.backube/privileged-movers: "true"
+    pod-security.kubernetes.io/enforce: "privileged"
