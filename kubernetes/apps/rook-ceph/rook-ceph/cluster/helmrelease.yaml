@@ -50,6 +50,8 @@ spec:
       bdev_async_discard = true
       bluefs_buffered_io = false
     cephClusterSpec:
+      mgr:
+        count: 1
       network:
         connections:
           requireMsgr2: true
@@ -98,7 +100,6 @@ spec:
                 - matchExpressions:
                     - key: node-role.kubernetes.io/control-plane
                       operator: Exists
-        mon: *placement
     cephBlockPools:
       - name: ceph-blockpool
         spec:
