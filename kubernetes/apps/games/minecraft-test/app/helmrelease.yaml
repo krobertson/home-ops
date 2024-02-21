@@ -49,12 +49,21 @@ spec:
     extraEnv:
       TZ: "${TIMEZONE}"
       ENABLE_AUTOPAUSE: FALSE
+    extraVolumes:
+      - volumeMounts:
+        - name: whitelist-config
+          mountPath: /data/whitelist.json
+        volumes:
+          - name: whitelist-config
+            configMap:
+              name: minecraft-test-ops
+              items:
+                - key: whitelist.json
     persistence:
       dataDir:
         enabled: true
     serviceAnnotations:
       io.cilium/lb-ipam-ips: "192.168.2.201"
-      mc-router.itzg.me/externalServerName: "mcsv.${SECRET_DOMAIN}"
     minecraftServer:
       eula: true
       version: 1.20.4
@@ -67,9 +76,7 @@ spec:
       maxTickTime: -1
       gameMode: survival
       pvp: false
-      onlineMode: true
-      whitelist: "zerimis"
-      ops: "zerimis"
+      onlineMode: false
       motd: "R7N Test"
       viewDistance: 12
       spigetResources:
@@ -98,7 +105,7 @@ spec:
           type: ClusterIP
           port: 8123
         ingress:
-          ingressClassName: external
+          ingressClassName: internal
           enabled: true
           hosts:
           - name: &host "minecraft.${SECRET_DOMAIN}"

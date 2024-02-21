@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minecraft-test-ops
+data:
+  whitelist.json: |-
+    [{"name":"zerimis","uuid":"6b05fdf0-2f4f-3af4-8dfa-527efd2ee0dc"}]
+  ops.json: |-
+    [
+      {
+        "uuid": "6b05fdf0-2f4f-3af4-8dfa-527efd2ee0dc",
+        "name": "zerimis",
+        "level": 4,
+        "bypassesPlayerLimit": false
+      }
+    ]
