@@ -67,7 +67,7 @@ spec:
       maxTickTime: -1
       gameMode: survival
       pvp: false
-      onlineMode: false
+      onlineMode: true
       whitelist: "zerimis"
       ops: "zerimis"
       motd: "R7N Test"
