@@ -52,7 +52,6 @@ spec:
     persistence:
       dataDir:
         enabled: true
-        existingClaim: *app
     serviceAnnotations:
       io.cilium/lb-ipam-ips: "192.168.2.201"
       mc-router.itzg.me/externalServerName: "mcsv.${SECRET_DOMAIN}"
