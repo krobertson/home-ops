@@ -91,7 +91,10 @@ spec:
       motd: "R7N Test"
       viewDistance: 12
       spigetResources:
-      - 36618 #Prom Exporter
+      - 36618 # Prom Exporter
+      - 100301 # bigger barrels
+      mods: # TODO: move internal
+      - https://dynmap.us/builds/dynmap/Dynmap-3.6-spigot.jar
       rcon:
         enabled: true
         serviceType: ClusterIP
