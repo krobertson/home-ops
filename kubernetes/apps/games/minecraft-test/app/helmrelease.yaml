@@ -49,16 +49,27 @@ spec:
     extraEnv:
       TZ: "${TIMEZONE}"
       ENABLE_AUTOPAUSE: FALSE
+    initContainers:
+      - name: copy-ops-files
+        image: ghcr.io/onedr0p/alpine:3.19.1@sha256:0e3067295cc20dafbd4cf63789ccc71858ad555f3998200ca10b271328c7285e
+        command:
+          [
+            "/bin/sh",
+            "-c"
+          ]
+        args:
+          - cp /configmap/whitelist.json /data/whitelist.json;
+            cp /configmap/ops.json /data/ops.json;
+        volumeMounts:
+          - name: ops-config
+            mountPath: /configmap
+          - name: datadir
+            mountPath: /data
     extraVolumes:
-      - volumeMounts:
-        - name: whitelist-config
-          mountPath: /data/whitelist.json
-        volumes:
-          - name: whitelist-config
+      - volumes:
+          - name: ops-config
             configMap:
               name: minecraft-test-ops
-              items:
-                - key: whitelist.json
     persistence:
       dataDir:
         enabled: true
