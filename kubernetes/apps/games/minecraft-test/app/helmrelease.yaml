@@ -94,7 +94,7 @@ spec:
       - 36618 # Prom Exporter
       - 100301 # bigger barrels
       modUrls: # TODO: move internal
-      - https://dynmap.us/builds/dynmap/Dynmap-3.6-spigot.jar
+      - https://dynmap.us/builds/dynmap/Dynmap-3.7-beta-4-spigot.jar
       rcon:
         enabled: true
         serviceType: ClusterIP
