@@ -6,6 +6,7 @@ resources:
   - ./cilium.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
+  - ./homepage.yaml
   - ./influxdata.yaml
   - ./ingress-nginx.yaml
   - ./k8s-gateway.yaml
