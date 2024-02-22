@@ -29,6 +29,9 @@ spec:
   - name: rook-ceph-cluster
     namespace: rook-ceph
   values:
+    deploymentAnnotations:
+      secret.reloader.stakater.com/reload: &secret minecraft-rcon-secret
+      configmap.reloader.stakater.com/reload: &configmap minecraft-test-ops
     image:
       repository: ghcr.io/itzg/minecraft-server
       tag: java17
@@ -69,7 +72,7 @@ spec:
       - volumes:
           - name: ops-config
             configMap:
-              name: minecraft-test-ops
+              name: *configmap
     persistence:
       dataDir:
         enabled: true
@@ -133,6 +136,6 @@ spec:
             - *host
   valuesFrom:
   - kind: Secret
-    name: minecraft-rcon-secret
+    name: *secret
     valuesKey: RCON_PASSWORD
     targetPath: minecraftServer.rcon.password
