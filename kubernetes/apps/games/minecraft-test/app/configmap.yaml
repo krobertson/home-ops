@@ -7,7 +7,7 @@ data:
   # use https://minecraft-serverlist.com/tools/offline-uuid to generate
   # offline UUIDs.
   whitelist.json: |-
-    {"players":[{"username":"zerimis","uuid":"6b05fdf0-2f4f-3af4-8dfa-527efd2ee0dc"},{"username":"gldenpho3nix","uuid":"e0782cc5-5416-3979-8246-5fbabb1d8f5d"},{"username":"SilverNick","uuid":"094b062d-814d-3f00-9bea-885327f243de"},{"username":"Jurasic","uuid":"5af12cc4-7e5a-3b73-b481-048dd62feb15"},{"username":"LittleMiss8910","uuid":"cf952f50-19d8-36fb-8702-7ba98d21715b"}]}
+    [{name":"zerimis","uuid":"6b05fdf0-2f4f-3af4-8dfa-527efd2ee0dc"},{name":"gldenpho3nix","uuid":"e0782cc5-5416-3979-8246-5fbabb1d8f5d"},{name":"SilverNick","uuid":"094b062d-814d-3f00-9bea-885327f243de"},{name":"Jurasic","uuid":"5af12cc4-7e5a-3b73-b481-048dd62feb15"},{name":"LittleMiss8910","uuid":"cf952f50-19d8-36fb-8702-7ba98d21715b"}]
   ops.json: |-
     [
       {
