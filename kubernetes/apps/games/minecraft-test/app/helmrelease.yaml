@@ -91,10 +91,13 @@ spec:
       motd: "R7N Test"
       viewDistance: 12
       spigetResources:
-      - 36618 # Prom Exporter
+      - 36618  # Prom Exporter
       - 100301 # bigger barrels
-      modUrls: # TODO: move internal
-      - https://dynmap.us/builds/dynmap/Dynmap-3.7-beta-4-spigot.jar
+      - 84310  # tree feller
+      - 60383  # angelchest
+      modUrls:
+      - https://rgw.r7n.dev/minecraft-mods/Dynmap-3.7-beta-4-spigot.jar
+      - https://rgw.r7n.dev/minecraft-mods/Lands-6.44.10.jar
       rcon:
         enabled: true
         serviceType: ClusterIP
