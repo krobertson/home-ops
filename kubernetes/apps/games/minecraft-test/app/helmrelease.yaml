@@ -28,6 +28,7 @@ spec:
   dependsOn:
   - name: rook-ceph-cluster
     namespace: rook-ceph
+  - name: external-secrets-store
   values:
     deploymentAnnotations:
       secret.reloader.stakater.com/reload: &secret minecraft-rcon-secret
@@ -77,8 +78,7 @@ spec:
       dataDir:
         enabled: true
     serviceAnnotations:
-      external-dns.alpha.kubernetes.io/hostname: minecraft-test.r7n.dev
-      io.cilium/lb-ipam-ips: "192.168.2.201"
+      mc-router.itzg.me/externalServerName: minecraft-test.r7n.dev
     minecraftServer:
       eula: true
       version: 1.20.4
@@ -86,14 +86,17 @@ spec:
       forceReDownload: true
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
       memory: 8192M
-      difficulty: normal
-      spawnProtection: 0
-      maxTickTime: -1
+      levelSeed: gkGJRTmsI2geox9aODf2A556
       gameMode: survival
+      difficulty: easy
+      viewDistance: 15
+      maxBuildHeight: 320
+      spawnProtection: 16
+      maxTickTime: -1
       pvp: false
       onlineMode: false
       motd: "R7N Test"
-      viewDistance: 12
+      enableCommandBlock: "false"
       spigetResources:
       - 36618  # Prom Exporter
       - 100301 # bigger barrels

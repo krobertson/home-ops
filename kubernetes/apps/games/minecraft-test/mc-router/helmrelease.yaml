@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app minecraft-router
+spec:
+  interval: 30m
+  chart:
+    spec:
+      # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
+      chart: mc-router
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: minecraft-server
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    services:
+      minecraft:
+        type: LoadBalancer
+    minecraftRouter:
+      connectionRateLimit: 2
+      debug:
+        enabled: true
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Service
+              name: minecraft-router-mc-router
+            patch: |
+              apiVersion: v1
+              kind: Service
+              metadata:
+                name: ignored
+                annotations:
+                  external-dns.alpha.kubernetes.io/hostname: minecraft-test.r7n.dev
+                  io.cilium/lb-ipam-ips: "192.168.2.201"
