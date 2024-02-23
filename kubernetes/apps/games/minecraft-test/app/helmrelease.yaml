@@ -108,7 +108,6 @@ spec:
       rcon:
         enabled: true
         serviceType: ClusterIP
-      serviceType: LoadBalancer
       extraPorts:
       - name: metrics
         containerPort: 9225
