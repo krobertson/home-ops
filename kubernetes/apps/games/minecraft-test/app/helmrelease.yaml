@@ -95,7 +95,7 @@ spec:
       pvp: false
       onlineMode: false
       motd: "R7N Test"
-      enableCommandBlock: "false"
+      enableCommandBlock: false
       spigetResources:
       - 36618  # Prom Exporter
       - 100301 # bigger barrels
