@@ -5,7 +5,7 @@ resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./democractic-csi.yaml
+  - ./democratic-csi.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./homepage.yaml
