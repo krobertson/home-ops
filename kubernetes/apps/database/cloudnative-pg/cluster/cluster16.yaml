@@ -50,3 +50,6 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
+  replicationSlots:
+    highAvailability:
+      enabled: false
