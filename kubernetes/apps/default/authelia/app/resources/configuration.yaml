@@ -47,16 +47,6 @@ session:
         - host: redis-node-2.redis-headless.database.svc.cluster.local
           port: 26379
 
-storage:
-  encryption_key: "$${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
-  postgres:
-    host: $${AUTHELIA_STORAGE_POSTGRES_ADDRESS}
-    port: 5432
-    database: "$${AUTHELIA_STORAGE_POSTGRES_DATABASE}"
-    schema: public
-    username: "$${AUTHELIA_STORAGE_POSTGRES_USERNAME}"
-    password: "$${AUTHELIA_STORAGE_POSTGRES_PASSWORD}"
-
 notifier:
   disable_startup_check: true
   smtp:
