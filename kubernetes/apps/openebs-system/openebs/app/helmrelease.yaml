@@ -23,6 +23,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    ndmOperator:
+      enabled: false
+    ndm:
+      enabled: false
     localprovisioner:
       hostpathClass:
         enabled: true
