@@ -34,18 +34,28 @@ session:
       domain: r7n.dev
       authelia_url: https://auth.r7n.dev
       default_redirection_url: https://r7n.dev
-  # redis:
-  #   host: redis.database.svc.cluster.local
-  #   database_index: 14
-  #   high_availability:
-  #     sentinel_name: redis-master
-  #     nodes:
-  #       - host: redis-node-0.redis-headless.database.svc.cluster.local
-  #         port: 26379
-  #       - host: redis-node-1.redis-headless.database.svc.cluster.local
-  #         port: 26379
-  #       - host: redis-node-2.redis-headless.database.svc.cluster.local
-  #         port: 26379
+  redis:
+    host: redis.database.svc.cluster.local
+    database_index: 14
+    high_availability:
+      sentinel_name: redis-master
+      nodes:
+        - host: redis-node-0.redis-headless.database.svc.cluster.local
+          port: 26379
+        - host: redis-node-1.redis-headless.database.svc.cluster.local
+          port: 26379
+        - host: redis-node-2.redis-headless.database.svc.cluster.local
+          port: 26379
+
+storage:
+  encryption_key: "$${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
+  postgres:
+    host: $${AUTHELIA_STORAGE_POSTGRES_ADDRESS}
+    port: 5432
+    database: "$${AUTHELIA_STORAGE_POSTGRES_DATABASE}"
+    schema: public
+    username: "$${AUTHELIA_STORAGE_POSTGRES_USERNAME}"
+    password: "$${AUTHELIA_STORAGE_POSTGRES_PASSWORD}"
 
 notifier:
   disable_startup_check: true
@@ -55,7 +65,7 @@ notifier:
     disable_require_tls: true
 
 totp:
-  disable: true
+  disable: false
   issuer: authelia.com
 
 webauthn:
@@ -65,22 +75,11 @@ duo_api:
   disable: true
 
 access_control:
-  default_policy: deny
+  default_policy: two_factor
   networks:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
-  rules:
-    # bypass Authelia WAN + LAN
-    - domain:
-        - auth.r7n.dev
-      policy: bypass
-    # One factor auth for LAN
-    - domain:
-        - "*.r7n.dev"
-      policy: one_factor
-      subject: ["group:admins", "group:users"]
-      networks:
-        - internal
+  rules: []
 
 identity_providers:
   oidc:
