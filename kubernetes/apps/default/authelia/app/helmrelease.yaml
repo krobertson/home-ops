@@ -40,6 +40,9 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
+            env:
+              # TODO: Fix this soon.
+              INIT_POSTGRES_SUPER_USER: "root"
             envFrom: &envFrom
               - secretRef:
                   name: authelia-secret

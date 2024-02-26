@@ -35,6 +35,9 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
+            env:
+              # TODO: Fix this soon.
+              INIT_POSTGRES_SUPER_USER: "root"
             envFrom: &envFrom
               - secretRef:
                   name: lldap-secret
@@ -44,11 +47,10 @@ spec:
               repository: ghcr.io/lldap/lldap
               tag: v0.5.0@sha256:f0f5d92cd6c6dca9415993cfc57919f0618e87090b323a98c1536975860fa45a
             env:
-              TZ: America/New_York
+              TZ: America/Los_Angeles
               LLDAP_HTTP_PORT: &port 80
               LLDAP_HTTP_URL: https://lldap.r7n.dev
               LLDAP_LDAP_PORT: &ldapPort 389
-              LLDAP_LDAP_BASE_DN: dc=home,dc=arpa
             envFrom: *envFrom
             probes:
               liveness: &probes
