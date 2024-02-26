@@ -5,7 +5,7 @@ kind: Cluster
 metadata:
   name: postgres16
 spec:
-  instances: 6 # Set to my total number of nodes
+  instances: 2
   imageName: ghcr.io/cloudnative-pg/postgresql:16.2-3
   primaryUpdateStrategy: unsupervised
   storage:
@@ -50,6 +50,4 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
-  replicationSlots:
-    highAvailability:
-      enabled: false
+
