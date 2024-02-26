@@ -10,6 +10,7 @@ resources:
   - ./democratic-csi.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
+  - ./grafana.yaml
   - ./homepage.yaml
   - ./influxdata.yaml
   - ./ingress-nginx.yaml
