@@ -48,6 +48,7 @@ spec:
               LLDAP_HTTP_PORT: &port 80
               LLDAP_HTTP_URL: https://lldap.r7n.dev
               LLDAP_LDAP_PORT: &ldapPort 389
+              LLDAP_LDAP_BASE_DN: dc=r7n,dc=dev
             envFrom: *envFrom
             probes:
               liveness: &probes
