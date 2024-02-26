@@ -9,13 +9,13 @@ authentication_backend:
     implementation: custom
     timeout: 5s
     start_tls: false
-    base_dn: dc=home,dc=arpa
+    base_dn: dc=r7n,dc=dev
     additional_users_dn: ou=people
     users_filter: (&({username_attribute}={input})(objectClass=person))
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: uid=admin,ou=people,dc=home,dc=arpa
+    user: uid=admin,ou=people,dc=r7n,dc=dev
     password: password
     attributes:
       username: uid
@@ -30,7 +30,7 @@ session:
   expiration: 1h
   remember_me: 1M
   cookies:
-    - name: devbu_session
+    - name: r7n_session
       domain: r7n.dev
       authelia_url: https://auth.r7n.dev
       default_redirection_url: https://r7n.dev
