@@ -87,7 +87,7 @@ spec:
       envFrom:
         - configMapRef:
             name: minecraft-test-backups
-        - secretKeyRef:
+        - secretRef:
             name: minecraft-test-backups
       extraEnv:
         RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
