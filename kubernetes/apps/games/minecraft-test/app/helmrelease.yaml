@@ -84,7 +84,11 @@ spec:
       backupMethod: restic
       resticEnvs:
         RESTIC_PASSWORD: password
-        RESTIC_REPOSITORY: "s3:http://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}"
+      envFrom:
+        - configMapRef:
+          name: minecraft-test-backups
+      extraEnv:
+        RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
     minecraftServer:
       eula: true
       version: 1.20.4
@@ -156,15 +160,3 @@ spec:
     name: minecraft-test-backups
     valuesKey: AWS_SECRET_ACCESS_KEY
     targetPath: mcbackup.extraEnv.AWS_SECRET_ACCESS_KEY
-  - kind: ConfigMap
-    name: minecraft-test-backups
-    valuesKey: BUCKET_NAME
-    targetPath: mcbackup.extraEnv.BUCKET_NAME
-  - kind: ConfigMap
-    name: minecraft-test-backups
-    valuesKey: BUCKET_HOST
-    targetPath: mcbackup.extraEnv.BUCKET_HOST
-  - kind: ConfigMap
-    name: minecraft-test-backups
-    valuesKey: BUCKET_PORT
-    targetPath: mcbackup.extraEnv.BUCKET_PORT
