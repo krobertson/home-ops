@@ -78,6 +78,13 @@ spec:
         enabled: true
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: minecraft-test.r7n.dev
+    mcbackup:
+      enabled: true
+      pruneBackupsDays: 30
+      backupMethod: restic
+      resticEnvs:
+        RESTIC_PASSWORD: password
+        RESTIC_REPOSITORY: "s3:http://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}"
     minecraftServer:
       eula: true
       version: 1.20.4
@@ -107,13 +114,6 @@ spec:
       rcon:
         enabled: true
         serviceType: ClusterIP
-      mcbackup:
-        enabled: true
-        pruneBackupsDays: 30
-        backupMethod: restic
-        resticEnvs:
-          RESTIC_PASSWORD: password
-          RESTIC_REPOSITORY: "s3:http://${BUCKET_HOST}:${BUCKET_PORT}/${BUCKET_NAME}"
       extraPorts:
       - name: metrics
         containerPort: 9225
@@ -151,20 +151,20 @@ spec:
   - kind: Secret
     name: minecraft-test-backups
     valuesKey: AWS_ACCESS_KEY_ID
-    targetPath: minecraftServer.mcbackup.extraEnv.AWS_ACCESS_KEY_ID
+    targetPath: mcbackup.extraEnv.AWS_ACCESS_KEY_ID
   - kind: Secret
     name: minecraft-test-backups
     valuesKey: AWS_SECRET_ACCESS_KEY
-    targetPath: minecraftServer.mcbackup.extraEnv.AWS_SECRET_ACCESS_KEY
+    targetPath: mcbackup.extraEnv.AWS_SECRET_ACCESS_KEY
   - kind: ConfigMap
     name: minecraft-test-backups
     valuesKey: BUCKET_NAME
-    targetPath: minecraftServer.mcbackup.extraEnv.BUCKET_NAME
+    targetPath: mcbackup.extraEnv.BUCKET_NAME
   - kind: ConfigMap
     name: minecraft-test-backups
     valuesKey: BUCKET_HOST
-    targetPath: minecraftServer.mcbackup.extraEnv.BUCKET_HOST
+    targetPath: mcbackup.extraEnv.BUCKET_HOST
   - kind: ConfigMap
     name: minecraft-test-backups
     valuesKey: BUCKET_PORT
-    targetPath: minecraftServer.mcbackup.extraEnv.BUCKET_PORT
+    targetPath: mcbackup.extraEnv.BUCKET_PORT
