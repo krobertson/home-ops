@@ -86,7 +86,9 @@ spec:
         RESTIC_PASSWORD: password
       envFrom:
         - configMapRef:
-          name: minecraft-test-backups
+            name: minecraft-test-backups
+        - secretKeyRef:
+            name: minecraft-test-backups
       extraEnv:
         RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
     minecraftServer:
@@ -152,11 +154,3 @@ spec:
     name: *secret
     valuesKey: RCON_PASSWORD
     targetPath: minecraftServer.rcon.password
-  - kind: Secret
-    name: minecraft-test-backups
-    valuesKey: AWS_ACCESS_KEY_ID
-    targetPath: mcbackup.extraEnv.AWS_ACCESS_KEY_ID
-  - kind: Secret
-    name: minecraft-test-backups
-    valuesKey: AWS_SECRET_ACCESS_KEY
-    targetPath: mcbackup.extraEnv.AWS_SECRET_ACCESS_KEY
