@@ -1,0 +1,7 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: minecraft-test-backups
+spec:
+  generateBucketName: minecraft-test-backups
+  storageClassName: ceph-bucket
