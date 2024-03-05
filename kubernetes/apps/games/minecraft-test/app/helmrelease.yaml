@@ -80,8 +80,10 @@ spec:
       mc-router.itzg.me/externalServerName: minecraft-test.r7n.dev
     mcbackup:
       enabled: true
-      pruneBackupsDays: 30
       backupMethod: restic
+      backupInterval: 1h
+      pauseIfNoPlayers: "true"
+      pruneResticRetention: "--keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75"
       resticEnvs:
         RESTIC_PASSWORD: password
       envFrom:
