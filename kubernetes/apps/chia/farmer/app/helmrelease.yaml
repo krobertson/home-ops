@@ -36,7 +36,7 @@ spec:
             env:
               service: farmer-only
               upnp: "false"
-              keys: /config/keys
+              keys: /config/keys/nemonic.key
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
