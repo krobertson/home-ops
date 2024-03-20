@@ -51,6 +51,7 @@ spec:
       blockchain:
         enabled: true
         storageClass: ceph-block
+        accessMode: ReadWriteOnce
         size: 320Gi
         globalMounts:
           - path: /root/.chia/mainnet
