@@ -57,7 +57,7 @@ spec:
               PUBLIC_PORT: &port 8211
               RCON_ENABLED: true
               RCON_PORT: &rcon-port 25575
-              PUBLIC_IP: pal.${SECRET_DOMAIN}
+              PUBLIC_IP: palworld.${SECRET_DOMAIN}
               ## Webhook Settings
               WEBHOOK_ENABLED: true
             envFrom:
@@ -105,6 +105,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
+          coredns.io/hostname: palworld.${SECRET_DOMAIN}
           io.cilium/lb-ipam-ips: 192.168.2.203
         ports:
           http:
