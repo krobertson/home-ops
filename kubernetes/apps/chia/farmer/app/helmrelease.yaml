@@ -25,19 +25,24 @@ spec:
     keepHistory: false
   values:
     controllers:
-      app:
-        image:
-          repository: ghcr.io/chia-network/chia
-          tag: 2.2.1@sha256:a4b34e95919920e423636ccca94e79222130099248665d34823b6ac0731d82a8
-        env:
-          service: farmer-only
-          upnp: "false"
-          keys: /config/keys
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities: { drop: ["ALL"] }
+      chia:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/chia-network/chia
+              tag: 2.2.1@sha256:a4b34e95919920e423636ccca94e79222130099248665d34823b6ac0731d82a8
+            env:
+              service: farmer-only
+              upnp: "false"
+              keys: /config/keys
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
     service:
       app:
+        controller: chia
         ports:
           sync:
             port: 8444
