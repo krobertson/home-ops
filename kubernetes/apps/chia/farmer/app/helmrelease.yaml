@@ -33,6 +33,13 @@ spec:
             image:
               repository: ghcr.io/chia-network/chia
               tag: 2.2.1@sha256:a4b34e95919920e423636ccca94e79222130099248665d34823b6ac0731d82a8
+            command:
+              [
+                "/bin/sh",
+                "-c",
+                "sleep infinity"
+         #       "rm -rf /root/.chia/mainnet/* && mkdir -p /root/.chia/mainnet/db && tar xzvf /seeds/isos/mainnet.2024-02-29.tar.gz -C /root/.chia/mainnet/db && echo done && sleep infinity"
+              ]
             env:
               upnp: "false"
               keys: /config/keys/nemonic.key
@@ -45,6 +52,8 @@ spec:
         ports:
           sync:
             port: 8444
+          rpc:
+            port: 8555
     persistence:
       blockchain:
         enabled: true
