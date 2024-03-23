@@ -37,8 +37,7 @@ spec:
               [
                 "/bin/sh",
                 "-c",
-                "sleep infinity"
-         #       "rm -rf /root/.chia/mainnet/* && mkdir -p /root/.chia/mainnet/db && tar xzvf /seeds/isos/mainnet.2024-02-29.tar.gz -C /root/.chia/mainnet/db && echo done && sleep infinity"
+                "rm -rf /root/.chia/mainnet/* && mkdir -p /root/.chia/mainnet/db && tar xzvf /seeds/chia/mainnet.2024-02-29.tar.gz -C /root/.chia/mainnet/db && echo done && sleep infinity"
               ]
             env:
               upnp: "false"
@@ -68,3 +67,9 @@ spec:
         name: chia-secret
         globalMounts:
           - path: /config/keys
+      seeds:
+        type: nfs
+        server: 192.168.1.219
+        path: /volume1/docker/torrents
+        globalMounts:
+          - path: /seeds
