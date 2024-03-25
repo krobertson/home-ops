@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./farmer/ks.yaml
-  - ./harvester/ks.yaml
+  - ./garden-harvester/ks.yaml
   - ./nats/ks.yaml
   - ./recompute-proxy/ks.yaml
