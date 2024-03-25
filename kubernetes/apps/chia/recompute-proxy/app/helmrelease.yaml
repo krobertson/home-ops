@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app gh-recompute-proxy
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      proxy:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          proxy:
+            image:
+              repository: ghcr.io/madmax43v3r/chia-recompute
+              tag: latest@sha256:fc662e371e0d8c58883de54780a8b6b8557054c4c16d540108af9a74b7042870
+            args:
+              - ./chia_recompute_proxy
+              - --node
+              - 192.168.2.46
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+    service:
+      app:
+        controller: proxy
+        ports:
+          http:
+            port: 11989

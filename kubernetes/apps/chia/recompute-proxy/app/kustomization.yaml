@@ -3,8 +3,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./farmer/ks.yaml
-  - ./harvester/ks.yaml
-  - ./nats/ks.yaml
-  - ./recompute-proxy/ks.yaml
+  - ./helmrelease.yaml
