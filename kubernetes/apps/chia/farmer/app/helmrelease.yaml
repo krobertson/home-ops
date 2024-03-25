@@ -63,4 +63,4 @@ spec:
         type: secret
         name: chia-secret
         globalMounts:
-          - path: /config/keys
+          - path: /root/.chia_keys
