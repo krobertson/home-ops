@@ -34,15 +34,18 @@ spec:
               repository: ghcr.io/madmax43v3r/chia-recompute
               tag: latest@sha256:fc662e371e0d8c58883de54780a8b6b8557054c4c16d540108af9a74b7042870
             args:
-              - ./chia_recompute_proxy
-              - --node
-              - 192.168.2.46
+              - ./chia_recompute_proxy_http
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
     service:
       app:
         controller: proxy
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 192.168.2.207
         ports:
           http:
-            port: 11989
+            port: 11988
+          servers:
+            port: 11999
