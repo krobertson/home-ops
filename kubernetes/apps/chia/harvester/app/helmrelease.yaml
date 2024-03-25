@@ -28,6 +28,10 @@ spec:
       harvester:
         annotations:
           reloader.stakater.com/auto: "true"
+        type: daemonset
+        pod:
+          nodeSelector:
+            chia-harvester: "yes"
         containers:
           garden:
             image:
