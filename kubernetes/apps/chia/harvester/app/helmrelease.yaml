@@ -36,7 +36,7 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-garden
-              tag: dev@sha256:94f0d4ae90b53d45d18c29f04242683d63c7501e38acccf1e27bf90ad73aec7a
+              tag: dev@sha256:a0397c740bb0b8cdc35b7c9b43c1b0e04b18865dcf07659bbda0f346a2b93546
             args:
               - harvester
               - --expand-path
