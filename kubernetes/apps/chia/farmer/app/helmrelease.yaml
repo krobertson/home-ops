@@ -31,11 +31,11 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/chia-network/chia
-              tag: 2.2.1@sha256:a4b34e95919920e423636ccca94e79222130099248665d34823b6ac0731d82a8
+              repository: ghcr.io/madmax43v3r/chia-gigahorse
+              tag: 2.1.4.giga32@sha256:d1088016ece4fbf0a7cca841bd13b1d39cbf0d79dad316c8d4a77d6d45cafa6c
             env:
-              upnp: "false"
-              keys: /config/keys/nemonic.key
+              CHIA_SERVICES: "node farmer-only"
+              CHIA_UPNP: "false"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
