@@ -47,7 +47,7 @@ spec:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
               tag: 2.1.4.giga32@sha256:d1088016ece4fbf0a7cca841bd13b1d39cbf0d79dad316c8d4a77d6d45cafa6c
             env:
-              CHIA_SERVICES: "node farmer-only"
+              CHIA_SERVICES: "node farmer-only wallet"
               CHIA_UPNP: "false"
             securityContext:
               allowPrivilegeEscalation: false
