@@ -28,6 +28,19 @@ spec:
       chia:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-wallet:
+            image:
+              repository: ghcr.io/madmax43v3r/chia-gigahorse
+              tag: 2.1.4.giga32@sha256:d1088016ece4fbf0a7cca841bd13b1d39cbf0d79dad316c8d4a77d6d45cafa6c
+            command:
+              [
+                "/bin/sh",
+                "-c"
+              ]
+            args:
+              - mkdir /root/.chia_keys && chmod 700 /root/.chia_keys &&
+                ./chia.bin keys add -f /config/keys/nemonic.key -l ""
         containers:
           app:
             image:
@@ -51,6 +64,11 @@ spec:
           rpc:
             port: 8555
     persistence:
+      datadir:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /root
       blockchain:
         enabled: true
         storageClass: ceph-block
@@ -63,4 +81,4 @@ spec:
         type: secret
         name: chia-secret
         globalMounts:
-          - path: /root/.chia_keys
+          - path: /config/keys
