@@ -3,9 +3,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./chia-harvester/ks.yaml
-  - ./farmer/ks.yaml
-  - ./garden-harvester/ks.yaml
-  - ./nats/ks.yaml
-  - ./recompute-proxy/ks.yaml
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml

@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app garden-harvester
+  name: &app chia-harvester
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -33,29 +33,20 @@ spec:
           nodeSelector:
             chia-harvester: "yes"
         containers:
-          garden:
+          app:
             image:
-              repository: ghcr.io/krobertson/chia-garden
-              tag: dev@sha256:81c98ac17b2577cf52a4e4a70e17320fa0f1962f67693681b36133e13e0f6396
-            args:
-              - harvester
-              - --expand-path
-              - /mnt/plots
+              repository: ghcr.io/madmax43v3r/chia-gigahorse
+              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
             env:
-              GARDEN_NATS_URL: "nats://nats:4222"
-              GARDEN_HARVESTER_HTTP_IP: "192.168.2.206"
+              CHIA_SERVICES: "harvester"
+              CHIA_UPNP: "false"
+              CHIA_CA: "/config/chia-ca/ca.key"
+              CHIA_FARMER_ADDRESS: "chia-farmer"
+              CHIA_FARMER_PORT: "8447"
+              CHIA_PLOTS: "/mnt/plots"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
-    service:
-      app:
-        controller: harvester
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: 192.168.2.206
-        ports:
-          http:
-            port: 3434
     persistence:
       chia-plots:
         enabled: true
@@ -63,3 +54,9 @@ spec:
         hostPath: /var/mnt/chia
         globalMounts:
           - path: /mnt/plots
+      chia-ca:
+        enabled: true
+        type: secret
+        name: chia-ca-secret
+        globalMounts:
+          - path: /config/chia-ca

@@ -32,7 +32,7 @@ spec:
           init-wallet:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.1.4.giga32@sha256:d1088016ece4fbf0a7cca841bd13b1d39cbf0d79dad316c8d4a77d6d45cafa6c
+              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
             command:
               [
                 "/bin/sh",
@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.1.4.giga32@sha256:d1088016ece4fbf0a7cca841bd13b1d39cbf0d79dad316c8d4a77d6d45cafa6c
+              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
             env:
               CHIA_SERVICES: "node farmer-only wallet"
               CHIA_UPNP: "false"
@@ -63,6 +63,8 @@ spec:
             port: 8444
           rpc:
             port: 8555
+          farm:
+            port: 8447
     persistence:
       datadir:
         enabled: true
@@ -79,6 +81,6 @@ spec:
       wallet:
         enabled: true
         type: secret
-        name: chia-secret
+        name: chia-wallet-secret
         globalMounts:
           - path: /config/keys
