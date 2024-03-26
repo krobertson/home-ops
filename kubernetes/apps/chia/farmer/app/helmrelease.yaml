@@ -49,6 +49,7 @@ spec:
             env:
               CHIA_SERVICES: "node farmer-only wallet"
               CHIA_UPNP: "false"
+              CHIAPOS_MAX_GPU_DEVICES: "0"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }

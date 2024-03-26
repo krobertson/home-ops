@@ -44,6 +44,8 @@ spec:
               CHIA_FARMER_ADDRESS: "chia-farmer"
               CHIA_FARMER_PORT: "8447"
               CHIA_PLOTS: "/mnt/plots"
+              CHIAPOS_MAX_GPU_DEVICES: "0"
+              CHIAPOS_RECOMPUTE_HOST: "gh-recompute-proxy:11988"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
