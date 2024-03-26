@@ -33,7 +33,7 @@ spec:
           nodeSelector:
             chia-harvester: "yes"
         initContainers:
-          init-wallet:
+          init-plots:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
               tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
@@ -43,9 +43,7 @@ spec:
                 "-c"
               ]
             args:
-              - for d in /mnt/plots/*/ ; do
-                  ./chia.bin plots add -d "%d"
-                done
+              - for d in /mnt/plots/*/ ; do ./chia.bin plots add -d "%d" || continue ; done
         containers:
           app:
             image:
