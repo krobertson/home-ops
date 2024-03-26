@@ -32,6 +32,20 @@ spec:
         pod:
           nodeSelector:
             chia-harvester: "yes"
+        initContainers:
+          init-wallet:
+            image:
+              repository: ghcr.io/madmax43v3r/chia-gigahorse
+              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
+            command:
+              [
+                "/bin/sh",
+                "-c"
+              ]
+            args:
+              - for d in /mnt/plots/*/ ; do
+                  ./chia.bin plots add -d "%d"
+                done
         containers:
           app:
             image:
@@ -43,7 +57,6 @@ spec:
               CHIA_CA: "/config/chia-ca"
               CHIA_FARMER_ADDRESS: "chia-farmer"
               CHIA_FARMER_PORT: "8447"
-              CHIA_PLOTS: "/mnt/plots/hdd02"
               CHIAPOS_MAX_GPU_DEVICES: "0"
               CHIAPOS_RECOMPUTE_HOST: "gh-recompute-proxy:11988"
               CHIA_LOG_LEVEL: "DEBUG"
@@ -51,6 +64,11 @@ spec:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
     persistence:
+      datadir:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /root
       chia-plots:
         enabled: true
         type: hostPath
