@@ -40,7 +40,7 @@ spec:
             env:
               CHIA_SERVICES: "harvester"
               CHIA_UPNP: "false"
-              CHIA_CA: "/config/chia-ca/ca.key"
+              CHIA_CA: "/config/chia-ca"
               CHIA_FARMER_ADDRESS: "chia-farmer"
               CHIA_FARMER_PORT: "8447"
               CHIA_PLOTS: "/mnt/plots"
