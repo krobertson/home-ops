@@ -43,7 +43,8 @@ spec:
                 "-c"
               ]
             args:
-              - for d in /mnt/plots/*/ ; do ./chia.bin plots add -d "%d" || continue ; done
+              - ./chia.bin init --fix-ssl-permissions ;
+                for d in /mnt/plots/*/ ; do ./chia.bin plots add -d "%d" || continue ; done
         containers:
           app:
             image:
