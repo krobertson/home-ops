@@ -43,9 +43,10 @@ spec:
               CHIA_CA: "/config/chia-ca"
               CHIA_FARMER_ADDRESS: "chia-farmer"
               CHIA_FARMER_PORT: "8447"
-              CHIA_PLOTS: "/mnt/plots"
+              CHIA_PLOTS: "/mnt/plots/hdd02"
               CHIAPOS_MAX_GPU_DEVICES: "0"
               CHIAPOS_RECOMPUTE_HOST: "gh-recompute-proxy:11988"
+              CHIA_LOG_LEVEL: "DEBUG"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
