@@ -43,7 +43,6 @@ spec:
               - /mnt/plots
             env:
               GARDEN_NATS_URL: "nats://nats:4222"
-              GARDEN_HARVESTER_HTTP_IP: "192.168.2.206"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
