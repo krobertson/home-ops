@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/madmax43v3r/chia-recompute
               tag: latest-nvidia@sha256:c024ef092321415f75c79fe318a665d8912c66d7a3cbea2e2a8fa0c284e5fa26
             args:
-              - ./chia_recompute_proxy_http -u gh-recompute-proxy
+              - ./chia_recompute_server -u gh-recompute-proxy
             env:
               NVIDIA_VISIBLE_DEVICES: "all"
             securityContext:
