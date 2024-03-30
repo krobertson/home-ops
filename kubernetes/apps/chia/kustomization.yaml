@@ -9,3 +9,4 @@ resources:
   - ./garden-harvester/ks.yaml
   - ./nats/ks.yaml
   - ./recompute-proxy/ks.yaml
+  - ./recompute-server/ks.yaml

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app gh-recompute-proxy
+  name: &app gh-recompute-server
 spec:
   interval: 30m
   chart:
@@ -25,27 +25,23 @@ spec:
     keepHistory: false
   values:
     controllers:
-      proxy:
+      server:
         annotations:
           reloader.stakater.com/auto: "true"
+        type: daemonset
+        pod:
+          runtimeClassName: nvidia
+          nodeSelector:
+            nvidia.feature.node.kubernetes.io/gpu: "true"
         containers:
-          proxy:
+          server:
             image:
               repository: ghcr.io/madmax43v3r/chia-recompute
-              tag: latest@sha256:ca8e3121eec212c3d505d5019d80dbe3fb577639dd056dbbf422d37279121a8d
+              tag: latest-nvidia@sha256:c024ef092321415f75c79fe318a665d8912c66d7a3cbea2e2a8fa0c284e5fa26
             args:
-              - ./chia_recompute_proxy_http
+              - ./chia_recompute_proxy_http -u gh-recompute-proxy
+            env:
+              NVIDIA_VISIBLE_DEVICES: "all"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
-    service:
-      app:
-        controller: proxy
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: 192.168.2.207
-        ports:
-          http:
-            port: 11988
-          servers:
-            port: 11999
