@@ -37,14 +37,14 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-garden
-              tag: dev@sha256:ee8bcd2ccf4ac200e41e071492f9125d83972dde5a9b2db399ea1e182adadac5
+              tag: dev@sha256:f31558be31d3dac084ef794c8f8080e88a25becfe668fa0364d9862169530605
             args:
               - plotter
               - -p
               - /mnt/plots
             env:
               GARDEN_NATS_URL: "nats://nats:4222"
-              GARDEN_PLOTTER_MAX_TRANSFERS: "4"
+              GARDEN_PLOTTER_MAX_TRANSFERS: "20"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
