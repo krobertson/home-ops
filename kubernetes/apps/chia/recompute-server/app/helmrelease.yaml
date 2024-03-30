@@ -33,18 +33,6 @@ spec:
           runtimeClassName: nvidia
           nodeSelector:
             nvidia.feature.node.kubernetes.io/gpu: "true"
-        initContainers:
-          init-power:
-            image:
-              repository: nvcr.io/nvidia/cuda
-              tag: 12.1.0-base-ubuntu22.04
-            command:
-              [
-                "/bin/sh",
-                "-c"
-              ]
-            args:
-              - nvidia-smi -i 0 -pm ENABLED && nvidia-smi -i 0 -pl 360 && nvidia-smi -i 1 -pm ENABLED && nvidia-smi -i 1 -pl 360 && nvidia-smi -q -d power
         containers:
           server:
             image:
