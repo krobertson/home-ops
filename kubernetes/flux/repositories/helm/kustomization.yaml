@@ -19,6 +19,7 @@ resources:
   - ./metrics-server.yaml
   - ./minecraft.yaml
   - ./nats-charts.yaml
+  - ./nvidia.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
