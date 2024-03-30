@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app garden-harvester
+  name: &app garden-plotter
 spec:
   interval: 30m
   chart:
@@ -25,13 +25,13 @@ spec:
     keepHistory: false
   values:
     controllers:
-      harvester:
+      plotter:
         annotations:
           reloader.stakater.com/auto: "true"
         type: daemonset
         pod:
           nodeSelector:
-            chia-harvester: "yes"
+            chia-plotter: "yes"
           hostNetwork: true
         containers:
           garden:
@@ -39,27 +39,18 @@ spec:
               repository: ghcr.io/krobertson/chia-garden
               tag: dev@sha256:3594b547fd46b17981df9e6e2ba4e1364fdef2043c8e611ab15f652302b4e6ad
             args:
-              - harvester
-              - --expand-path
+              - plotter
+              - -p
               - /mnt/plots
             env:
               GARDEN_NATS_URL: "nats://nats:4222"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
-    service:
-      app:
-        controller: harvester
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: 192.168.2.206
-        ports:
-          http:
-            port: 3434
     persistence:
-      chia-plots:
+      tmp-plots:
         enabled: true
         type: hostPath
-        hostPath: /var/mnt/chia
+        hostPath: /var/mnt/plots
         globalMounts:
           - path: /mnt/plots

@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   - ./chia-harvester/ks.yaml
   - ./farmer/ks.yaml
+  - ./garden-plotter/ks.yaml
   - ./garden-harvester/ks.yaml
   - ./nats/ks.yaml
   - ./recompute-proxy/ks.yaml
