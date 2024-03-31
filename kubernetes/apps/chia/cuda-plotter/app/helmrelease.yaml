@@ -37,7 +37,7 @@ spec:
           plotter:
             image:
               repository: ghcr.io/krobertson/chia-gigahorse-cudaplotter
-              tag: v2.2.1.giga35@sha256:f4b9b139a063648c43e78ee5c4eb76cf0570fcf8a4b3e1e65e34227108829a4e
+              tag: v2.2.1.giga35@sha256:deae59b170c28c30d107b129cee4777816fbb6954f99b1673a252be6419c24b1
             env:
               NVIDIA_VISIBLE_DEVICES: "all"
             envFrom:
