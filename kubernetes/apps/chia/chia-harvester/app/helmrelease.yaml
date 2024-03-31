@@ -36,7 +36,7 @@ spec:
           init-plots:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
+              tag: 2.2.1.giga35@sha256:05f52381283856d6538f54804bfea20250acceea2f54221465b7c159a521ee32
             command:
               [
                 "/bin/sh",
@@ -49,12 +49,12 @@ spec:
           app:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.2.1.giga33@sha256:0e5374b0021006166b0dd8bac40728dea5f05862bde0fc949f2734ecb4802471
+              tag: 2.2.1.giga35@sha256:05f52381283856d6538f54804bfea20250acceea2f54221465b7c159a521ee32
             env:
               CHIA_SERVICES: "harvester"
               CHIA_UPNP: "false"
               CHIA_CA: "/config/chia-ca"
-              CHIA_FARMER_ADDRESS: "chia-farmer"
+              CHIA_FARMER_ADDRESS: "chia-farmer.chia.svc.cluster.local"
               CHIA_FARMER_PORT: "8447"
               CHIAPOS_MAX_GPU_DEVICES: "0"
               CHIAPOS_RECOMPUTE_HOST: "gh-recompute-proxy:11988"
