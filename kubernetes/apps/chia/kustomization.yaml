@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./chia-harvester/ks.yaml
+  - ./cuda-plotter/ks.yaml
   - ./farmer/ks.yaml
   - ./garden-plotter/ks.yaml
   - ./garden-harvester/ks.yaml
