@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: utkuozdemir/nvidia_gpu_exporter
-              tag: 1.2.0@sha256:cc407f77ab017101ce233a0185875ebc75d2a0911381741b20ad91f695e488c7
+              repository: ghcr.io/krobertson/nvidia-gpu-exporter
+              tag: 1.2.0@sha256:5af7fce44484a4e0985c50d304a3a3fcac7e7869b24ed587630c799c4a09846c
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
