@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app nvidia-gpu-exporter
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      app:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        type: daemonset
+        pod:
+          runtimeClassName: nvidia
+          nodeSelector:
+            nvidia.feature.node.kubernetes.io/gpu: "true"
+        containers:
+          app:
+            image:
+              repository: utkuozdemir/nvidia_gpu_exporter
+              tag: 1.2.0@sha256:cc407f77ab017101ce233a0185875ebc75d2a0911381741b20ad91f695e488c7
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
