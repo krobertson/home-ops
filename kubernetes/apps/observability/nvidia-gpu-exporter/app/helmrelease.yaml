@@ -38,6 +38,10 @@ spec:
             image:
               repository: ghcr.io/krobertson/nvidia-gpu-exporter
               tag: 1.2.0@sha256:5af7fce44484a4e0985c50d304a3a3fcac7e7869b24ed587630c799c4a09846c
+            ports:
+              - name: metrics
+                containerPort: 9835
+                protocol: TCP
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
