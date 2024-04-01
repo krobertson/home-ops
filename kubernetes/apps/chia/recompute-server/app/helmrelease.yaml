@@ -32,7 +32,7 @@ spec:
         pod:
           runtimeClassName: nvidia
           nodeSelector:
-            nvidia.feature.node.kubernetes.io/gpu: "true"
+            chia-compute: "yes"
         containers:
           server:
             image:
