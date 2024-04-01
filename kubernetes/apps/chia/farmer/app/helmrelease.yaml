@@ -53,6 +53,17 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
+          exporter:
+            image:
+              repository: ghcr.io/chia-network/chia-exporter
+              tag: main@sha256:740691b42ccea25174bc8ab6752efd10721a66ddace4d06e32361c458e237d70
+            ports:
+              - name: metrics
+                containerPort: 9914
+                protocol: TCP
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
     service:
       app:
         controller: chia

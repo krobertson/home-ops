@@ -179,6 +179,11 @@ spec:
           gnetId: 14574
           revision: 9
           datasource: Prometheus
+        chia-exporter:
+          # renovate: depName="Chia Farming"
+          gnetId: 17939
+          revision: 2
+          datasource: Prometheus
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
