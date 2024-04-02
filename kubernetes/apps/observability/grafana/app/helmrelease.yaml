@@ -183,7 +183,9 @@ spec:
           # renovate: depName="Chia Farming"
           gnetId: 17939
           revision: 2
-          datasource: Prometheus
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
