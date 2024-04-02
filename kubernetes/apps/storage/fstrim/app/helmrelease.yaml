@@ -3,27 +3,48 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: fstrim
+  name: &app fstrim
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.0.4
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
       fstrim:
         type: cronjob
-
         cronjob:
-          schedule: "0 0 * * 1"
-          parallelism: 3 # Set this to your number of nodes
-
+          schedule: "@weekly"
+          parallelism: 9 # Set to my total number of nodes
+          successfulJobsHistory: 0
+          failedJobsHistory: 0
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/kubanetics
+              tag: 2024.3.6@sha256:6556e8c4b0b732bd4eec99d8b1c44caafb0f2f653d827667f2684c24ec4af244
+            env:
+              SCRIPT_NAME: fstrim.sh
+            resources:
+              requests:
+                cpu: 25m
+              limits:
+                memory: 128Mi
+            securityContext:
+              privileged: true
         pod:
           hostNetwork: true
           hostPID: true
@@ -33,36 +54,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: fstrim
-
-        containers:
-          app:
-            image:
-              repository: docker.io/library/alpine
-              tag: 3.19
-            command:
-              - "/bin/sh"
-              - "-c"
-            args:
-              - |
-                nsenter --mount=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/mnt --net=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/net -- sh -c "cat /proc/self/mountinfo | grep -v kubelet | grep -v tmpfs | grep -v overlay > /tmp/fs.txt"
-                nsenter --mount=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/mnt --net=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/net -- sh -c "fstrim -v --quiet-unsupported -I /tmp/fs.txt"
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 25m
-                memory: 128Mi
-              limits:
-                memory: 128Mi
-            securityContext:
-              privileged: true
-
+                  app.kubernetes.io/name: *app
     persistence:
       procfs:
         type: hostPath
