@@ -44,7 +44,7 @@ spec:
               - /mnt/plots
             env:
               GARDEN_NATS_URL: "nats://nats:4222"
-              GARDEN_PLOTTER_MAX_TRANSFERS: "10"
+              GARDEN_PLOTTER_MAX_TRANSFERS: "5"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
