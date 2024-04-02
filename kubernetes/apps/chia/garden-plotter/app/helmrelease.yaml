@@ -37,7 +37,7 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-garden
-              tag: dev@sha256:36d389c30fd656c15f47531fea2b7647c420a759707ca740aaba91aa88e7ecb0
+              tag: dev@sha256:deaf59ac5c624333594d7d5f02cf641f1aeb5b8313c27682d61d1b2a229a8262
             args:
               - plotter
               - -p
