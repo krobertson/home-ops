@@ -37,14 +37,14 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-gigahorse-cudaplotter
-              tag: v2.2.1.giga35@sha256:ef18504a8ac15adb081dbc523c90af6a1693ebd741477e823727a6ae99cc77d3
+              tag: v2.2.1.giga35@sha256:20706bda53fdddf950ed7cc607cdf6e52a1639e450c26561854e27bd050b32a1
             command:
               [
                 "/bin/sh",
                 "-c"
               ]
             args:
-              - find /mnt/plots -type d | xargs ./chia_plot_sink
+              - find /mnt/chia -type d | xargs ./chia_plot_sink
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
@@ -52,6 +52,6 @@ spec:
       chia-plots:
         enabled: true
         type: hostPath
-        hostPath: /var/mnt/chia
+        hostPath: /var/mnt
         globalMounts:
-          - path: /mnt/plots
+          - path: /mnt
