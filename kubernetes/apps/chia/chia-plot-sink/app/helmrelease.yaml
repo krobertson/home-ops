@@ -36,15 +36,10 @@ spec:
         containers:
           garden:
             image:
-              repository: ghcr.io/krobertson/chia-gigahorse-cudaplotter
-              tag: v2.2.1.giga35@sha256:20706bda53fdddf950ed7cc607cdf6e52a1639e450c26561854e27bd050b32a1
+              repository: ghcr.io/krobertson/chia-plot-sink-multi
+              tag: dev@sha256:00abf17c3fa8b1bf2950f8917367d89ba08e83285a465207c1920d7182d73d24
             command:
-              [
-                "/bin/sh",
-                "-c"
-              ]
-            args:
-              - find /mnt/chia -type d | xargs ./chia_plot_sink
+              [ "./chia-plot-sink-multi", "-t", "/mnt/tmp", "-d", "/mnt/chia" ]
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
