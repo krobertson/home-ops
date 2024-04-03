@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./chia-harvester/ks.yaml
-  - ./chia-plot-copy/ks.yaml
   - ./chia-plot-sink/ks.yaml
   - ./cuda-plotter/ks.yaml
   - ./farmer/ks.yaml
