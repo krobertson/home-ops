@@ -28,7 +28,7 @@ spec:
         type: cronjob
         cronjob:
           schedule: "@hourly"
-          parallelism: 2 # Set to my total number of nodes
+          parallelism: 3 # Set to my total number of nodes
           successfulJobsHistory: 0
           failedJobsHistory: 0
         containers:
@@ -47,7 +47,7 @@ spec:
               privileged: true
         pod:
           nodeSelector:
-            chia-plotter: "yes"
+            fstrim-hourly: "yes"
           hostNetwork: true
           hostPID: true
           topologySpreadConstraints:
