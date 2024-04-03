@@ -31,9 +31,6 @@ spec:
           parallelism: 2 # Set to my total number of nodes
           successfulJobsHistory: 0
           failedJobsHistory: 0
-        pod:
-          nodeSelector:
-            chia-plotter: "yes"
         containers:
           app:
             image:
@@ -49,6 +46,8 @@ spec:
             securityContext:
               privileged: true
         pod:
+          nodeSelector:
+            chia-plotter: "yes"
           hostNetwork: true
           hostPID: true
           topologySpreadConstraints:
