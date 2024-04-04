@@ -74,6 +74,8 @@ spec:
         # org_role: Viewer
       news:
         news_feed_enabled: false
+    imageRenderer:
+      enabled: true
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
