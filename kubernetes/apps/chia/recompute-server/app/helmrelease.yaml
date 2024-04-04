@@ -43,7 +43,7 @@ spec:
               - -u
               - gh-recompute-proxy
             env:
-              NVIDIA_VISIBLE_DEVICES: "1"
+              NVIDIA_VISIBLE_DEVICES: "0"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
