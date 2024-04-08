@@ -37,7 +37,7 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/nvidia-gpu-exporter
-              tag: 1.2@sha256:5bc082d019c2398889dc75657e085f001bdbcae9ca9895adca83e8f737f7e781
+              tag: 1.2@sha256:b1e32c74ebc3adc14b61e8d0ca434b12fbbfa3ec5a1777d19a4a728a23c28921
             command:
               [
                 "/bin/sh",
