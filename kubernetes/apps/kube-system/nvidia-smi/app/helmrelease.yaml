@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app partsetup
+  name: &app nvidia-smi
 spec:
   interval: 30m
   chart:
@@ -30,6 +30,7 @@ spec:
           reloader.stakater.com/auto: "true"
         type: daemonset
         pod:
+          runtimeClassName: nvidia
           nodeSelector:
             nvidia.feature.node.kubernetes.io/gpu: "true"
         containers:
