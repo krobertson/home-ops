@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nvidia-power-limits
+  namespace: storage
+data:
+  talos-gpu01.yaml: |
+    limits:
+      0: 360
+      1: 360
+  talos-gpu02.yaml: |
+    limits:
+      0: 360
+      1: 360
+  talos-recompute01.yaml: |
+    limits:
+      0: 220
