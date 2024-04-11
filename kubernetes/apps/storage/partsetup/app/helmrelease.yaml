@@ -31,7 +31,7 @@ spec:
         type: daemonset
         pod:
           nodeSelector:
-            chia-harvester: "yes"
+            partsetup: "yes"
           hostNetwork: true
         containers:
           garden:
