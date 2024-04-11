@@ -8,6 +8,5 @@ resources:
   - ./chia-plot-sink/ks.yaml
   - ./cuda-plotter/ks.yaml
   - ./farmer/ks.yaml
-  - ./nats/ks.yaml
   - ./recompute-proxy/ks.yaml
   - ./recompute-server/ks.yaml
