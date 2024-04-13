@@ -9,12 +9,4 @@ modules:
     retries: 5
     timeout: 60s
     walk:
-      - .1.3.6.1.4.1.850.1.1.3.2.3.3.1.1.9
-    metrics:
-      - name: tripplitePDUOutletPower
-        oid: .1.3.6.1.4.1.850.1.1.3.2.3.3.1.1.9
-        type: gauge
-        help: The index to the Rack PDU bank properties table entry. - .1.3.6.1.4.1.850.1.1.3.2.3.3.1.1.9
-        indexes:
-          - labelname: tripplitePDUOutletPower
-            type: gauge
+      - 1.3.6.1.4.1.850.1.1.3.2.3.3.1.1.9
