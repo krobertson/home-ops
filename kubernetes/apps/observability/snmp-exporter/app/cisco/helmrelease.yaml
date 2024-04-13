@@ -40,9 +40,9 @@ spec:
     serviceMonitor:
       enabled: true
       params:
-        - name: pdu1
-          auth: [tripplite_v2]
-          module: [tripplite_pdu]
-          target: 192.168.2.123
+        - name: cisco01
+          auth: [public_v2]
+          module: [cisco_custom]
+          target: 192.168.2.88
       path: /snmp
       scrapeTimeout: 10s
