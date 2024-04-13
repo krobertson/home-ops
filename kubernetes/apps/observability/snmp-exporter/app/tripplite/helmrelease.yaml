@@ -46,3 +46,6 @@ spec:
           target: 192.168.2.123
       path: /snmp
       scrapeTimeout: 10s
+      relabelings:
+        - sourceLabels: [__param_target]
+          targetLabel: instance
