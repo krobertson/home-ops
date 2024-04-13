@@ -1,7 +1,7 @@
 ---
 auths:
   public_v2:
-    community: public
+    community: tripplite
     security_level: noAuthNoPriv
     auth_protocol: MD5
     priv_protocol: DES
@@ -9,8 +9,6 @@ auths:
 
 modules:
   tripplite_pdu:
-    auth:
-      community: tripplite
     retries: 5
     timeout: 60s
     walk:
