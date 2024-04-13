@@ -1,10 +1,7 @@
 ---
 auths:
-  public_v2:
+  tripplite_v2:
     community: tripplite
-    security_level: noAuthNoPriv
-    auth_protocol: MD5
-    priv_protocol: DES
     version: 2
 
 modules:
