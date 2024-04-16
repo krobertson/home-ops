@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/krobertson/chia-plot-sink-multi
               tag: dev@sha256:af2b05dca0a6df897d98b127f626ab9997f03376166c43851ee17d65ac8cd5a9
             command:
-              [ "./chia-plot-sink-multi", "-c", "15", "-t", "/mnt/tmp", "-d", "/mnt/chia" ]
+              [ "./chia-plot-sink-multi", "-c", "8", "-t", "/mnt/tmp", "-d", "/mnt/chia" ]
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
