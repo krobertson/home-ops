@@ -8,3 +8,7 @@ configMapGenerator:
   - name: chia-plot-sink-configs
     files:
       - talos-harvester01.yaml=./resources/talos-harvester01.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
