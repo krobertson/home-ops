@@ -33,13 +33,31 @@ spec:
           nodeSelector:
             chia-harvester: "yes"
           hostNetwork: true
+        initContainers:
+          init-config-rename:
+            image:
+              repository: ghcr.io/onedr0p/alpine
+              tag: 3.19.1@sha256:0e3067295cc20dafbd4cf63789ccc71858ad555f3998200ca10b271328c7285e
+            command:
+              [
+                "/bin/sh",
+                "-c"
+              ]
+            args:
+              - ln -s /config/base/$NODE_NAME.yaml /config/sink.yaml
+                for d in /mnt/plots/*/ ; do ./chia.bin plots add -d "$d" || continue ; done
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
         containers:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-plot-sink-multi
-              tag: dev@sha256:af2b05dca0a6df897d98b127f626ab9997f03376166c43851ee17d65ac8cd5a9
+              tag: dev@sha256:9b46e76c4f4f4987d27da9400d9736440dd912f0d151f6b810cab1e29e03cb03
             command:
-              [ "./chia-plot-sink-multi", "-c", "8", "-t", "/mnt/tmp", "-d", "/mnt/chia" ]
+              [ "./chia-plot-sink-multi", "-c", "/config/sink.yaml" ]
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
@@ -50,3 +68,14 @@ spec:
         hostPath: /var/mnt
         globalMounts:
           - path: /mnt
+      configdir:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /config
+      plot-sink-configs:
+        enabled: true
+        type: configMap
+        name: chia-plot-sink-configs
+        globalMounts:
+          - path: /config/base

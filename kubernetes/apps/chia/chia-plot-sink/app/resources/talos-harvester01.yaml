@@ -1,0 +1,31 @@
+skip_directory_file: ".not_mounted"
+cache:
+  # concurrency for the cache should be scoped to either the maximum throughput
+  # of your inbound network device and the maximum throughput of your NVME
+  # drives, or your number of plotting processes. As one example, if your
+  # harvester has a 100G NIC and your plotters have 10G NICs, go with around 10.
+  # Please note, ensure your cache concurrency is not more than the sum of your
+  # destinations concurrency. This would be an easy way to allow your cache to
+  # grow faster than you can move them off.
+  concurrency: 8
+  paths:
+    - /mnt/cache/cache1
+    - /mnt/cache/cache2
+destinations:
+  # Destinations should be grouped based on drives that are sharing a single
+  # controller channel. The maximum throughput to those drives will be limited
+  # by the throughput of the controller. For instance, SAS2 is 6Gbit/sec, SAS3
+  # is 12Gbit/sec.
+  #
+  # concurrency should be scoped to the throughput to that group of drive and
+  # the write throughput of the drives used. For instance, if you have
+  # 12Gbit/sec, that would be 1.5GB/sec. If the drives support about
+  # 200-250MB/sec, you might want a concurrency around 6-8.
+  local:
+    concurrency: 8
+    paths:
+      - /mnt/chia/local-*
+  external1:
+    concurrency: 8
+    paths:
+      - /mnt/chia/jbod01-*
