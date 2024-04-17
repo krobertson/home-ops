@@ -45,7 +45,6 @@ spec:
               ]
             args:
               - ln -s /config/base/$NODE_NAME.yaml /config/sink.yaml
-                for d in /mnt/plots/*/ ; do ./chia.bin plots add -d "$d" || continue ; done
             env:
               - name: NODE_NAME
                 valueFrom:
