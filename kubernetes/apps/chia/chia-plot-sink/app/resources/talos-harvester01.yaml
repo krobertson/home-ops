@@ -7,10 +7,10 @@ cache:
   # Please note, ensure your cache concurrency is not more than the sum of your
   # destinations concurrency. This would be an easy way to allow your cache to
   # grow faster than you can move them off.
-  concurrency: 8
+  concurrency: 12
   paths:
-    - /mnt/cache/cache1
-    - /mnt/cache/cache2
+    - /mnt/tmp/cache1
+    - /mnt/tmp/cache2
 destinations:
   # Destinations should be grouped based on drives that are sharing a single
   # controller channel. The maximum throughput to those drives will be limited
@@ -21,10 +21,18 @@ destinations:
   # the write throughput of the drives used. For instance, if you have
   # 12Gbit/sec, that would be 1.5GB/sec. If the drives support about
   # 200-250MB/sec, you might want a concurrency around 6-8.
-  local:
-    concurrency: 8
+  local1:
+    concurrency: 4
     paths:
-      - /mnt/chia/local-*
+      - /mnt/chia/local01-*
+  local2:
+    concurrency: 4
+    paths:
+      - /mnt/chia/local02-*
+  local3:
+    concurrency: 4
+    paths:
+      - /mnt/chia/local03-*
   external1:
     concurrency: 8
     paths:
