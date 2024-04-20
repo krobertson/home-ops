@@ -54,7 +54,7 @@ spec:
           garden:
             image:
               repository: ghcr.io/krobertson/chia-plot-sink-multi
-              tag: dev@sha256:3972c17b760572a4e2dc6ea40f1cbe1c881e01ce57ea51e07650881f18a31275
+              tag: dev@sha256:1955ce57524e21ff8133d3b23a6d3274e0e4e35393e9341e1d534630f332ef55
             command:
               [ "./chia-plot-sink-multi", "-c", "/config/sink.yaml" ]
             securityContext:
