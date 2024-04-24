@@ -184,7 +184,7 @@ spec:
         chia-exporter:
           # renovate: depName="Chia Farming"
           gnetId: 17939
-          revision: 2
+          revision: 3
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
