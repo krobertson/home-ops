@@ -31,7 +31,7 @@ spec:
   values:
     deploymentAnnotations:
       secret.reloader.stakater.com/reload: &secret minecraft-rcon-secret
-      configmap.reloader.stakater.com/reload: &configmap minecraft-test-ops
+      configmap.reloader.stakater.com/reload: &configmap minecraft-ops
     image:
       repository: ghcr.io/itzg/minecraft-server
       tag: java17
@@ -88,9 +88,9 @@ spec:
         RESTIC_PASSWORD: password
       envFrom:
         - configMapRef:
-            name: minecraft-test-backups
+            name: minecraft-backups
         - secretRef:
-            name: minecraft-test-backups
+            name: minecraft-backups
       extraEnv:
         RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
     minecraftServer:

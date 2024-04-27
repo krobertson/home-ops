@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: minecraft-test-ops
+  name: minecraft-ops
 data:
   # use https://minecraft-serverlist.com/tools/offline-uuid to generate
   # offline UUIDs.
