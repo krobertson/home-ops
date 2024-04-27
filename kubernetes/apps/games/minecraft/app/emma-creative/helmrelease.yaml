@@ -95,7 +95,7 @@ spec:
         RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
     minecraftServer:
       eula: true
-      version: 1.20.5
+      version: 1.20.4
       type: SPIGOT
       forceReDownload: true
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
