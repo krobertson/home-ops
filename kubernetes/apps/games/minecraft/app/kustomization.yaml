@@ -6,5 +6,5 @@ resources:
   - ./admin-configmap.yaml
   - ./bucket.yaml
   - ./externalsecret.yaml
-  # - ./emma-creative
+  - ./emma-creative
   - ./test
