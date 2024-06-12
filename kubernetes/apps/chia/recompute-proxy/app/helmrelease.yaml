@@ -32,7 +32,7 @@ spec:
           proxy:
             image:
               repository: ghcr.io/madmax43v3r/chia-recompute
-              tag: latest@sha256:ca8e3121eec212c3d505d5019d80dbe3fb577639dd056dbbf422d37279121a8d
+              tag: latest@sha256:e021ee5afc8f74ce617dd64a37e52d6412241b87bd3a4aa43a3cb70926f88bc6
             args:
               - ./chia_recompute_proxy_http
             securityContext:

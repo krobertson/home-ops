@@ -36,7 +36,7 @@ spec:
           init-plots:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.2.1.giga35@sha256:05f52381283856d6538f54804bfea20250acceea2f54221465b7c159a521ee32
+              tag: 2.3.0.giga36@sha256:1494354065a02dc80bf35611be10e4702f72e58b3fe0942747735f1f8fce0dea
             command:
               [
                 "/bin/sh",
@@ -49,7 +49,7 @@ spec:
           app:
             image:
               repository: ghcr.io/madmax43v3r/chia-gigahorse
-              tag: 2.2.1.giga35@sha256:05f52381283856d6538f54804bfea20250acceea2f54221465b7c159a521ee32
+              tag: 2.3.0.giga36@sha256:1494354065a02dc80bf35611be10e4702f72e58b3fe0942747735f1f8fce0dea
             env:
               CHIA_SERVICES: "harvester"
               CHIA_UPNP: "false"
