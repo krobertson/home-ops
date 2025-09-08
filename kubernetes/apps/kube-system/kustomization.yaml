@@ -6,7 +6,5 @@ resources:
   - ./cilium/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
   - ./metrics-server/ks.yaml
-  - ./nvidia-device-plugin/ks.yaml
-  - ./nvidia-smi/ks.yaml
   - ./spegel/ks.yaml
   - ./reloader/ks.yaml
