@@ -24,6 +24,7 @@ tasks:
     cmds:
       - minijinja-cli "{{.SETUP_DIR}}/apps/resources.yaml.j2" | kubectl apply --server-side --filename -
       - helmfile --quiet --file {{.SETUP_DIR}}/apps/crds.yaml template | kubectl apply --server-side --filename -
+      - sops exec-file "{{.SETUP_DIR}}/apps/sops-age.sops.yaml" "kubectl --namespace flux-system apply --server-side --filename {}"
       - helmfile --quiet --file {{.SETUP_DIR}}/apps/helmfile.yaml sync --hide-notes
     preconditions:
       - test -f {{.KUBECONFIG}}

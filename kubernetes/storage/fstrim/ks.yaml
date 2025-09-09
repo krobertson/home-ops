@@ -13,7 +13,8 @@ spec:
   path: "./kubernetes/storage/fstrim/app"
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   interval: 10m
   prune: true
   wait: false
