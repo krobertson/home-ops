@@ -70,7 +70,8 @@ spec:
             port: *port
     serviceMonitor:
       main:
-        enabled: true
+        endpoints:
+          - port: http
     ingress:
       main:
         enabled: true
