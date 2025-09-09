@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.11.1
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.33.4
+
+clusterName: home-kubernetes
+endpoint: https://192.168.2.143:6443
+additionalApiServerCertSans: &sans
+  - "192.168.2.143"
+  - 127.0.0.1 # KubePrism
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.69.0.0/16"]
+clusterSvcNets: ["10.96.0.0/16"]
+
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "mini01"
+    ipAddress: "192.168.2.143"
+    installDiskSelector:
+      serial: "TW02345GLOH006AK002E"
+    controlPlane: true
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: f0:2f:74:*
+        dhcp: true
+  - hostname: "ts01"
+    ipAddress: "192.168.2.101"
+    installDiskSelector:
+      serial: "S5NYNL0WB00777F"
+    controlPlane: false
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: e8:80:88:*
+        dhcp: true
+  - hostname: "ts02"
+    ipAddress: "192.168.2.102"
+    installDiskSelector:
+      serial: "S5NYNL0WB00776W"
+    controlPlane: false
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: e8:80:88:*
+        dhcp: true
+  - hostname: "ts03"
+    ipAddress: "192.168.2.103"
+    installDiskSelector:
+      serial: "S5NYNL0WB00789W"
+    controlPlane: false
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: e8:80:88:*
+        dhcp: true
+  - hostname: "ts04"
+    ipAddress: "192.168.2.104"
+    installDiskSelector:
+      serial: "S5NYNL0WB00780Y"
+    controlPlane: false
+    nodeAnnotations:
+      installerImage: '{{ .MachineConfig.MachineInstall.InstallImage }}'
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: e8:80:88:*
+        dhcp: true
+
+patches:
+  - "@./patches/global/machine-dns.yaml"     # host DNS settings
+  - "@./patches/global/machine-files.yaml"   # spegel/NFS Mount
+  - "@./patches/global/machine-network.yaml" # search Domain
+  - "@./patches/global/machine-sysctls.yaml" # network tweaks
+  - "@./patches/global/machine-time.yaml"    # ntp settings
+
+controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml" # makes rook-ceph and anything else needing elevated permissions work
+    - "@./patches/controller/cluster.yaml" # control-plane tweaks
+    - "@./patches/controller/machine-features.yaml" # enabled API server access from the kube-system namespace
+
+worker:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
