@@ -1,0 +1,29 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./backube.yaml
+  - ./bitnami.yaml
+  - ./bjw-s.yaml
+  - ./cilium.yaml
+  - ./cloudnative-pg.yaml
+  - ./democratic-csi.yaml
+  - ./external-dns.yaml
+  - ./external-secrets.yaml
+  - ./grafana.yaml
+  - ./homepage.yaml
+  - ./influxdata.yaml
+  - ./ingress-nginx.yaml
+  - ./k8s-gateway.yaml
+  - ./jetstack.yaml
+  - ./metrics-server.yaml
+  - ./minecraft.yaml
+  - ./nats-charts.yaml
+  - ./nvidia.yaml
+  - ./openebs.yaml
+  - ./piraeus.yaml
+  - ./postfinance.yaml
+  - ./prometheus-community.yaml
+  - ./rook-ceph.yaml
+  - ./stakater.yaml
+  - ./xenitab.yaml

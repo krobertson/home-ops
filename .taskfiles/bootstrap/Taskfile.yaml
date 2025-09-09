@@ -22,9 +22,9 @@ tasks:
   apps:
     desc: Bootstrap apps into the Talos cluster
     cmds:
-      - minijinja-cli "{{.TALOS_DIR}}/apps/resources.yaml.j2" | kubectl apply --server-side --filename -
-      - helmfile --quiet --file {{.TALOS_DIR}}/apps/crds.yaml template | kubectl apply --server-side --filename -
-      - helmfile --quiet --file {{.TALOS_DIR}}/apps/helmfile.yaml sync --hide-notes
+      - minijinja-cli "{{.SETUP_DIR}}/apps/resources.yaml.j2" | kubectl apply --server-side --filename -
+      - helmfile --quiet --file {{.SETUP_DIR}}/apps/crds.yaml template | kubectl apply --server-side --filename -
+      - helmfile --quiet --file {{.SETUP_DIR}}/apps/helmfile.yaml sync --hide-notes
     preconditions:
       - test -f {{.KUBECONFIG}}
       - test -f {{.ROOT_DIR}}/.sops.yaml
