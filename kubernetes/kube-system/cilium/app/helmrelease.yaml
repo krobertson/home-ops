@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: cilium
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: cilium
@@ -15,70 +15,42 @@ spec:
         namespace: flux-system
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     autoDirectNodeRoutes: true
     bgpControlPlane:
-      enabled: true
+      enabled: false
     bpf:
-      masquerade: false
+      masquerade: true
+      # Ref: https://github.com/siderolabs/talos/issues/10002
+      hostLegacyRouting: true
     cgroup:
       automount:
         enabled: false
       hostRoot: /sys/fs/cgroup
-    cluster:
-      id: 1
-      name: home-kubernetes
-    containerRuntime:
-      integration: containerd
-    # NOTE: This might need to be set if you have more than one active NIC on your hosts
-    # devices:
-    #   - eno0
+    cni:
+      # Required for pairing with Multus CNI
+      exclusive: false
+    dashboards:
+      enabled: true
     endpointRoutes:
       enabled: true
-    hubble:
-      enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
+    envoy:
+      rollOutPods: true
+      prometheus:
         serviceMonitor:
           enabled: true
-        dashboards:
-          enabled: true
-          annotations:
-            grafana_folder: Cilium
-      relay:
-        enabled: true
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: true
-        rollOutPods: true
-        ingress:
-          enabled: true
-          className: internal
-          hosts:
-            - "hubble.${SECRET_DOMAIN}"
-          tls:
-            - hosts:
-                - "hubble.${SECRET_DOMAIN}"
+    gatewayAPI:
+      enabled: true
+    hubble:
+      enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
+    ipv4NativeRoutingCIDR: "10.69.0.0/16"
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
@@ -90,25 +62,19 @@ spec:
       mode: dsr
     localRedirectPolicy: true
     operator:
-      replicas: 1
-      rollOutPods: true
+      dashboards:
+        enabled: true
       prometheus:
         enabled: true
         serviceMonitor:
           enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
+      replicas: 1
+      rollOutPods: true
     prometheus:
       enabled: true
       serviceMonitor:
         enabled: true
         trustCRDsExist: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
     rollOutCiliumPods: true
     routingMode: native
     securityContext:
@@ -121,6 +87,8 @@ spec:
           - IPC_LOCK
           - SYS_ADMIN
           - SYS_RESOURCE
+          - PERFMON
+          - BPF
           - DAC_OVERRIDE
           - FOWNER
           - SETGID
@@ -129,3 +97,5 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+    socketLB:
+      hostNamespaceOnly: true
