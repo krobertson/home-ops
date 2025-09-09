@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
     - name: external-secrets-stores
-  path: ./kubernetes/apps/default/authelia/app
+  path: ./kubernetes/default/authelia/app
   prune: true
   sourceRef:
     kind: GitRepository

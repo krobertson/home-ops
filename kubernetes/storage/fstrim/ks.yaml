@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  path: "./kubernetes/apps/storage/fstrim/app"
+  path: "./kubernetes/storage/fstrim/app"
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  path: "./kubernetes/apps/storage/partsetup/app"
+  path: "./kubernetes/storage/partsetup/app"
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

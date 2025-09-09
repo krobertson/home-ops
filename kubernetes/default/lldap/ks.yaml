@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
     - name: external-secrets-stores
-  path: ./kubernetes/apps/default/lldap/app
+  path: ./kubernetes/default/lldap/app
   prune: true
   sourceRef:
     kind: GitRepository

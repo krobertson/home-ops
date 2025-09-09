@@ -9,7 +9,7 @@ spec:
   targetNamespace: default
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/apps/default/influxdb/app
+  path: ./kubernetes/default/influxdb/app
   prune: true
   sourceRef:
     kind: GitRepository
