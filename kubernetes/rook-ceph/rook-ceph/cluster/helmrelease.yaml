@@ -92,19 +92,19 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: talos-f23-tu2
+          - name: mini01
             devices:
               - name: /dev/nvme1n1
-          - name: talos-mzl-nm1
+          - name: ts01
             devices:
               - name: /dev/nvme0n1
-          - name: talos-n9i-fpl
+          - name: ts02
             devices:
               - name: /dev/nvme0n1
-          - name: talos-nm4-420
+          - name: ts03
             devices:
               - name: /dev/nvme0n1
-          - name: talos-eit-0ma
+          - name: ts04
             devices:
               - name: /dev/nvme0n1
       placement:
