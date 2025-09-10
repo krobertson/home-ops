@@ -118,6 +118,7 @@ spec:
     persistence:
       config:
         enabled: true
+        accessMode: ReadWriteOnce
         storageClass: ceph-block
         size: 10Gi
       tmp:

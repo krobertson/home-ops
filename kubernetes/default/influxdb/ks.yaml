@@ -7,9 +7,19 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: default
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/default/influxdb/app
+  postBuild:
+    substitute:
+      APP: *app
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   sourceRef:
     kind: GitRepository
