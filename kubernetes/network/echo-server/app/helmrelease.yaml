@@ -83,7 +83,6 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
                   port: *port
         tls:
           - hosts:
@@ -96,7 +95,6 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
                   port: *port
         tls:
           - hosts:
