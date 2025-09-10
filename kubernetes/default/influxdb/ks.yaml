@@ -15,8 +15,6 @@ spec:
     - name: external-secrets-stores
   path: ./kubernetes/default/influxdb/app
   postBuild:
-    substitute:
-      APP: *app
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
