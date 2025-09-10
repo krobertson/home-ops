@@ -123,8 +123,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
-                  port: 80
+                  port: *apiPort
         tls:
           - hosts:
               - *host

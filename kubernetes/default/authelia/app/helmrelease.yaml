@@ -122,8 +122,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
-                  port: 80
+                  port: *port
         tls:
           - hosts:
               - *host
