@@ -83,7 +83,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 8123
+                port: *port
       internal:
         hostnames:
           - "{{ .Release.Name }}-internal.r7n.dev"
@@ -94,4 +94,4 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 8123
+                port: *port
