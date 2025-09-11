@@ -14,7 +14,7 @@ spec:
     secretRef:
       name: sops-age
   dependsOn:
-    - name: certificates-export
+    - name: certificates-import
       namespace: network
   path: ./kubernetes/network/ingress-nginx/internal
   postBuild:
@@ -46,7 +46,7 @@ spec:
     secretRef:
       name: sops-age
   dependsOn:
-    - name: certificates-export
+    - name: certificates-import
       namespace: network
   path: ./kubernetes/network/ingress-nginx/external
   postBuild:
