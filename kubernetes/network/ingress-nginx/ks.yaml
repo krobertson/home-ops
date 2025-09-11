@@ -15,6 +15,7 @@ spec:
       name: sops-age
   dependsOn:
     - name: certificates-export
+      namespace: network
   path: ./kubernetes/network/ingress-nginx/internal
   postBuild:
     substituteFrom:
@@ -46,6 +47,7 @@ spec:
       name: sops-age
   dependsOn:
     - name: certificates-export
+      namespace: network
   path: ./kubernetes/network/ingress-nginx/external
   postBuild:
     substituteFrom:
