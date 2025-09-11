@@ -1,46 +1,38 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app home-assistant
+  name: home-assistant
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
-    namespace: flux-system
+    name: home-assistant
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.7.4@sha256:3db687091769f145839c0a690143c1a63dbb646fd69711684103b575f070b598
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2025.9.1@sha256:fe188478864988a04274743529685ad2f15dd3bb0041096a79dbe5a7b5ebc770
             env:
               TZ: America/Los_Angeles
               HASS_HTTP_TRUSTED_PROXY_1: 192.168.2.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 10.69.0.0/16
             envFrom:
               - secretRef:
-                  name: home-assistant-secret
+                  name: "{{ .Release.Name }}-secret"
             probes: &probes
               liveness:
                 enabled: false
@@ -51,12 +43,12 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 2Gi
           code:
             image:
               repository: ghcr.io/coder/code-server
@@ -76,19 +68,21 @@ spec:
                 cpu: 10m
               limits:
                 memory: 512Mi
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
           http:
+            appProtocol: kubernetes.io/ws
             port: 8123
           code:
+            appProtocol: kubernetes.io/ws
             port: 80
     route:
       main:
@@ -119,5 +113,19 @@ spec:
         accessMode: ReadWriteOnce
         storageClass: ceph-block
         size: 10Gi
-      tmp:
+      config-cache:
+        enabled: true
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
+        size: 1Gi
+      tmpfs:
         type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/logs
+                subPath: logs
+              - path: /config/tts
+                subPath: tts
+              - path: /tmp
+                subPath: tmp
