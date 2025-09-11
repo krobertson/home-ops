@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app homepage
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -13,17 +13,15 @@ spec:
   maxHistory: 2
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
       main:
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -31,9 +29,9 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.9.5
+              tag: v1.4.6
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Los_Angeles
             envFrom:
               - secretRef:
                   name: homepage-secret
@@ -47,7 +45,7 @@ spec:
       main:
         ports:
           http:
-            port: 3000
+            port: &port 3000
     route:
       *app :
         hostnames:
@@ -59,7 +57,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 3000
+                port: *port
     persistence:
       config:
         enabled: true
