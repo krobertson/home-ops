@@ -1,10 +1,12 @@
----
-originRequest:
-  originServerName: "external.${SECRET_DOMAIN}"
 
+---
 ingress:
-  - hostname: "${SECRET_DOMAIN}"
+  - hostname: r7n.dev
+    originRequest:
+      originServerName: r7n.dev
     service: https://envoy-external.network.svc.cluster.local:443
-  - hostname: "*.${SECRET_DOMAIN}"
+  - hostname: "*.r7n.dev"
+    originRequest:
+      originServerName: external.r7n.dev
     service: https://envoy-external.network.svc.cluster.local:443
   - service: http_status:404
