@@ -114,19 +114,6 @@ spec:
             runAsNonRoot: true
             fsGroup: 999
             fsGroupChangePolicy: OnRootMismatch
-    ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host "{{ .Release.Name }}.r7n.dev"
-            paths:
-              - path: /
-                service:
-                  port: *apiPort
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
