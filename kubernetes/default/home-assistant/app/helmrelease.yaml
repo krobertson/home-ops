@@ -94,7 +94,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: home-assistant
                 port: 8123
       code:
         hostnames:
@@ -105,7 +105,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: home-assistant
                 port: 80
     persistence:
       config:
