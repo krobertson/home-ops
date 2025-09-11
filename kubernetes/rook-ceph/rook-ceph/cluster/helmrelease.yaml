@@ -28,15 +28,14 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
-    ingress:
-      dashboard:
-        ingressClassName: internal
-        host:
-          name: &host rook.r7n.dev
-          path: /
-        tls:
-          - hosts:
-              - *host
+    route:
+      rook:
+        hostnames:
+          - rook.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     cephClusterSpec:
       cephConfig:
         global:

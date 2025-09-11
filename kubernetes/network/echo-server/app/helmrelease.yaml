@@ -80,6 +80,10 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 8123
       internal:
         hostnames:
           - "{{ .Release.Name }}-internal.r7n.dev"
@@ -87,3 +91,7 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 8123
