@@ -29,9 +29,11 @@ spec:
     toolbox:
       enabled: true
     route:
-      rook:
-        hostnames:
-          - rook.r7n.dev
+      dashboard:
+        host:
+          name: rook.r7n.dev
+          path: /
+          pathType: PathPrefix
         parentRefs:
           - name: envoy-internal
             namespace: network
