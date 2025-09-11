@@ -6,6 +6,5 @@ resources:
   - ./namespace.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./nvidia-gpu-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./thanos/ks.yaml
