@@ -24,7 +24,7 @@ spec:
       - name: &name EXTERNAL_DNS_PIHOLE_SERVER
         valueFrom:
           secretKeyRef:
-            name: pihole-dns-secret
+            name: &secret pihole-dns-secret
             key: *name
       - name: &name EXTERNAL_DNS_PIHOLE_PASSWORD
         valueFrom:
