@@ -66,14 +66,6 @@ spec:
     queryFrontend:
       enabled: true
       replicaCount: 2
-      route:
-        *app :
-          hostnames:
-            - thanos-query-frontend.r7n.dev
-          parentRefs:
-            - name: envoy-internal
-              namespace: network
-              sectionName: https
       networkPolicy:
         enabled: false
     query:
