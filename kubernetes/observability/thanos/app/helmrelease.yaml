@@ -66,14 +66,14 @@ spec:
     queryFrontend:
       enabled: true
       replicaCount: 2
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hostname: &host thanos-query-frontend.r7n.dev
-        tls: true
-        extraTls:
-          - hosts:
-              - *host
+      route:
+        *app :
+          hostnames:
+            - thanos-query-frontend.r7n.dev
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+              sectionName: https
       networkPolicy:
         enabled: false
     query:
@@ -83,7 +83,7 @@ spec:
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: observability
-      stores: ["thanos.turbo.ac:10901"]
+      stores: ["thanos.r7n.dev:10901"]
       networkPolicy:
         enabled: false
     bucketweb:
