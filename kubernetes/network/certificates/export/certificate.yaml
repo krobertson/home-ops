@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: r7n-dev-staging
+spec:
+  secretName: r7n-dev-staging-tls
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: r7n.dev
+  dnsNames:
+    - r7n.dev
+    - "*.r7n.dev"
