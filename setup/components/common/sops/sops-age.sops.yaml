@@ -1,7 +1,7 @@
-apiVersion: ENC[AES256_GCM,data:gJw=,iv:rzSWmoKynPs2Z4lIRFlYhg1HKB51zqW6YZ54ToAplmU=,tag:Me+uNkybeNZpr4SqVfrnYw==,type:str]
-kind: ENC[AES256_GCM,data:lqR/q/0B,iv:UfcqT2Pp69i5gSmnvxv5X42RLlWERX/sH74pG/tDzJM=,tag:tMYFW6hnI3v4TAHSeqGgeQ==,type:str]
+apiVersion: v1
+kind: Secret
 metadata:
-    name: ENC[AES256_GCM,data:skYiQu2IOf8=,iv:WQAIegZIs7YRznDgHEj2FaDg7QcF1NIBnsInewizIOQ=,tag:4Vf+hu7n8Pxshgpsmxa4ZA==,type:str]
+    name: sops-age
 stringData:
     age.agekey: ENC[AES256_GCM,data:1vs4K1lggWkc3sHX3BL1EY69QRFwE1/U8k+WW7IkEIia/tRyTgS743yhsk+SFg7RxjMDZ75MhDeANthLPbvGCmkXE9TUiOk1yLM=,iv:ksTbhjZk43jH03UyqL9CBXZFKycyPAMCHlK3qDbsWSM=,tag:aC9jZ1PiIrYJTOEJ1JpQ0g==,type:str]
 sops:
@@ -22,5 +22,5 @@ sops:
     lastmodified: "2025-09-09T20:30:01Z"
     mac: ENC[AES256_GCM,data:o81n8uAMxp/oj0RErWWgENW3WgFUA7ZV9GC2Vnp5G1D7GAT4Ft/DePrQSSdLjqiINyltd3AOfeRt5YTdawpR31y5AtX4DfRisVSLQ5YtpXIoWuulYNW3ATtBjtdjElRgD3zC3LI4Yls5YnDEc1yiH0rLojbYfou0hCNjjvMjvZM=,iv:ddJ9nDqV5LMgq06mrJauB9iI54O0lxUAsoWx56ywjG4=,tag:Uvc9asEqgpwJsXt4uNzAYQ==,type:str]
     pgp: []
-    unencrypted_suffix: _unencrypted
+    encrypted_regex: ^(data|stringData)$
     version: 3.9.1
