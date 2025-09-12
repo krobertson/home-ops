@@ -32,6 +32,7 @@ spec:
               tag: v1.4.6
             env:
               TZ: America/Los_Angeles
+              HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.r7n.dev"
             envFrom:
               - secretRef:
                   name: homepage-secret

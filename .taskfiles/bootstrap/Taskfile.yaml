@@ -22,8 +22,8 @@ tasks:
   apps:
     desc: Bootstrap apps into the Talos cluster
     cmds:
+      - for i in $(find "{{.KUBERNETES_DIR}}" -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename); do kubectl create namespace "$i" --dry-run=client -o yaml | kubectl apply --server-side -f -; done;
       - minijinja-cli "{{.SETUP_DIR}}/apps/cloudflare-tunnel-id-secret.yaml" | op inject | kubectl apply --server-side --filename -
-      - minijinja-cli "{{.SETUP_DIR}}/apps/resources.yaml.j2" | kubectl apply --server-side --filename -
       - helmfile --quiet --file {{.SETUP_DIR}}/apps/crds.yaml template | kubectl apply --server-side --filename -
       - sops exec-file "{{.SETUP_DIR}}/apps/sops-age.sops.yaml" "kubectl --namespace flux-system apply --server-side --filename {}"
       - sops exec-file "{{.SETUP_DIR}}/apps/cluster-secrets.sops.yaml" "kubectl --namespace flux-system apply --server-side --filename {}"
