@@ -50,12 +50,6 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 512Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              readOnlyRootFilesystem: true
     service:
       app:
         ports:
