@@ -61,7 +61,7 @@ spec:
     route:
       app:
         hostnames:
-          - 13ft.r7n.dev
+          - thirteen-feet.r7n.dev
         parentRefs:
           - name: envoy-internal
             namespace: network
