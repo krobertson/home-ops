@@ -6,3 +6,4 @@ components:
   - ../../setup/components/common
 resources:
   - ./it-tools/ks.yaml
+  - ./openspeedtest/ks.yaml
