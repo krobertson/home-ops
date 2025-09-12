@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: 13ft-ladder
+  name: thirteen-ft
 spec:
   interval: 1h
   chartRef:
@@ -60,8 +60,14 @@ spec:
             subPath: tmp
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Services
+          gethomepage.dev/name: 13ft
+          gethomepage.dev/icon: https://i.imgur.com/kxOLAbO.png
+          gethomepage.dev/description: Block ads, paywalls, and other nonsense
         hostnames:
-          - thirteen-feet.r7n.dev
+          - 13ft.r7n.dev
         parentRefs:
           - name: envoy-internal
             namespace: network
