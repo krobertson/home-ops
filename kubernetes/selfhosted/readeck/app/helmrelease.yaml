@@ -1,0 +1,66 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: readeck
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: readeck
+  maxHistory: 2
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      app:
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: codeberg.org/readeck/readeck
+              tag: 0.20.2@sha256:2fc8c3ce875db68fbfdc6cdd517a9315b14be65867116ffac26997e800def0ca
+            env:
+              TZ: "America/Los_Angeles"
+              READECK_LOG_LEVEL: info
+              READECK_DEV_MODE: "false"
+              READECK_SERVER_HOST: 0.0.0.0
+              READECK_SERVER_PORT: &port "8080"
+              READECK_SERVER_PREFIX: /
+              READECK_USE_X_FORWARDED: "true"
+              READECK_ALLOWED_HOSTS: readeck.r7n.dev
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
+        size: 10Gi
+        globalMounts:
+          - path: /readeck
+    route:
+      app:
+        hostnames:
+          - readeck.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https

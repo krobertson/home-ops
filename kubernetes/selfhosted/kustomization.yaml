@@ -8,3 +8,4 @@ resources:
   - ./13ft-ladder/ks.yaml
   - ./it-tools/ks.yaml
   - ./openspeedtest/ks.yaml
+  - ./readeck/ks.yaml
