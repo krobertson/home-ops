@@ -51,9 +51,7 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: ceph-block
-        size: 10Gi
+        existingClaim: pvc-readeck-config
         globalMounts:
           - path: /readeck
     route:
