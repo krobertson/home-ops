@@ -110,14 +110,10 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: ceph-block
-        size: 10Gi
+        existingClaim: pv-home-assistant-config
       config-cache:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: ceph-block
-        size: 1Gi
+        existingClaim: pv-home-assistant-cache
       tmpfs:
         type: emptyDir
         advancedMounts:

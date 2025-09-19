@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: flux-system
-    - name: rook-ceph-cluster
-      namespace: flux-system
   interval: 1h
   path: ./kubernetes/default/home-assistant/app
   postBuild:
