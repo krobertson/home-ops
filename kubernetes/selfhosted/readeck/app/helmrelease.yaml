@@ -51,7 +51,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: pvc-readeck-config
+        storageClass: '-'
+        volumeName: readeck-config-pv
+        accessMode: ["ReadWriteOnce"]
+        size: 10Gi
         globalMounts:
           - path: /readeck
     route:

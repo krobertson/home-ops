@@ -110,10 +110,16 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: pv-home-assistant-config
+        storageClass: '-'
+        volumeName: home-assistant-config-pv
+        accessMode: ["ReadWriteOnce"]
+        size: 20Gi
       config-cache:
         enabled: true
-        existingClaim: pv-home-assistant-cache
+        storageClass: '-'
+        volumeName: home-assistant-cache-pv
+        accessMode: ["ReadWriteOnce"]
+        size: 1Gi
       tmpfs:
         type: emptyDir
         advancedMounts:
