@@ -2,7 +2,9 @@
 .DS_Store
 Thumbs.db
 # k8s
-kubeconfig
+.kubeconfig
+.talosconfig
+.omniconfig
 .decrypted~*.yaml
 .config.env
 *.agekey
@@ -17,9 +19,5 @@ kubeconfig
 .task
 # Brew
 Brewfile.lock.json
-# intellij
-.idea
 # wiki
 wiki
-# Bootstrap
-/config.yaml

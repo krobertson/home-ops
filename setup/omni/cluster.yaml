@@ -110,7 +110,6 @@ patches:
 
 ---
 kind: ControlPlane
-name: Control Plane
 machines:
   - 30303031-3030-3030-6535-373436336500
   - 30303031-3030-3030-3262-323339323100
