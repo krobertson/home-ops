@@ -10,8 +10,12 @@ spec:
     name: democratic-csi
   interval: 1h
   values:
+    controller:
+      driver:
+        image:
+          tag: next
     csiDriver:
-      name: "iscsi"
+      name: "org.democratic-csi.iscsi"
     storageClasses:
       - name: iscsi
         defaultClass: false
