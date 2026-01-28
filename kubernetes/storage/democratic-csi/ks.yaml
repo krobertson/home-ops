@@ -6,7 +6,7 @@ metadata:
   name: democratic-csi
 spec:
   interval: 1h
-  path: ./kubernetes/storage/democratic-csi/iscsi
+  path: ./kubernetes/storage/democratic-csi/app
   prune: true
   sourceRef:
     kind: GitRepository

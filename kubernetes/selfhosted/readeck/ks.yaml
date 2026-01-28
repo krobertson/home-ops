@@ -6,7 +6,7 @@ metadata:
   name: readeck
 spec:
   dependsOn:
-    - name: democratic-csi-iscsi
+    - name: democratic-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/selfhosted/readeck/app

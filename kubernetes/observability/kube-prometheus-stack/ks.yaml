@@ -6,7 +6,7 @@ metadata:
   name: kube-prometheus-stack
 spec:
   dependsOn:
-    - name: democratic-csi-iscsi
+    - name: democratic-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/observability/kube-prometheus-stack/app
