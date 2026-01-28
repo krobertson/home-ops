@@ -64,8 +64,8 @@ spec:
           extentBlocksize: 512
           extentAvailThreshold: 0
         zfs:
-          datasetParentName: tank/fast/k8s/iscsi/volumes
-          detachedSnapshotsDatasetParentName: tank/fast/k8s/iscsi/snapshots
+          datasetParentName: fast/k8s/iscsi/volumes
+          detachedSnapshotsDatasetParentName: fast/k8s/iscsi/snapshots
           zvolCompression:
           zvolDedup:
           zvolEnableReservation: false
