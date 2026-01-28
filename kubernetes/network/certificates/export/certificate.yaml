@@ -1,14 +1,21 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: r7n-dev
 spec:
-  secretName: r7n-dev-tls
-  issuerRef:
-    name: letsencrypt-production
-    kind: ClusterIssuer
-  commonName: r7n.dev
   dnsNames:
     - r7n.dev
     - "*.r7n.dev"
+  duration: 160h
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-production
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  secretName: r7n-dev-tls
+  usages:
+    - digital signature

@@ -1,0 +1,138 @@
+# omnictl cluster template sync -v -f setup/omni/cluster.yaml
+---
+kind: Cluster
+name: r7n-kubernetes
+kubernetes:
+  version: v1.35.0
+talos:
+  version: v1.12.2
+patches:
+  - name: Disable flannel, kube-proxy, and coredns
+    inline:
+      cluster:
+        network:
+          cni:
+            name: none
+          podSubnets: ["10.48.0.0/16"]
+          serviceSubnets: ["10.84.0.0/16"]
+          dnsDomain: cluster.local
+        proxy:
+          disabled: true
+        coreDNS:
+          disabled: true
+
+  - name: Configure containerd
+    inline:
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |-
+              [plugins."io.containerd.cri.v1.images"]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.cri.v1.runtime"]
+                device_ownership_from_security_context = true
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+  - name: Enable cluster discovery
+    inline:
+      cluster:
+        discovery:
+          registries:
+            kubernetes:
+              disabled: false
+            service:
+              disabled: false
+
+  - name: Configure NTP
+    inline:
+      machine:
+        time:
+          disabled: false
+          servers:
+            - time.cloudflare.com
+
+  - name: Custom sysctl settings
+    inline:
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: "1048576"     # Watchdog
+          fs.inotify.max_user_instances: "8192"      # Watchdog
+          net.core.rmem_max: "7500000"               # Cloudflared | QUIC
+          net.core.wmem_max: "7500000"               # Cloudflared | QUIC
+          net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
+          net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
+          net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
+          net.ipv4.tcp_slow_start_after_idle: "0"    # Preserve congestion window after idle
+          user.max_user_namespaces: "11255"          # User Namespaces
+
+
+
+  - name: Mount openebs-hostpath in kubelet
+    inline:
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/openebs/local
+              type: bind
+              source: /var/openebs/local
+              options:
+                - bind
+                - rshared
+                - rw
+
+  - name: Increase MaxPods
+    inline:
+      machine:
+        kubelet:
+          extraConfig:
+            maxPods: 150
+
+  - name: Configure NFS properties
+    inline:
+      machine:
+        files:
+          - op: overwrite
+            path: /etc/nfsmount.conf
+            permissions: 420
+            content: |-
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=16
+              noatime=True
+
+---
+kind: ControlPlane
+name: Control Plane
+machines:
+  - 30303031-3030-3030-6535-373436336500
+  - 30303031-3030-3030-3262-323339323100
+patches:
+  - name: Cluster configuration
+    inline:
+      cluster:
+        allowSchedulingOnMasters: false
+---
+kind: Workers
+name: ThinkStation Tiny
+systemExtensions:
+  - siderolabs/iscsi-tools
+  - siderolabs/nfsd
+  - siderolabs/util-linux-tools
+machines:
+  - cb9ff480-4c01-11ee-92c7-43deb1926200
+  - a1167000-4cc3-11ee-a31f-5d70bd902500
+  - fbaace80-4cb9-11ee-b6e3-fd2131602500
+patches:
+  - name: Configure installation disk
+    inline:
+      machine:
+        install:
+          disk: /dev/nvme0n1

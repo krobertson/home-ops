@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: dns-external-rules
+  name: external-dns-rules
 spec:
   groups:
     - name: external-dns.rules

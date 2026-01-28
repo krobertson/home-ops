@@ -51,9 +51,8 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: '-'
-        volumeName: readeck-config-pv
-        accessMode: ["ReadWriteOnce"]
+        accessMode: ReadWriteOnce
+        storageClass: iscsi
         size: 10Gi
         globalMounts:
           - path: /readeck

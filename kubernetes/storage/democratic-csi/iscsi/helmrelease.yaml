@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name democratic-csi-iscsi
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: *name
+  interval: 1h
+  values:
+    csiDriver:
+      name: "iscsi"
+    storageClasses:
+      - name: iscsi
+        defaultClass: false
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: ext4
+          detachedVolumesFromSnapshots: "false"
+        mountOptions: []
+        secrets:
+          controller-expand-secret: null
+          controller-publish-secret: null
+          node-publish-secret: null
+          node-stage-secret: null
+          provisioner-secret: null
+    volumeSnapshotClasses:
+      - name: iscsi
+        parameters:
+          detachedSnapshots: "true"
+    driver:
+      existingConfigSecret: truenas-iscsi-driver-config
+      config:
+        driver: freenas-api-iscsi
+    node:
+      driver:
+        extraEnv:
+          - name: ISCSIADM_HOST_STRATEGY
+            value: nsenter
+          - name: ISCSIADM_HOST_PATH
+            value: /usr/local/sbin/iscsiadm
+        iscsiDirHostPath: /var/iscsi
+        iscsiDirHostPathType: ''
+      hostPID: true

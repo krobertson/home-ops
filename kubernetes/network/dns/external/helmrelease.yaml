@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app dns-external
+  name: &app cloudflare-dns
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: dns-external
+    name: cloudflare-dns
   install:
     remediation:
       retries: -1
@@ -33,7 +33,6 @@ spec:
             key: *name
     extraArgs:
       - --cloudflare-dns-records-per-page=1000
-      - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
       - --gateway-name=envoy-external

@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app dns-internal
+  name: &app pihole-dns
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: dns-internal
+    name: pihole-dns
   install:
     remediation:
       retries: -1

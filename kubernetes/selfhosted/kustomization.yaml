@@ -1,11 +1,15 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: selfhosted
+namespace: default
+
 components:
-  - ../../setup/components/common
+  - ../../common/alerts
+
 resources:
   - ./13ft-ladder/ks.yaml
   - ./it-tools/ks.yaml
   - ./openspeedtest/ks.yaml
   - ./readeck/ks.yaml
+  - ./namespace.yaml
