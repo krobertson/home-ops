@@ -33,9 +33,41 @@ spec:
         parameters:
           detachedSnapshots: "true"
     driver:
-      existingConfigSecret: truenas-iscsi-driver-config
       config:
         driver: freenas-api-iscsi
+        httpConnection:
+          allowInsecure: true
+          host: 192.168.210.251
+          port: 443
+          protocol: https
+          apiKey: ""
+        instance_id: null
+        iscsi:
+          targetPortal: "192.168.210.251:3260"
+          targetPortals: []
+          interface:
+          namePrefix: csi-
+          nameSuffix: "-cluster"
+          targetGroups:
+            - targetGroupPortalGroup: 2
+              targetGroupInitiatorGroup: 4
+              targetGroupAuthType: None
+              targetGroupAuthGroup:
+          extentCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+          extentInsecureTpc: true
+          extentXenCompat: false
+          extentRpm: "SSD"
+          extentBlocksize: 512
+          extentAvailThreshold: 0
+        zfs:
+          datasetParentName: tank/fast/k8s/iscsi/volumes
+          detachedSnapshotsDatasetParentName: tank/fast/k8s/iscsi/snapshots
+          zvolCompression:
+          zvolDedup:
+          zvolEnableReservation: false
+          zvolBlocksize:
+          datasetProperties:
+            "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
     node:
       driver:
         extraEnv:
@@ -46,3 +78,8 @@ spec:
         iscsiDirHostPath: /var/iscsi
         iscsiDirHostPathType: ''
       hostPID: true
+  valuesFrom:
+    - kind: Secret
+      name: truenas-api-secret
+      valuesKey: apiKey
+      targetPath: driver.config.httpConnection.apiKey
