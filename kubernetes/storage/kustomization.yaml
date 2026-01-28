@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: storage
 
 components:
-  - ../../components/alerts
+  - ../../common/alerts
 
 resources:
   - ./namespace.yaml
