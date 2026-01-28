@@ -3,48 +3,49 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app pihole-dns
+  name: &app unifi-dns
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: pihole-dns
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+    name: unifi-dns
+  interval: 1h
   values:
     fullnameOverride: *app
     provider:
-      name: pihole
-    env:
-      - name: &name EXTERNAL_DNS_PIHOLE_SERVER
-        valueFrom:
-          secretKeyRef:
-            name: &secret pihole-dns-secret
-            key: *name
-      - name: &name EXTERNAL_DNS_PIHOLE_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: pihole-dns-secret
-            key: *name
-    extraArgs:
-      - --pihole-api-version=5
-      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
-      - --crd-source-kind=DNSEndpoint
-      - --gateway-name=envoy-internal
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/kashalls/external-dns-unifi-webhook
+          tag: v0.8.1@sha256:e9b7bf621768c490110fb154c94a4f610f254c9f0c540140ea429c601a8475dd
+        env:
+          - name: UNIFI_HOST
+            value: https://192.168.1.1
+          - name: UNIFI_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: &secret unifi-dns-secret
+                key: UNIFI_API_KEY
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
     triggerLoopOnEvent: true
     policy: sync
     sources:
-      - crd
       - gateway-httproute
-    txtOwnerId: default
-    txtPrefix: k8s.
+      - service
+    txtOwnerId: main
+    txtPrefix: k8s.main.
     domainFilters:
-      - r7n.dev
+      - turbo.ac
     serviceMonitor:
       enabled: true
     podAnnotations:

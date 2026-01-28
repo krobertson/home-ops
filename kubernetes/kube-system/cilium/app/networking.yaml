@@ -10,11 +10,11 @@ spec:
       kubernetes.io/os: linux
   bgpInstances:
     - name: cilium
-      localASN: 64555
+      localASN: 64554
       peers:
-        - name: vyos
-          peerASN: 64555
-          peerAddress: 172.18.0.1
+        - name: unifi
+          peerASN: 64553
+          peerAddress: 192.168.1.1
           peerConfigRef:
             name: l3-bgp-peer-config
 ---
@@ -52,36 +52,8 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: ipv4-internal-pool
+  name: pool
 spec:
+  allowFirstLastIPs: "No"
   blocks:
-    - start: 172.18.0.150
-      stop: 172.18.0.250
-  serviceSelector:
-    matchLabels:
-      pool: internal
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumloadbalancerippool_v2.json
-apiVersion: cilium.io/v2
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: ipv4-external-pool
-spec:
-  blocks:
-    - start: 172.18.2.131
-      stop: 172.18.2.158
-  serviceSelector:
-    matchLabels:
-      pool: external
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumloadbalancerippool_v2.json
-apiVersion: cilium.io/v2
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: ipv6-external-pool
-spec:
-  blocks:
-    - cidr: 2604:8b80:2:9::/64
-  serviceSelector:
-    matchLabels:
-      pool: external
+    - cidr: 192.168.212.0/24

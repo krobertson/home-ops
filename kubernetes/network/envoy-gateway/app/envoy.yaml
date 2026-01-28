@@ -60,7 +60,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 192.168.210.43
+      lbipam.cilium.io/ips: 192.168.210.101
     labels:
       pool: external
   listeners:
@@ -99,7 +99,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 192.168.210.41
+      lbipam.cilium.io/ips: 192.168.210.102
     labels:
       pool: internal
   listeners:
