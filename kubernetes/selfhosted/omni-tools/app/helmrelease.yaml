@@ -24,11 +24,19 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           app:
             image:
               repository: docker.io/iib0011/omni-tools
               tag: 0.6@sha256:ceb5acc317daf387634f7f212cefe4722fd1243ad1cba74203f25254195b6c69
+            command: ["nginx"]
+            args: ["-g", "daemon off;"]
             env:
               TZ: America/Los_Angeles
             resources:
@@ -53,6 +61,14 @@ spec:
         globalMounts:
           - path: /tmp
             subPath: tmp
+      nginx-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /var/cache/nginx
+      nginx-run:
+        type: emptyDir
+        globalMounts:
+          - path: /var/run
     route:
       app:
         hostnames:
