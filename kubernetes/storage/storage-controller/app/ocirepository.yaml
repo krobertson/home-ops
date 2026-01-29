@@ -11,5 +11,5 @@ spec:
     operation: copy
   ref:
     tag: 4.2.0
-  url: oci://ghcr.io/democratic-csi/charts/democratic-csi
+  url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
 
