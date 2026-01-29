@@ -46,7 +46,7 @@ spec:
           protocol: https
           apiKey: ""
         instance_id: null
-        zfs:
+        nfs:
           shareHost: 1192.168.210.251
           shareAlldirs: false
           shareAllowedHosts: []
