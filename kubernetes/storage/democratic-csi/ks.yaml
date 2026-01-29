@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: democratic-csi
 spec:
+  dependsOn:
+    - name: storage-controller
   interval: 1h
   path: ./kubernetes/storage/democratic-csi/app
   prune: true
