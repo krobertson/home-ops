@@ -6,3 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./ocirepository.yaml
   - ./iscsi.yaml
+  - ./nfs.yaml
