@@ -57,7 +57,7 @@ spec:
           volumes:
             - name: grafana-data
               csi:
-                driver: iscsi
+                driver: org.democratic-csi.iscsi
   httpRoute:
     spec:
       hostnames:
