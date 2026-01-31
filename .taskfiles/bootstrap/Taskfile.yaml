@@ -4,31 +4,12 @@ version: '3'
 
 tasks:
 
-  talos:
-    desc: Bootstrap the Talos cluster
-    dir: '{{.TALOS_DIR}}'
-    cmds:
-      - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talos/talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
-      - talhelper genconfig
-      - talhelper gencommand apply --extra-flags="--insecure" | bash
-      - until talhelper gencommand bootstrap | bash; do sleep 10; done
-      - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}} --force" | bash; do sleep 10; done
-    preconditions:
-      - test -f {{.ROOT_DIR}}/.sops.yaml
-      - test -f {{.SOPS_AGE_KEY_FILE}}
-      - test -f {{.TALOS_DIR}}/talconfig.yaml
-      - which talhelper talosctl sops
-
   apps:
     desc: Bootstrap apps into the Talos cluster
     cmds:
-      - for i in $(find "{{.KUBERNETES_DIR}}" -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename); do kubectl create namespace "$i" --dry-run=client -o yaml | kubectl apply --server-side -f -; done;
-      - minijinja-cli "{{.SETUP_DIR}}/apps/cloudflare-tunnel-id-secret.yaml" | op inject | kubectl apply --server-side --filename -
-      - helmfile --quiet --file {{.SETUP_DIR}}/apps/crds.yaml template | kubectl apply --server-side --filename -
-      - sops exec-file "{{.SETUP_DIR}}/apps/sops-age.sops.yaml" "kubectl --namespace flux-system apply --server-side --filename {}"
-      - sops exec-file "{{.SETUP_DIR}}/apps/cluster-secrets.sops.yaml" "kubectl --namespace flux-system apply --server-side --filename {}"
+#      - for i in $(find "{{.KUBERNETES_DIR}}" -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename); do kubectl create namespace "$i" --dry-run=client -o yaml | kubectl apply --server-side -f -; done;
+#      - op inject -i {{.SETUP_DIR}}/apps/secrets.yaml | kubectl apply --server-side --filename -
+#      - helmfile --file {{.SETUP_DIR}}/apps/crds.yaml template --quiet | yq eval-all --exit-status 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --filename -
       - helmfile --quiet --file {{.SETUP_DIR}}/apps/helmfile.yaml sync --hide-notes
     preconditions:
       - test -f {{.KUBECONFIG}}
-      - test -f {{.ROOT_DIR}}/.sops.yaml
-      - test -f {{.SOPS_AGE_KEY_FILE}}
