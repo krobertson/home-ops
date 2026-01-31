@@ -5,8 +5,7 @@ name: enp3s0f1np1
 addresses:
   - address: 192.168.210.241/24
 routes:
-  - destination: 0.0.0.0/0
-    gateway: 192.168.210.1
+  - gateway: 192.168.210.1
 ---
 apiVersion: v1alpha1
 kind: LinkConfig
