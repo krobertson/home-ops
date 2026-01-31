@@ -1,0 +1,24 @@
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: enp3s0f1np1
+addresses:
+  - address: 192.168.210.241/24
+routes:
+  - destination: 0.0.0.0/0
+    gateway: 192.168.210.1
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: enp4s0np0
+mtu: 9000
+addresses:
+  - address: 192.168.255.241/24
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.210.1
+searchDomains:
+  domains:
+    - r7n.dev

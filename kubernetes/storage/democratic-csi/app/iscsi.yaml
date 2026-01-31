@@ -47,7 +47,7 @@ spec:
           apiKey: ""
         instance_id: null
         iscsi:
-          targetPortal: "192.168.210.251:3260"
+          targetPortal: "192.168.255.251:3260"
           targetPortals: []
           interface:
           namePrefix: csi-

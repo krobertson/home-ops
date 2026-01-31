@@ -126,9 +126,9 @@ systemExtensions:
   - siderolabs/nfsd
   - siderolabs/util-linux-tools
 machines:
-  - cb9ff480-4c01-11ee-92c7-43deb1926200
-  - a1167000-4cc3-11ee-a31f-5d70bd902500
-  - fbaace80-4cb9-11ee-b6e3-fd2131602500
+  - 249e7e24-710a-479c-85ed-6480e94c6c05
+  - 273e5600-c087-11f0-bdca-a7e872e84b00
+  - 2d643c00-c219-11f0-8ac7-134cdb064600
 patches:
   - name: Configure installation disk
     inline:
