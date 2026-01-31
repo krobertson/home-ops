@@ -56,8 +56,8 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
           volumes:
             - name: grafana-data
-              csi:
-                driver: org.democratic-csi.iscsi
+              persistentVolumeClaim:
+                claimName: grafana-data-pvc
   httpRoute:
     spec:
       hostnames:
