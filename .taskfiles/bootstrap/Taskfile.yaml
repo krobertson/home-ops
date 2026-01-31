@@ -7,9 +7,9 @@ tasks:
   apps:
     desc: Bootstrap apps into the Talos cluster
     cmds:
-#      - for i in $(find "{{.KUBERNETES_DIR}}" -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename); do kubectl create namespace "$i" --dry-run=client -o yaml | kubectl apply --server-side -f -; done;
-#      - op inject -i {{.SETUP_DIR}}/apps/secrets.yaml | kubectl apply --server-side --filename -
-#      - helmfile --file {{.SETUP_DIR}}/apps/crds.yaml template --quiet | yq eval-all --exit-status 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --filename -
+      - for i in $(find "{{.KUBERNETES_DIR}}" -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename); do kubectl create namespace "$i" --dry-run=client -o yaml | kubectl apply --server-side -f -; done;
+      - op inject -i {{.SETUP_DIR}}/apps/secrets.yaml | kubectl apply --server-side --filename -
+      - helmfile --file {{.SETUP_DIR}}/apps/crds.yaml template --quiet | yq eval-all --exit-status 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --filename -
       - helmfile --quiet --file {{.SETUP_DIR}}/apps/helmfile.yaml sync --hide-notes
     preconditions:
       - test -f {{.KUBECONFIG}}
