@@ -11,24 +11,38 @@ spec:
   interval: 1h
   values:
     fullnameOverride: *app
+    extraArgs:
+      - "--config.file=/config/snmp.yaml"
+    extraConfigmapMounts:
+      - name: *app
+        mountPath: /config/snmp.yaml
+        subPath: snmp.yaml
+        configMap: *app
+        readOnly: true
+        defaultMode: 420
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: *app
     serviceMonitor:
       enabled: true
       params:
-        - name: apcups
-          module:
-            - apcups
-          target: 192.168.1.80
-          auth:
-            - public_v2
-        - name: dell
-          module:
-            - dell
-          target: 192.168.1.82
-          auth:
-            - public_v2
+        - name: arista-10gbe
+          auth: [public_v2]
+          module: [switch]
+          target: 192.168.254.11
+        - name: arista-100gbe
+          auth: [public_v2]
+          module: [switch]
+          target: 192.168.254.12
+        - name: rack1
+          auth: [tripplite_v2]
+          module: [tripplite_pdu]
+          target: 192.168.254.13
+        - name: rack2
+          auth: [tripplite_v2]
+          module: [tripplite_pdu]
+          target: 192.168.254.14
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
-        - sourceLabels:
-            - __param_target
+        - sourceLabels: [__param_target]
           targetLabel: instance
