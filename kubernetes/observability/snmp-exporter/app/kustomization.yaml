@@ -7,7 +7,7 @@ resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
 configMapGenerator:
-  - name: snmp-exporter-tripplite
+  - name: snmp-exporter
     files:
       - snmp.yaml=./snmp.yaml
 generatorOptions:
