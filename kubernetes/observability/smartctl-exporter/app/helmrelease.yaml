@@ -11,6 +11,9 @@ spec:
   interval: 1h
   values:
     fullnameOverride: *app
+    image:
+      # default repo no longer has an arm64 image
+      repository: ghcr.io/home-operations/smartctl-exporter
     serviceMonitor:
       enabled: true
     prometheusRules:
