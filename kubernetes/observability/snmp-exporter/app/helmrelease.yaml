@@ -26,6 +26,13 @@ spec:
           auth: [public_v2]
           module: [system,if_mib,arista_sw]
           target: 192.168.254.12
+        - name: synology
+          auth: [public_v2]
+          module: [synology]
+          target: 192.168.1.176
+          relabel_configs:
+            - source_labels: [__param_target]
+              target_label: instance
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
