@@ -20,7 +20,7 @@ spec:
       params:
         - name: arista-10gbe
           auth: [public_v2]
-          module: [system,if_mib,arist_sw]
+          module: [system,if_mib,arista_sw]
           target: 192.168.254.11
         - name: arista-100gbe
           auth: [public_v2]
