@@ -9,6 +9,7 @@ components:
 
 resources:
   - ./13ft-ladder/ks.yaml
+  - ./atuin/ks.yaml
   - ./it-tools/ks.yaml
   - ./omni-tools/ks.yaml
   - ./openspeedtest/ks.yaml
