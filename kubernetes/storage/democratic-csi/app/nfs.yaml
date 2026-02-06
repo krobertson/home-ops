@@ -47,7 +47,7 @@ spec:
           apiKey: ""
         instance_id: null
         nfs:
-          shareHost: 1192.168.255.251
+          shareHost: 192.168.255.251
           shareAlldirs: false
           shareAllowedHosts: []
           shareAllowedNetworks: []
