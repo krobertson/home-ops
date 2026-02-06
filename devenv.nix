@@ -6,5 +6,7 @@
     pkgs.omnictl
     pkgs.kubectl
     pkgs.kubelogin-oidc
+    pkgs.fluxcd
+    pkgs.helmfile
   ];
 }
