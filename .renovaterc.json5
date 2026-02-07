@@ -12,6 +12,7 @@
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard :robot:",
+  schedule: ["every weekend"],
   ignorePaths: [
     "**/resources/**",
     "/setup/**",
