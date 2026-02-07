@@ -57,7 +57,7 @@ spec:
           volumes:
             - name: grafana-data
               persistentVolumeClaim:
-                claimName: grafana-data-pvc
+                claimName: grafana-pvc
   httpRoute:
     spec:
       hostnames:
@@ -76,5 +76,5 @@ spec:
       resources:
         requests:
           storage: 10Gi
-      storageClassName: ceph-block
+      storageClassName: iscsi
   disableDefaultSecurityContext: All
