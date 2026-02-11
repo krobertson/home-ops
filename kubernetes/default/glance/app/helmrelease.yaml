@@ -97,7 +97,7 @@ spec:
         rules:
           - backendRefs:
             - identifier: app
-              port: 8080
+              port: 8888
     serviceAccount:
       glance:
         enabled: true
