@@ -73,7 +73,7 @@ spec:
       app:
         ports:
           http:
-            port: 8080
+            port: 8888
     persistence:
       config-file:
         type: configMap
