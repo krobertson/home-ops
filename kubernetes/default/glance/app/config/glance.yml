@@ -95,10 +95,16 @@ pages:
 
           - type: stocks
             stocks:
-              - symbol: SPY
+              - symbol: FXAIX
                 name: S&P 500
+              - symbol: FXNAX
+                name: US Bonds
+              - symbol: FZILX
+                name: Intl Idx
               - symbol: BTC-USD
                 name: Bitcoin
+              - symbol: ETH-USD
+                name: Ethereum
               - symbol: NVDA
                 name: NVIDIA
               - symbol: AAPL
@@ -109,5 +115,3 @@ pages:
                 name: Google
               - symbol: AMD
                 name: AMD
-              - symbol: RDDT
-                name: Reddit
