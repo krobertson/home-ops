@@ -94,6 +94,10 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: 8080
     serviceAccount:
       glance:
         enabled: true
