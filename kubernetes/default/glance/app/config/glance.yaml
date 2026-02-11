@@ -1,0 +1,115 @@
+pages:
+  - name: Home
+    server:
+      host: 0.0.0.0
+      port: 8080
+      proxied: true
+      assets-path: /user/assets
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+
+          - type: bookmarks
+            groups:
+              - title: Systems
+                color: 200 50 50
+                links:
+                  - title: Synology NAS
+                    url: http://192.168.1.176/
+                  - title: TrueNAS
+                    url: https://truenas.r7n.dev/
+                  - title: R7N Omni
+                    url: https://r7n.na-west-1.omni.siderolabs.io/
+                  - title: Homelab Proxmox
+                    url: https://192.168.210.244:8006/
+                  - title: Unifi
+                    url: https://192.168.1.1/
+              - title: Media
+                links:
+                  - title: Emby
+                    url: http://192.168.1.176:8096/
+                  - title: Sonarr
+                    url: http://192.168.1.176:7878/
+                  - title: Radarr
+                    url: http://192.168.1.176:8989/
+                  - title: SABnzbd
+                    url: http://192.168.1.176:8080/
+              - title: Homelab Apps
+                links:
+                  - title: Omni Tools
+                    url: https://omni-tools.r7n.dev/
+                  - title: IT Tools
+                    url: https://it-tools.r7n.dev/
+                  - title: 13ft Ladder
+                    url: https://13ft.r7n.dev/
+                  - title: Readeck
+                    url: https://readeck.r7n.dev/
+                  - title: OpenSpeedTest
+                    url: https://openspeedtest.r7n.dev/
+                  - title: Home Assistant
+                    url: http://192.168.2.160:8123/
+              - title: IPMI
+                links:
+                  - title: truenas
+                    url: https://truenas-ipmi.r7n.dev/
+                  - title: mini01
+                    url: https://mini01-kvm.r7n.dev/
+                  - title: mini02
+                    url: https://mini02-kvm.r7n.dev/
+                  - title: mini03
+                    url: https://mini03-kvm.r7n.dev/
+                  - title: mini04
+                    url: https://mini04-kvm.r7n.dev/
+
+      - size: full
+        widgets:
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Radarr
+                url: http://192.168.1.176:7878/
+                icon: /assets/jellyfin-logo.png
+              - title: Sonarr
+                url: http://192.168.1.176:8989/
+                icon: /assets/gitea-logo.png
+              - title: SABnzbd
+                url: http://192.168.1.176:8080
+                icon: /assets/immich-logo.png
+
+          - type: hacker-news
+
+          - type: videos
+            channels:
+              - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+              - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
+              - UCOk-gHyjcWZNj3Br4oxwh0A # Techno Tim
+
+          - type: reddit
+            subreddit: selfhosted
+
+      - size: small
+        widgets:
+          - type: weather
+            location: Lodi, California, United States
+            units: imperial
+
+          - type: stocks
+            stocks:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: BTC-USD
+                name: Bitcoin
+              - symbol: NVDA
+                name: NVIDIA
+              - symbol: AAPL
+                name: Apple
+              - symbol: MSFT
+                name: Microsoft
+              - symbol: GOOGL
+                name: Google
+              - symbol: AMD
+                name: AMD
+              - symbol: RDDT
+                name: Reddit
