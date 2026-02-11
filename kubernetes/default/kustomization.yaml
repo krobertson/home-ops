@@ -8,6 +8,5 @@ components:
   - ../../common/alerts
 
 resources:
-  - ./homepage/ks.yaml
   - ./glance/ks.yaml
   - ./namespace.yaml
