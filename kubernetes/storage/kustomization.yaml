@@ -9,5 +9,6 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./cnpg/ks.yaml
   - ./democratic-csi/ks.yaml
   - ./storage-controller/ks.yaml
