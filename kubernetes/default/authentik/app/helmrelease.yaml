@@ -56,7 +56,7 @@ spec:
       route:
         main:
           enabled: true
-          hostanmes:
+          hostnames:
             - authentik.r7n.dev
           parentRefs:
             - name: envoy-internal
