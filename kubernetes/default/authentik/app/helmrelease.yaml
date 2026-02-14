@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: authentik
+  interval: 15m
+  values:
+    global:
+      addPrometheusAnnotations: true
+      envFrom:
+        - secretRef:
+            name: authentik
+      env:
+        - name: AUTHENTIK_POSTGRESQL__HOST
+          value: postgres.storage.svc
+        - name: AUTHENTIK_POSTGRESQL__NAME
+          value: authentik
+        - name: AUTHENTIK_POSTGRESQL__USER
+          value: authentik
+        - name: AUTHENTIK_EMAIL__PORT
+          value: "587"
+        - name: AUTHENTIK_EMAIL__USE_TLS
+          value: "true"
+
+    server:
+      replicas: 1
+      initContainers:
+        - name: init-db
+          image: ghcr.io/home-operations/postgres-init:18.1
+          envFrom:
+            - secretRef:
+                name: authentik
+            - secretRef:
+                name: cloudnative-pg-secret
+                namespace: storage
+          env:
+            - name: INIT_POSTGRES_HOST
+              value: postgres.storage.svc
+            - name: INIT_POSTGRES_USER
+              value: authentik
+            - name: INIT_POSTGRES_DBNAME
+              value: authentik
+      resources:
+        requests:
+          cpu: 50m
+          memory: 500Mi
+        limits:
+          memory: 800Mi
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
+      route:
+        main:
+          enabled: true
+          hostanmes:
+            - authentik.r7n.dev
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+
+    worker:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 500Mi
+        limits:
+          memory: 1200Mi
+
+    authentik:
+      log_level: debug
+
+    prometheus:
+      rules:
+        enabled: true

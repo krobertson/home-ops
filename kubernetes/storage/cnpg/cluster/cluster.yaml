@@ -33,3 +33,12 @@ spec:
     requests:
       cpu: 500m
       memory: 1Gi
+
+  managed:
+    roles:
+      - name: authentik
+        login: true
+        superuser: false
+        createdb: false
+        passwordSecret:
+          name: cnpg-database-authentik

@@ -5,3 +5,4 @@ resources:
   - ./cluster.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
+  - ./databases/authentik.yaml
