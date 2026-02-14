@@ -35,9 +35,6 @@ spec:
           envFrom:
             - secretRef:
                 name: authentik
-            - secretRef:
-                name: cloudnative-pg-secret
-                namespace: storage
           env:
             - name: INIT_POSTGRES_HOST
               value: postgres.storage.svc
