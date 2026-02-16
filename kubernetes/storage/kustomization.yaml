@@ -11,4 +11,5 @@ resources:
   - ./namespace.yaml
   - ./cnpg/ks.yaml
   - ./democratic-csi/ks.yaml
+  - ./openebs/ks.yaml
   - ./storage-controller/ks.yaml
