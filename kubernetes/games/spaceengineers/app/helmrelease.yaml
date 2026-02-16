@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spaceengineers
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: spaceengineers
+  values:
+    controllers:
+      game:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          game:
+            image:
+              repository: ghcr.io/krobertson/space-engineers-torch
+              tag: latest
+
+          # Configure the code-server sidecar
+          code:
+            dependsOn: game
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.109.2-39
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/games/.vscode"
+              - --extensions-dir
+              - "/games/.vscode"
+              - --port
+              - "8081"
+              - "/games"
+    service:
+      game:
+        type: ClusterIP
+        ports:
+          server:
+            port: 27016
+            protocol: UDP
+          steam:
+            port: 8766
+            protocol: UDP
+      code:
+        ports:
+          http:
+            port: 8081
+    route:
+      code:
+        hostnames:
+          - spaceengineers.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+    persistence:
+      games:
+        enabled: true
+        accessMode: ReadWriteOnce
+        storageClass: openebs-hostpath
+        size: 50Gi
+        globalMounts:
+          - path: /games
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
