@@ -48,7 +48,7 @@ spec:
               - "/games"
     service:
       game:
-        type: ClusterIP
+        type: NodePort
         ports:
           server:
             port: 27016
