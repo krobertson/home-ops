@@ -72,10 +72,12 @@ spec:
           - port: 9122
     service:
       code:
+        identifier: code
         ports:
           http:
             port: 8081
       exporter:
+        identifier: exporter
         ports:
           http:
             port: 9122
