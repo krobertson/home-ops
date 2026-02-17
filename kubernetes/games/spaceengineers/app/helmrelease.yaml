@@ -25,10 +25,11 @@ spec:
           game:
             image:
               repository: ghcr.io/krobertson/space-engineers-torch
-              tag: latest
+              tag: latest@sha256:4e526fc99969e12b9058da5e0e5d32c392230536e7fa1f28a341b56785fd051e
             env:
               # wine doesn't like /games being owned by root
               WINEPREFIX: /games/spaceengineers/.wine
+              WINEDLLOVERRIDES: "mscoree=n,b;mshtml=n,b;websocket=n,b"
             ports:
               - containerPort: 27016
                 protocol: UDP
