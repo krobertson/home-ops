@@ -32,12 +32,10 @@ spec:
             ports:
               - containerPort: 27016
                 protocol: UDP
-              - containerPort: 27016
-                protocol: TCP
+                hostPort: 27016
               - containerPort: 8766
                 protocol: UDP
-              - containerPort: 8766
-                protocol: TCP
+                hostPort: 8766
 
           # Configure the code-server sidecar
           code:
@@ -56,21 +54,6 @@ spec:
               - "8081"
               - "/games"
     service:
-      game:
-        type: NodePort
-        ports:
-          server:
-            port: 27016
-            protocol: UDP
-          server2:
-            port: 27016
-            protocol: TCP
-          steam:
-            port: 8766
-            protocol: UDP
-          steam2:
-            port: 8766
-            protocol: TCP
       code:
         ports:
           http:
