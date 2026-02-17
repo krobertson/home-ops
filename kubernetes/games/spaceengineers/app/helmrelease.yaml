@@ -48,7 +48,7 @@ spec:
               - "/games"
     service:
       game:
-        type: NodePort
+        type: LoadBalancer
         ports:
           server:
             port: 27016
