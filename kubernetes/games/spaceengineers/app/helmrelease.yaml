@@ -29,6 +29,15 @@ spec:
             env:
               # wine doesn't like /games being owned by root
               WINEPREFIX: /games/spaceengineers/.wine
+            ports:
+              - containerPort: 27016
+                protocol: UDP
+              - containerPort: 27016
+                protocol: TCP
+              - containerPort: 8766
+                protocol: UDP
+              - containerPort: 8766
+                protocol: TCP
 
           # Configure the code-server sidecar
           code:
@@ -48,14 +57,20 @@ spec:
               - "/games"
     service:
       game:
-        type: LoadBalancer
+        type: NodePort
         ports:
           server:
             port: 27016
             protocol: UDP
+          server2:
+            port: 27016
+            protocol: TCP
           steam:
             port: 8766
             protocol: UDP
+          steam2:
+            port: 8766
+            protocol: TCP
       code:
         ports:
           http:
