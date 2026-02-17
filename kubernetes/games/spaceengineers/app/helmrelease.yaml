@@ -20,12 +20,15 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
-            fsGroupChangePolicy: "Always"
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           game:
             image:
               repository: ghcr.io/krobertson/space-engineers-torch
               tag: latest
+            env:
+              # wine doesn't like /games being owned by root
+              WINEPREFIX: /games/spaceengineers/.wine
 
           # Configure the code-server sidecar
           code:
