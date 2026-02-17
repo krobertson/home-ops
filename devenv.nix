@@ -1,4 +1,10 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 
 {
   packages = [
@@ -7,6 +13,7 @@
     pkgs.kubectl
     pkgs.kubelogin-oidc
     pkgs.fluxcd
+    pkgs.kubernetes-helm
     pkgs.helmfile
   ];
 }
