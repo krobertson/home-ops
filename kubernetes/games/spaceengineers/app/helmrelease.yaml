@@ -40,6 +40,9 @@ spec:
               - containerPort: 8080
                 protocol: TCP
                 hostPort: 8080
+              - containerPort: 8280
+                protocol: TCP
+                hostPort: 8280
 
           # Configure the code-server sidecar
           code:
