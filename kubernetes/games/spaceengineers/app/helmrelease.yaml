@@ -88,6 +88,9 @@ spec:
               LOG_FILE_ENDINGS: log txt
               LOGROTATE_INTERVAL: daily
               LOGROTATE_SIZE: 100M
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
 
     service:
       code:
