@@ -55,7 +55,7 @@ spec:
               - "8081"
               - "/games"
 
-          rconExporter:
+          rcon-exporter:
             dependsOn: game
             image:
               repository: ghcr.io/krobertson/space-engineers-exporter
@@ -67,7 +67,7 @@ spec:
               - secretRef:
                   name: spaceengineers
 
-          torchExporter:
+          torch-exporter:
             dependsOn: game
             image:
               repository: ghcr.io/krobertson/torch-remote-exporter
@@ -94,11 +94,11 @@ spec:
         ports:
           http:
             port: 8081
-      rconExporter:
+      rcon-exporter:
         ports:
           http:
             port: 9122
-      torchExporter:
+      torch-exporter:
         ports:
           http:
             port: 9090
@@ -115,16 +115,16 @@ spec:
               - identifier: code
                 port: 8081
     serviceMonitor:
-      rconExporter:
+      rcon-exporter:
         endpoints:
           - port: http
         service:
-          identifier: rconExporter
-      torchExporter:
+          identifier: rcon-exporter
+      torch-exporter:
         endpoints:
           - port: http
         service:
-          identifier: torchExporter
+          identifier: torch-exporter
     persistence:
       games:
         enabled: true
