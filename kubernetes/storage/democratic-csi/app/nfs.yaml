@@ -17,7 +17,8 @@ spec:
     csiDriver:
       name: "org.democratic-csi.nfs"
     storageClasses:
-      - name: nfs
+      - &nfs
+        name: nfs
         defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
@@ -32,6 +33,9 @@ spec:
           node-publish-secret: null
           node-stage-secret: null
           provisioner-secret: null
+      - <<: *nfs
+        name: nfs-retain
+        reclaimPolicy: Retain
     volumeSnapshotClasses:
       - name: nfs
         parameters:
