@@ -1,0 +1,18 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oauth-spaceengineers-code
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: spaceengineers-code
+  oidc:
+    provider:
+      issuer: https://authentik.r7n.dev/application/o/spaceengineers-code/
+    clientID: 83jr5W6OFAg8KSERRUsghZ5pcN27XkJo9Uxnx4Cg
+    clientSecret:
+      name: spaceengineers
+    redirectURL: https://spaceengineers.r7n.dev/
+    logoutPath: /logout

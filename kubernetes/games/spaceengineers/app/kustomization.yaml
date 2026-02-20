@@ -7,3 +7,4 @@ resources:
   - ./grafanadashboard.yaml
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./securitypolicy.yaml
