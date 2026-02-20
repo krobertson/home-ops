@@ -79,6 +79,15 @@ spec:
               - secretRef:
                   name: spaceengineers
 
+          log-cleanup:
+            image:
+              repository: ghcr.io/krobertson/cleanup-older-files
+              tag: dev@sha256:a2c4e3b5dcbc453f9c02d955abc85a5bb1a6246fda649895f52ffafb329df794
+            env:
+              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
+              LOG_FILE_ENDINGS: log txt
+              DAYS_OLD: "3"
+
           logrotate:
             image:
               repository: ghcr.io/lazybytez/logrotate-container
@@ -88,6 +97,7 @@ spec:
               LOG_FILE_ENDINGS: log txt
               LOGROTATE_INTERVAL: daily
               LOGROTATE_SIZE: 100M
+              LOGROTATE_AUTOUPDATE: "true"
             securityContext:
               runAsUser: 0
               runAsGroup: 0
