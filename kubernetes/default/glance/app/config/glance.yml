@@ -50,15 +50,15 @@ pages:
               - title: IPMI
                 links:
                   - title: truenas
-                    url: https://truenas-ipmi.r7n.dev/
+                    url: https://192.168.254.21/
                   - title: mini01
-                    url: https://mini01-kvm.r7n.dev/
+                    url: http://mini01-kvm.r7n.dev/
                   - title: mini02
-                    url: https://mini02-kvm.r7n.dev/
+                    url: http://mini02-kvm.r7n.dev/
                   - title: mini03
-                    url: https://mini03-kvm.r7n.dev/
+                    url: http://mini03-kvm.r7n.dev/
                   - title: mini04
-                    url: https://mini04-kvm.r7n.dev/
+                    url: http://mini04-kvm.r7n.dev/
 
       - size: full
         widgets:
