@@ -115,6 +115,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: r7n-dev-tls
+    - name: spaceengineers-server
+      protocol: UDP
+      port: 27016
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: spaceengineers-steam
+      protocol: UDP
+      port: 8766
+      allowedRoutes:
+        namespaces:
+          from: All
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1

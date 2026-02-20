@@ -127,6 +127,26 @@ spec:
           - backendRefs:
               - identifier: code
                 port: 8081
+      game-server:
+        kind: UDPRoute
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: spaceengineers-server
+        rules:
+          - backendRefs:
+            - identifier: game
+              port: 27016
+      game-steam:
+        kind: UDPRoute
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: spaceengineers-steam
+        rules:
+          - backendRefs:
+            - identifier: game
+              port: 8766
     serviceMonitor:
       rcon-exporter:
         endpoints:
