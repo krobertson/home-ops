@@ -107,6 +107,12 @@ spec:
         ports:
           http:
             port: 8081
+      game:
+        ports:
+          server:
+            port: 27016
+          steam:
+            port: 8766
       rcon-exporter:
         ports:
           http:
