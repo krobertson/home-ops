@@ -37,12 +37,6 @@ spec:
               - containerPort: 8766
                 protocol: UDP
                 hostPort: 8766
-              - containerPort: 8080
-                protocol: TCP
-                hostPort: 8080
-              - containerPort: 8280
-                protocol: TCP
-                hostPort: 8280
 
           # Configure the code-server sidecar
           code:
@@ -100,7 +94,7 @@ spec:
         ports:
           http:
             port: 8081
-      ronExporter:
+      rconExporter:
         ports:
           http:
             port: 9122
