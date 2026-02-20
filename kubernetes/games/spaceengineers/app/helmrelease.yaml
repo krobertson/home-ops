@@ -111,8 +111,10 @@ spec:
         ports:
           server:
             port: 27016
+            protocol: UDP
           steam:
             port: 8766
+            protocol: UDP
       rcon-exporter:
         ports:
           http:
