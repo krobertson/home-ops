@@ -61,11 +61,23 @@ spec:
               - "8081"
               - "/games"
 
-          exporter:
+          rconExporter:
+            dependsOn: game
+            image:
+              repository: ghcr.io/krobertson/space-engineers-exporter
+              tag: 1.0.2-1@sha256:0f8dc4ebfe6eecdc0375064b1299ba67508243400c4c893c57d51d096e0e9fb2
+            env:
+              RCON_HOST: localhost
+              RCON_PORT: 8280
+            envFrom:
+              - secretRef:
+                  name: spaceengineers
+
+          torchExporter:
             dependsOn: game
             image:
               repository: ghcr.io/krobertson/torch-remote-exporter
-              tag: dev
+              tag: dev@sha256:e21358d5160575a317b1f2d805bebd50e104e72fb091315c646d0cf39b4c04b8
             env:
               TORCH_HOST: localhost
               TORCH_PORT: 8080
@@ -73,12 +85,26 @@ spec:
               - secretRef:
                   name: spaceengineers
 
+          logrotate:
+            image:
+              repository: ghcr.io/lazybytez/logrotate-container
+              tag: 2.0.0@sha256:6b502467fd4f14c6542784c474b830d64e2ff85eea9e91728d28fb88289f5298
+            env:
+              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
+              LOG_FILE_ENDINGS: log txt
+              LOGROTATE_INTERVAL: daily
+              LOGROTATE_SIZE: 100M
+
     service:
       code:
         ports:
           http:
             port: 8081
-      exporter:
+      ronExporter:
+        ports:
+          http:
+            port: 9122
+      torchExporter:
         ports:
           http:
             port: 9090
@@ -95,11 +121,16 @@ spec:
               - identifier: code
                 port: 8081
     serviceMonitor:
-      exporter:
+      rconExporter:
         endpoints:
           - port: http
         service:
-          identifier: exporter
+          identifier: rconExporter
+      torchExporter:
+        endpoints:
+          - port: http
+        service:
+          identifier: torchExporter
     persistence:
       games:
         enabled: true
