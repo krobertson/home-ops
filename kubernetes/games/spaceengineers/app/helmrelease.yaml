@@ -62,7 +62,7 @@ spec:
               tag: 1.0.2-1@sha256:0f8dc4ebfe6eecdc0375064b1299ba67508243400c4c893c57d51d096e0e9fb2
             env:
               RCON_HOST: localhost
-              RCON_PORT: 8280
+              RCON_PORT: 8080
             envFrom:
               - secretRef:
                   name: spaceengineers
@@ -74,7 +74,7 @@ spec:
               tag: dev@sha256:e21358d5160575a317b1f2d805bebd50e104e72fb091315c646d0cf39b4c04b8
             env:
               TORCH_HOST: localhost
-              TORCH_PORT: 8080
+              TORCH_PORT: 8787
             envFrom:
               - secretRef:
                   name: spaceengineers
