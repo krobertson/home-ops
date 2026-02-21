@@ -73,7 +73,7 @@ spec:
           memory: 1200Mi
 
     authentik:
-      log_level: debug
+      log_level: trace
 
     prometheus:
       rules:
