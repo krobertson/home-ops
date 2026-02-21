@@ -22,7 +22,7 @@ spec:
         - kind: Service
           name: authentik-server
           namespace: default
-          port: 80
+          port: 443
       path: /outpost.goauthentik.io/auth/envoy
       headersToBackend:
         - Set-Cookie
