@@ -56,22 +56,13 @@ spec:
       route:
         main:
           enabled: true
+          https: true
           hostnames:
             - authentik.r7n.dev
           parentRefs:
             - name: envoy-internal
               namespace: network
-        forward-auth:
-          parentRefs:
-            - name: envoy-internal
-              namespace: network
-            - name: envoy-external
-              namespace: network
-          rules:
-            - matches:
-                - path:
-                    type: PathPrefix
-                    value: /outpost.goauthentik.io
+
     worker:
       replicas: 1
       resources:
