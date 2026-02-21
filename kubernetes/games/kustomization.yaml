@@ -8,5 +8,6 @@ components:
   - ../../common/alerts
 
 resources:
+  - ./minecraft/ks.yaml
   - ./spaceengineers/ks.yaml
   - ./namespace.yaml
