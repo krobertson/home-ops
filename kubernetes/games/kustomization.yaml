@@ -9,5 +9,4 @@ components:
 
 resources:
   - ./minecraft/ks.yaml
-  - ./spaceengineers/ks.yaml
   - ./namespace.yaml

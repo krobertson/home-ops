@@ -23,7 +23,6 @@ spec:
         enabled: true
         name: openebs-hostpath
         isDefaultClass: false
-        reclaimPolicy: Retain
         basePath: *hostPath
       helperPod:
         image:
