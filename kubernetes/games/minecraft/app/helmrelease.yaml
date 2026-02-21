@@ -1,0 +1,106 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minecraft
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: minecraft
+  values:
+    controllers:
+      game:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        initContainers:
+          install:
+            image:
+              repository: ghcr.io/krobertson/game-containers/debian
+              tag: trixie
+            command:
+              - /usr/local/run.sh
+
+        containers:
+          server:
+            image:
+              repository: ghcr.io/krobertson/game-containers/java
+              tag: "21"
+            env:
+              EULA: "true"
+            command:
+              - /usr/local/run.sh
+
+          code:
+            dependsOn: server
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.109.2-39
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/game/.vscode"
+              - --extensions-dir
+              - "/game/.vscode"
+              - --port
+              - "8081"
+              - "/game"
+
+    service:
+      code:
+        ports:
+          http:
+            port: 8081
+      server:
+        ports:
+          server:
+            port: 25565
+    route:
+      code:
+        hostnames:
+          - minecraft.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: code
+                port: 8081
+    persistence:
+      scripts:
+        type: configMap
+        name: minecraft-scripts
+        defaultMode: 0755
+        advancedMounts:
+          game:
+            install:
+              - path: /usr/local/run.sh
+                subPath: install.sh
+                readOnly: true
+            server:
+              - path: /usr/local/run.sh
+                subPath: start.sh
+                readOnly: true
+      game:
+        enabled: true
+        accessMode: ReadWriteOnce
+        storageClass: openebs-hostpath
+        size: 50Gi
+        globalMounts:
+          - path: /game
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
