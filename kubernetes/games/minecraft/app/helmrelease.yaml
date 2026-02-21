@@ -73,7 +73,7 @@ spec:
     route:
       code:
         hostnames:
-          - minecraft.r7n.dev
+          - minecraft-code.r7n.dev
         parentRefs:
           - name: envoy-internal
             namespace: network
