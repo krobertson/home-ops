@@ -55,6 +55,10 @@ spec:
               - --port
               - "8081"
               - "/game"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+
 
     service:
       code:
