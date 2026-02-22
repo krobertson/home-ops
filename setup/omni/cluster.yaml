@@ -3,7 +3,7 @@
 kind: Cluster
 name: r7n-kubernetes
 kubernetes:
-  version: v1.35.0
+  version: v1.35.1
 talos:
   version: v1.12.2
 patches:
