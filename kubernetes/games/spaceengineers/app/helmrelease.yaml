@@ -21,25 +21,37 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
-        containers:
-          game:
+
+        initContainers:
+          install-steam:
             image:
-              repository: ghcr.io/krobertson/space-engineers-torch
-              tag: latest@sha256:4e526fc99969e12b9058da5e0e5d32c392230536e7fa1f28a341b56785fd051e
+              repository: ghcr.io/krobertson/game-containers/steamcmd
+              tag: rolling@sha256:a33d9109de3f8eb14b4beb98aa5a36f6049608062fd8e89623ad559521dd1e7f
             env:
-              # wine doesn't like /games being owned by root
-              WINEPREFIX: /games/spaceengineers/.wine
-              WINEDLLOVERRIDES: "mscoree=n,b;mshtml=n,b;websocket=n,b"
-            ports:
-              - containerPort: 27016
-                protocol: UDP
-                hostPort: 27016
-              - containerPort: 8766
-                protocol: UDP
-                hostPort: 8766
+              STEAM_APPID: "298740"
+              STEAM_WINDOWS_INSTALL: "1"
+          install-wine:
+            image:
+              repository: ghcr.io/krobertson/game-containers/wine
+              tag: stable@sha256:597ed8709168a5a131f04e200671e9d4ae2f4632b7cba573dfe614afec0f81a8
+            env:
+              WINETRICKS: vcrun2022 corefonts dotnet48
+            command: [ "setupwine.sh" ]
+          install-torch:
+            image:
+              repository: ghcr.io/krobertson/game-containers/base
+              tag: stable@sha256:838019f04bab7fd7e12540b9cb29eba544ca30d52ce1d6f1a9ced94e8d6c489a
+
+        containers:
+          server:
+            image:
+              repository: ghcr.io/krobertson/game-containers/wine
+              tag: stable@sha256:597ed8709168a5a131f04e200671e9d4ae2f4632b7cba573dfe614afec0f81a8
+            env:
+              WINEDLLOVERRIDES: "mscoree=n,b;mshtml=n,b"
 
           code:
-            dependsOn: game
+            dependsOn: server
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.109.2-39
@@ -52,61 +64,10 @@ spec:
               - "/games/.vscode"
               - --port
               - "8081"
-              - "/games"
-
-          rcon-exporter:
-            dependsOn: game
-            image:
-              repository: ghcr.io/krobertson/space-engineers-exporter
-              tag: 1.0.2-1@sha256:0f8dc4ebfe6eecdc0375064b1299ba67508243400c4c893c57d51d096e0e9fb2
-            env:
-              RCON_HOST: localhost
-              RCON_PORT: 8080
-            envFrom:
-              - secretRef:
-                  name: spaceengineers
-
-          torch-exporter:
-            dependsOn: game
-            image:
-              repository: ghcr.io/krobertson/torch-remote-exporter
-              tag: dev@sha256:e21358d5160575a317b1f2d805bebd50e104e72fb091315c646d0cf39b4c04b8
-            env:
-              TORCH_HOST: localhost
-              TORCH_PORT: 8787
-            envFrom:
-              - secretRef:
-                  name: spaceengineers
-
-          log-cleanup:
-            image:
-              repository: ghcr.io/krobertson/cleanup-older-files
-              tag: dev@sha256:a2c4e3b5dcbc453f9c02d955abc85a5bb1a6246fda649895f52ffafb329df794
-            env:
-              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
-              LOG_FILE_ENDINGS: log txt
-              DAYS_OLD: "3"
-
-          logrotate:
-            image:
-              repository: ghcr.io/lazybytez/logrotate-container
-              tag: 2.0.0@sha256:6b502467fd4f14c6542784c474b830d64e2ff85eea9e91728d28fb88289f5298
-            env:
-              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
-              LOG_FILE_ENDINGS: log txt
-              LOGROTATE_INTERVAL: daily
-              LOGROTATE_SIZE: 100M
-              LOGROTATE_AUTOUPDATE: "true"
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
+              - "/game"
 
     service:
-      code:
-        ports:
-          http:
-            port: 8081
-      game:
+      server:
         ports:
           server:
             port: 27016
@@ -114,14 +75,10 @@ spec:
           steam:
             port: 8766
             protocol: UDP
-      rcon-exporter:
+      code:
         ports:
           http:
-            port: 9122
-      torch-exporter:
-        ports:
-          http:
-            port: 9090
+            port: 8081
     route:
       code:
         hostnames:
@@ -134,7 +91,7 @@ spec:
           - backendRefs:
               - identifier: code
                 port: 8081
-      game-server:
+      server:
         kind: UDPRoute
         parentRefs:
           - name: envoy-internal
@@ -142,9 +99,9 @@ spec:
             sectionName: spaceengineers-server
         rules:
           - backendRefs:
-            - identifier: game
+            - identifier: server
               port: 27016
-      game-steam:
+      steam:
         kind: UDPRoute
         parentRefs:
           - name: envoy-internal
@@ -152,27 +109,30 @@ spec:
             sectionName: spaceengineers-steam
         rules:
           - backendRefs:
-            - identifier: game
+            - identifier: server
               port: 8766
-    serviceMonitor:
-      rcon-exporter:
-        endpoints:
-          - port: http
-        service:
-          identifier: rcon-exporter
-      torch-exporter:
-        endpoints:
-          - port: http
-        service:
-          identifier: torch-exporter
     persistence:
-      games:
+      scripts:
+        type: configMap
+        name: spaceenginers-scripts
+        defaultMode: 0755
+        advancedMounts:
+          game:
+            install-torch:
+              - path: /usr/local/bin/run.sh
+                subPath: install-torch.sh
+                readOnly: true
+            server:
+              - path: /usr/local/bin/run.sh
+                subPath: start.sh
+                readOnly: true
+      game:
         enabled: true
         accessMode: ReadWriteOnce
         storageClass: openebs-hostpath
         size: 50Gi
         globalMounts:
-          - path: /games
+          - path: /game
       tmpfs:
         type: emptyDir
         globalMounts:

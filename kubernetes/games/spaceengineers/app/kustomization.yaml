@@ -8,3 +8,12 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./securitypolicy.yaml
+configMapGenerator:
+  - name: minecraft-scripts
+    files:
+      - install-torch.sh=./scripts/install-torch.sh
+      - start.sh=./scripts/start.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

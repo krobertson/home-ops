@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e -x
+set -e
 
 if [ ! -e eula.txt ] ; then
   if [ "${EULA}" != "true" ]; then
