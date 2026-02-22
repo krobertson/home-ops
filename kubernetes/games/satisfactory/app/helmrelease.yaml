@@ -40,6 +40,16 @@ spec:
               readOnlyRootFilesystem: false
               capabilities:
                 drop: ["ALL"]
+            ports:
+              - name: "api"
+                containerPort: 7777
+                protocol: TCP
+              - name: "game"
+                containerPort: 7777
+                protocol: UDP
+              - name: "messaging"
+                containerPort: 8888
+                protocol: TCP
 
     service:
       server:
@@ -50,14 +60,17 @@ spec:
             group: services
         externalTrafficPolicy: Local
         ports:
-          server-udp:
+          game-udp:
+            enabled: true
             primary: true
             port: 7777
             protocol: UDP
-          server-tcp:
+          game-tcp:
+            enabled: true
             port: 7777
             protocol: TCP
-          reliable-tcp:
+          messaging-tcp:
+            enabled: true
             port: 8888
             protocol: TCP
     persistence:
