@@ -13,6 +13,10 @@ configMapGenerator:
     files:
       - install-torch.sh=./scripts/install-torch.sh
       - start.sh=./scripts/start.sh
+  - name: spaceengineers-configs
+    files:
+      - Torch.cfg=./configs/Torch.cfg
+      - Dedicated.cfg=./configs/Dedicated.cfg
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

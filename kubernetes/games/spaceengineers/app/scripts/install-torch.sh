@@ -13,4 +13,7 @@ if [ ! -e Torch.Server.exe ]; then
     unzip -o torch-server.zip -d /game/
     rm torch-server.zip
   )
+
+  # Create some needed directories
+  mkdir -p Plugins Instance
 fi
