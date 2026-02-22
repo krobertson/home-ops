@@ -13,7 +13,6 @@ curl -sSL -o ${RELEASE_MANIFEST} https://launchermeta.mojang.com/mc/game/version
 LATEST_VERSION=$(jq -r '.latest.release' ${RELEASE_MANIFEST})
 LATEST_SNAPSHOT_VERSION=$(jq -r '.latest.snapshot' ${RELEASE_MANIFEST})
 
-
 echo -e "Latest version is ${LATEST_VERSION}"
 echo -e "Latest snapshot is ${LATEST_SNAPSHOT_VERSION}"
 

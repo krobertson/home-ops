@@ -68,6 +68,7 @@ spec:
 
     service:
       server:
+        type: LoadBalancer
         ports:
           server:
             port: 27016
