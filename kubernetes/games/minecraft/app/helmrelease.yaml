@@ -32,7 +32,7 @@ spec:
           server:
             image:
               repository: ghcr.io/krobertson/game-containers/java
-              tag: 21@sha256:98852321dc06d2796dca727e9821f4927173c38aa887754e5f6211c1851ca578
+              tag: 25@sha256:5081e59726fe02b72345ad4027f9a82f2d86de65a3f0ce25a2a763063bbcb922
             env:
               EULA: "true"
 
