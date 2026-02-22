@@ -114,7 +114,7 @@ spec:
     persistence:
       scripts:
         type: configMap
-        name: spaceenginers-scripts
+        name: spaceengineers-scripts
         defaultMode: 0755
         advancedMounts:
           game:
