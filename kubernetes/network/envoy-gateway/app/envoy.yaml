@@ -127,6 +127,24 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: satisfactory-server-udp
+      protocol: UDP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: satisfactory-server-tcp
+      protocol: TCP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: satisfactory-messaging
+      protocol: TCP
+      port: 8888
+      allowedRoutes:
+        namespaces:
+          from: All
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
