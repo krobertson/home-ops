@@ -14,11 +14,13 @@ if [ ! -e Torch.Server.exe ]; then
     rm torch-server.zip
   )
 
-  echo 'Copying default Torch.cfg...'
-  cp /opt/default/Torch.cfg Torch.cfg
 fi
 
 ## Copy initial configuration files
+if [ ! -e Torch.cfg ]; then
+  echo 'Copying default Torch.cfg...'
+  cp /opt/default/Torch.cfg Torch.cfg
+fi
 mkdir -p Instance
 if [ ! -e Instance/SpaceEngineers-Dedicated.cfg ]; then
   echo 'Copying default SpaceEngineers-Dedicated.cfg...'
