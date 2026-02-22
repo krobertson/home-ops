@@ -43,6 +43,7 @@ spec:
 
     service:
       server:
+        type: LoadBalancer
         ports:
           server-udp:
             port: 7777
@@ -53,37 +54,6 @@ spec:
           messaging:
             port: 8888
             protocol: TCP
-    route:
-      server-udp:
-        kind: UDPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: satisfactory-server-udp
-        rules:
-          - backendRefs:
-            - identifier: server
-              port: 7777
-      server-tcp:
-        kind: TCPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: satisfactory-server-tcp
-        rules:
-          - backendRefs:
-            - identifier: server
-              port: 7777
-      messaging:
-        kind: TCPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: satisfactory-messaging
-        rules:
-          - backendRefs:
-            - identifier: server
-              port: 8888
     persistence:
       scripts:
         type: configMap
@@ -98,8 +68,8 @@ spec:
       game:
         enabled: true
         accessMode: ReadWriteOnce
-        storageClass: openebs-hostpath
-        size: 10Gi
+        storageClass: iscsi
+        size: 20Gi
         globalMounts:
           - path: /game
       tmpfs:
