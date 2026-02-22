@@ -86,11 +86,11 @@ spec:
         advancedMounts:
           game:
             install:
-              - path: /usr/local/run.sh
+              - path: /usr/local/bin/run.sh
                 subPath: install.sh
                 readOnly: true
             server:
-              - path: /usr/local/run.sh
+              - path: /usr/local/bin/run.sh
                 subPath: start.sh
                 readOnly: true
       game:
