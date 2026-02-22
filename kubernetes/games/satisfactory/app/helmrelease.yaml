@@ -35,6 +35,11 @@ spec:
             image:
               repository: ghcr.io/krobertson/game-containers/base
               tag: stable@sha256:838019f04bab7fd7e12540b9cb29eba544ca30d52ce1d6f1a9ced94e8d6c489a
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop: ["ALL"]
 
     service:
       server:
@@ -45,13 +50,16 @@ spec:
             group: services
         externalTrafficPolicy: Local
         ports:
-          server:
-            port: 7777
           server-udp:
+            primary: true
             port: 7777
             protocol: UDP
-          reliable:
+          server-tcp:
+            port: 7777
+            protocol: TCP
+          reliable-tcp:
             port: 8888
+            protocol: TCP
     persistence:
       scripts:
         type: configMap
