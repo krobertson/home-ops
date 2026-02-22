@@ -92,26 +92,6 @@ spec:
           - backendRefs:
               - identifier: code
                 port: 8081
-      server:
-        kind: UDPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: spaceengineers-server
-        rules:
-          - backendRefs:
-            - identifier: server
-              port: 27016
-      steam:
-        kind: UDPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: spaceengineers-steam
-        rules:
-          - backendRefs:
-            - identifier: server
-              port: 8766
     persistence:
       scripts:
         type: configMap
