@@ -47,6 +47,9 @@ spec:
         ports:
           server:
             port: 7777
+          server-udp:
+            port: 7777
+            protocol: UDP
           reliable:
             port: 8888
     persistence:
