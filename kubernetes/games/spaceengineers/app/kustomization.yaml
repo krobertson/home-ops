@@ -9,7 +9,7 @@ resources:
   - ./helmrelease.yaml
   - ./securitypolicy.yaml
 configMapGenerator:
-  - name: minecraft-scripts
+  - name: spaceengineers-scripts
     files:
       - install-torch.sh=./scripts/install-torch.sh
       - start.sh=./scripts/start.sh
