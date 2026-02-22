@@ -58,7 +58,9 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: satisfactory.r7n.dev
           gatus.home-operations.com/endpoint: |-
             group: services
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
+        allocateLoadBalancerNodePorts: true
         ports:
           game-udp:
             enabled: true
