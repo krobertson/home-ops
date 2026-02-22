@@ -41,6 +41,18 @@ spec:
               capabilities:
                 drop: ["ALL"]
 
+    service:
+      server:
+        ports:
+          server-udp:
+            port: 7777
+            protocol: UDP
+          server-tcp:
+            port: 7777
+            protocol: TCP
+          messaging:
+            port: 8888
+            protocol: TCP
     route:
       server-udp:
         kind: UDPRoute
