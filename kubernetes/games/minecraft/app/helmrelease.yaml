@@ -25,20 +25,16 @@ spec:
         initContainers:
           install:
             image:
-              repository: ghcr.io/krobertson/game-containers/debian
-              tag: trixie
-            command:
-              - /usr/local/run.sh
+              repository: ghcr.io/krobertson/game-containers/base
+              tag: stable@sha256:838019f04bab7fd7e12540b9cb29eba544ca30d52ce1d6f1a9ced94e8d6c489a
 
         containers:
           server:
             image:
               repository: ghcr.io/krobertson/game-containers/java
-              tag: "21"
+              tag: 21@sha256:98852321dc06d2796dca727e9821f4927173c38aa887754e5f6211c1851ca578
             env:
               EULA: "true"
-            command:
-              - /usr/local/run.sh
 
           code:
             dependsOn: server
