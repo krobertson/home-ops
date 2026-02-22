@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-router
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: mc-router
+  values:
+    image:
+      repository: ghcr.io/itzg/mc-router
+      tag: 1.40.1@sha256:d6709a5c2f9d83582911fae3e3f64a8a7602675d750039fa8b56eeb0a5d68860
+      pullPolicy: IfNotPresent
+    extraArgs:
+      - --in-kube-cluster
+    services:
+      minecraft:
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: mc-peaceful.r7n.dev, mc-survival.r7n.dev
