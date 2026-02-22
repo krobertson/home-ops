@@ -137,15 +137,8 @@ spec:
         type: configMap
         name: spaceengineers-configs
         defaultMode: 0644
-        advancedMounts:
-          game:
-            server:
-              - path: /game/Torch.cfg
-                subPath: Torch.cfg
-                readOnly: true
-              - path: /game/Instance/SpaceEngineers-Dedicated.cfg
-                subPath: Dedicated.cfg
-                readOnly: true
+        globalMounts:
+          - path: /opt/default
       tmpfs:
         type: emptyDir
         globalMounts:

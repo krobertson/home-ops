@@ -14,6 +14,13 @@ if [ ! -e Torch.Server.exe ]; then
     rm torch-server.zip
   )
 
-  # Create some needed directories
-  mkdir -p Plugins Instance
+  echo 'Copying default Torch.cfg...'
+  cp /opt/default/Torch.cfg Torch.cfg
+fi
+
+## Copy initial configuration files
+mkdir -p Instance
+if [ ! -e Instance/SpaceEngineers-Dedicated.cfg ]; then
+  echo 'Copying default SpaceEngineers-Dedicated.cfg...'
+  cp /opt/default/Dedicated.cfg Instance/SpaceEngineers-Dedicated.cfg
 fi
