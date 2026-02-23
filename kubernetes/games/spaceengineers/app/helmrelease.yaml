@@ -41,6 +41,8 @@ spec:
             image:
               repository: ghcr.io/krobertson/game-containers/base
               tag: stable@sha256:838019f04bab7fd7e12540b9cb29eba544ca30d52ce1d6f1a9ced94e8d6c489a
+            env:
+              RESTORE_URL: http://truenas.r7n.dev:30189/se-restore.zip
 
         containers:
           server:
@@ -66,9 +68,85 @@ spec:
               - "8081"
               - "/game"
 
+          rcon-exporter:
+            dependsOn: server
+            image:
+              repository: ghcr.io/krobertson/space-engineers-exporter
+              tag: 1.0.2-1@sha256:0f8dc4ebfe6eecdc0375064b1299ba67508243400c4c893c57d51d096e0e9fb2
+            env:
+              RCON_HOST: localhost
+              RCON_PORT: 8080
+            envFrom:
+              - secretRef:
+                  name: spaceengineers
+
+          torch-exporter:
+            dependsOn: server
+            image:
+              repository: ghcr.io/krobertson/torch-remote-exporter
+              tag: dev@sha256:e21358d5160575a317b1f2d805bebd50e104e72fb091315c646d0cf39b4c04b8
+            env:
+              TORCH_HOST: localhost
+              TORCH_PORT: 8787
+            envFrom:
+              - secretRef:
+                  name: spaceengineers
+
+          log-cleanup:
+            image:
+              repository: ghcr.io/krobertson/cleanup-older-files
+              tag: dev@sha256:a2c4e3b5dcbc453f9c02d955abc85a5bb1a6246fda649895f52ffafb329df794
+            env:
+              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
+              LOG_FILE_ENDINGS: log txt
+              DAYS_OLD: "3"
+
+          logrotate:
+            image:
+              repository: ghcr.io/lazybytez/logrotate-container
+              tag: 2.0.0@sha256:6b502467fd4f14c6542784c474b830d64e2ff85eea9e91728d28fb88289f5298
+            env:
+              LOGS_DIRECTORIES: /games/spaceengineers/instance /games/spaceengineers/Logs
+              LOG_FILE_ENDINGS: log txt
+              LOGROTATE_INTERVAL: daily
+              LOGROTATE_SIZE: 100M
+              LOGROTATE_AUTOUPDATE: "true"
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+
+      backup:
+        type: cronjob
+        cronjob:
+          # hourly
+          schedule: 0 * * * *
+          backoffLimit: 0
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+          ttlSecondsAfterFinished: 3600
+        pod:
+          restartPolicy: Never
+        containers:
+          restic:
+            image:
+              repository: restic/restic
+              tag: 0.18.1@sha256:39d9072fb5651c80d75c7a811612eb60b4c06b32ffe87c2e9f3c7222e1797e76
+            envFrom:
+              - secretRef:
+                  name: spaceengineers-backups
+            args:
+              - backup
+              - --host
+              - cronjob
+              - --tag=k8s
+              - --tag=spaceengineers
+              - /game
+
     service:
       server:
         type: LoadBalancer
+        controller: game
         ports:
           server:
             port: 27016
@@ -77,6 +155,7 @@ spec:
             port: 8766
             protocol: UDP
       code:
+        controller: game
         ports:
           http:
             port: 8081
