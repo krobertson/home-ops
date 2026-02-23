@@ -137,8 +137,8 @@ spec:
                   name: spaceengineers-backups
             args:
               - backup
-              - --host
-              - cronjob
+              - --host=cronjob
+              - --exclude-file=/opt/default/excludes.txt
               - --tag=k8s
               - --tag=spaceengineers
               - /game

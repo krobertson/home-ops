@@ -1,0 +1,13 @@
+# Game files
+/game/Content
+/game/DedicatedServer64
+
+# Steam mods
+/game/Instance/content
+
+# Local game backups, they change constantly
+/game/Instance/Saves/World/Backups
+
+# Logs
+/game/Logs
+*.logs

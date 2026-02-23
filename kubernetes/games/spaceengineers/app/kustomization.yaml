@@ -17,6 +17,7 @@ configMapGenerator:
     files:
       - Torch.cfg=./configs/Torch.cfg
       - Dedicated.cfg=./configs/Dedicated.cfg
+      - excludes.txt=./configs/excludes.txt
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
