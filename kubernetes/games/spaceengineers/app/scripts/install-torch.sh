@@ -12,6 +12,11 @@ if [ ! -z "${RESTORE_URL}" ] && [ ! -e Torch.cfg ] && [ ! -e Instance/SpaceEngin
   rm /tmp/restore.zip
 fi
 
+## Workaround mod issues
+cp DedicatedServer64/steamclient64.dll .
+cp DedicatedServer64/tier0_s64.dll .
+cp DedicatedServer64/vstdlib_s64.dll .
+
 ## Download Torch and unpack
 if [ ! -e Torch.Server.exe ]; then
   echo ''
