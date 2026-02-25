@@ -22,6 +22,9 @@ kind: Kustomization
 metadata:
   name: minecraft
 spec:
+  dependsOn:
+    - name: openebs
+      namespace: storage
   interval: 30m
   timeout: 5m
   path: ./kubernetes/games/minecraft/app

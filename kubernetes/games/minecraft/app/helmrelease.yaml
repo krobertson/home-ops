@@ -3,105 +3,62 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: minecraft
+  name: minecraft-survival
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
     name: minecraft
   values:
-    controllers:
-      game:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
-
-        initContainers:
-          install:
-            image:
-              repository: ghcr.io/krobertson/game-containers/base
-              tag: stable@sha256:838019f04bab7fd7e12540b9cb29eba544ca30d52ce1d6f1a9ced94e8d6c489a
-
-        containers:
-          server:
-            image:
-              repository: ghcr.io/krobertson/game-containers/java
-              tag: 21@sha256:98852321dc06d2796dca727e9821f4927173c38aa887754e5f6211c1851ca578
-            env:
-              EULA: "true"
-
-          code:
-            dependsOn: server
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.109.2-39
-            args:
-              - --auth
-              - "none"
-              - --user-data-dir
-              - "/game/.vscode"
-              - --extensions-dir
-              - "/game/.vscode"
-              - --port
-              - "8081"
-              - "/game"
-    service:
-      code:
-        ports:
-          http:
-            port: 8081
-      server:
-        type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: minecraft.r7n.dev
-          gatus.home-operations.com/endpoint: |-
-            group: services
-        externalTrafficPolicy: Local
-        ports:
-          server:
-            port: 25565
-    route:
-      code:
-        hostnames:
-          - minecraft-code.r7n.dev
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: code
-                port: 8081
+    workloadAsStatefulSet: true
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    image:
+      repository: itzg/minecraft-server
+      tag: 2026.2.1-java21@sha256:115f666dac309116d0921549a935f02c2f8e9114282590ad77423ac357319992
+    resources:
+      limits:
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    extraEnv:
+      TZ: "America/Los_Angeles"
+      INIT_MEMORY: 25%
+      MAX_MEMORY: 90%
     persistence:
-      scripts:
-        type: configMap
-        name: minecraft-scripts
-        defaultMode: 0755
-        advancedMounts:
-          game:
-            install:
-              - path: /usr/local/bin/run.sh
-                subPath: install.sh
-                readOnly: true
-            server:
-              - path: /usr/local/bin/run.sh
-                subPath: start.sh
-                readOnly: true
-      game:
+      storageClass: openebs-hostpath
+      dataDir:
         enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: openebs-hostpath
-        size: 50Gi
-        globalMounts:
-          - path: /game
-      tmpfs:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
-            subPath: tmp
+        # WTF: its Size and not size
+        Size: 5Gi
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: mc-survival.r7n.dev
+      gatus.home-operations.com/endpoint: |-
+        group: services
+    minecraftServer:
+      eula: true
+      whitelist: Zerimis
+      ops: Zerimis
+      pvp: false
+      difficulty: normal
+      gameMode: survival
+      levelType: largebiomes
+      rcon:
+        enabled: true
+    #mcbackup:
+    #  enabled: true
+    #  resticHostname: testcraft
+    #  backupMethod: restic
+    #  backupInterval: 1h
+    #  pauseIfNoPlayers: "true"
+    #  pruneResticRetention: "--keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75"
+    #  resticEnvs:
+    #    RESTIC_PASSWORD: password
+    #  extraEnv:
+    #    RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
