@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-survival
+spec:
+  endpoints:
+    - port: metrics
+      path: /metrics
+  jobLabel: minecraft-survival
+  namespaceSelector:
+    matchNames:
+      - games
+  selector:
+    matchLabels:
+      app: minecraft-survival

@@ -10,6 +10,8 @@ spec:
     kind: OCIRepository
     name: minecraft
   values:
+    workloadAsStatefulSet: true
+    strategyType: RollingUpdate
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     image:
@@ -61,14 +63,19 @@ spec:
       - 60383  # angelchest
       rcon:
         enabled: true
+      extraPorts:
+        - name: metrics
+          containerPort: 9225
+          service:
+            enabled: true
+            port: 9225
     #mcbackup:
     #  enabled: true
-    #  resticHostname: testcraft
+    #  resticHostname: minecraft-survival
     #  backupMethod: restic
     #  backupInterval: 1h
     #  pauseIfNoPlayers: "true"
     #  pruneResticRetention: "--keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75"
-    #  resticEnvs:
-    #    RESTIC_PASSWORD: password
-    #  extraEnv:
-    #    RESTIC_REPOSITORY: "s3:http://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
+    #  envFrom:
+    #    - secretRef:
+    #      name: spaceengineers
