@@ -5,13 +5,3 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: minecraft-scripts
-    files:
-      - install.sh=./scripts/install.sh
-      - start.sh=./scripts/start.sh
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-
