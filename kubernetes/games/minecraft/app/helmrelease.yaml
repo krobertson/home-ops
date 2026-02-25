@@ -10,8 +10,6 @@ spec:
     kind: OCIRepository
     name: minecraft
   values:
-    workloadAsStatefulSet: true
-    strategyType: RollingUpdate
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     image:
@@ -44,12 +42,23 @@ spec:
         group: services
     minecraftServer:
       eula: true
+      # renovate: datasource=custom.minecraft-release
+      version: 1.21.11
+      type: PAPER
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
-      difficulty: normal
+      onlineMode: true
+      difficulty: easy
       gameMode: survival
       levelType: largebiomes
+      viewDistance: 12
+      motd: "R7N Survival"
+      spigetResources:
+      - 36618  # Prom Exporter
+      - 100301 # bigger barrels
+      - 84310  # tree feller
+      - 60383  # angelchest
       rcon:
         enabled: true
     #mcbackup:
