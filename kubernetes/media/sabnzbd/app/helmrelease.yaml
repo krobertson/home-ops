@@ -59,8 +59,7 @@ spec:
                 memory: 4Gi
     defaultPodOptions:
       nodeSelector:
-        matchLabels:
-          location: home
+        location: home
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
