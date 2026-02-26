@@ -65,11 +65,11 @@ spec:
                 memory: 4Gi
     defaultPodOptions:
       nodeSelector:
-        location: home
+        location: house
       tolerations:
         - key: "location"
           operator: "Equal"
-          value: "home"
+          value: "house"
           effect: "NoSchedule"
       securityContext:
         runAsNonRoot: true
