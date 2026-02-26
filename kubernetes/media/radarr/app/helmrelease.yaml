@@ -64,10 +64,13 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
+      nodeSelector:
+        location: home
       tolerations:
         - key: "location"
           operator: "Equal"
           value: "home"
+          effect: "NoSchedule"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -97,7 +100,7 @@ spec:
       media:
         type: nfs
         server: synology.r7n.dev
-        path: /media
+        path: /volume1/media
         globalMounts:
           - path: /media
       tmp:
