@@ -1,0 +1,38 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cnpg-database-immich
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    name: cnpg-database-immich
+    creationPolicy: Owner
+    template:
+      type: kubernetes.io/basic-auth
+      engineVersion: v2
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
+  data:
+    - secretKey: username
+      remoteRef:
+        key: immich
+        property: DB_USERNAME
+    - secretKey: password
+      remoteRef:
+        key: immich
+        property: DB_PASSWORD
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: immich
+spec:
+  cluster:
+    name: postgres17
+  name: immich
+  owner: immich
+

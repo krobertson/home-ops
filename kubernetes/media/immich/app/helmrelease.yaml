@@ -1,0 +1,224 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: immich
+  interval: 1h
+  values:
+    controllers:
+      server:
+        strategy: Recreate
+        annotations:
+          secret.reloader.stakater.com/reload: immich-secret
+          configmap.reloader.stakater.com/reload: immich-configmap
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.2@sha256:ae89578925b480f5972f237dda2f7a37efe36aff500d3e7bd1d3a6a3181e4191
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.5.6@sha256:aa163d2e1cc2b16a9515dd1fef901e6f5231befad7024f093d7be1f2da14341a
+            env:
+              TZ: "America/Los_Angeles"
+              IMMICH_CONFIG_FILE: /config/immich-config.yaml
+              IMMICH_MEDIA_LOCATION: &mediaLocation /library
+              IMMICH_MACHINE_LEARNING_URL: "http://immich-machine-learning.media.svc.cluster.local:3003"
+              # Prevent NFS mount check failures
+              IMMICH_IGNORE_MOUNT_CHECK_ERRORS: "true"
+              DISABLE_REVERSE_GEOCODING: "true"
+              # REDIS_HOSTNAME: &redisHost "immich-redis"
+              REDIS_HOSTNAME: &redisHost "dragonfly.storage.svc.cluster.local"
+              REDIS_DBINDEX: &redisDB "1"
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+
+      machine-learning:
+        strategy: Recreate
+        annotations:
+          secret.reloader.stakater.com/reload: immich-secret
+          configmap.reloader.stakater.com/reload: immich-configmap
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+          # ML can run on any node, doesn't need GPU (CPU inference is fine)
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: plex
+                    topologyKey: kubernetes.io/hostname
+                - weight: 50
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: fileflows
+                    topologyKey: kubernetes.io/hostname
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v2.5.6@sha256:b213fa3c82d27a21a299c46ffbb38a091f18384db1ad67d409a3b34fe0fce556
+            env:
+              TZ: "America/Los_Angeles"
+              REDIS_HOSTNAME: *redisHost
+              REDIS_DBINDEX: *redisDB
+              MPLCONFIGDIR: "/cache/matplotlib"
+              # ML cache folder paths
+              MACHINE_LEARNING_CACHE_FOLDER: "/cache"
+              TRANSFORMERS_CACHE: "/cache"
+              IMMICH_MEDIA_LOCATION: *mediaLocation
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: &mlPort 3003
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *mlPort
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 60
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+    service:
+      server:
+        controller: server
+        ports:
+          http:
+            port: &port 2283
+          metrics-api:
+            port: 8081
+          metrics-ms:
+            port: 8082
+      machine-learning:
+        controller: machine-learning
+        ports:
+          http:
+            port: *mlPort
+
+    serviceMonitor:
+      server:
+        enabled: true
+        serviceName: server
+        endpoints:
+          - port: metrics-api
+            scheme: http
+            path: /metrics
+          - port: metrics-ms
+            scheme: http
+            path: /metrics
+
+    route:
+      internal:
+        hostnames:
+          - photos.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+            - identifier: server
+              port: *port
+
+    persistence:
+      config:
+        type: secret
+        name: immich-secret
+        advancedMounts:
+          server:
+            main:
+              - path: /config/immich-config.yaml
+                subPath: immich-config.yaml
+                readOnly: true
+      matplotlib:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /config/matplotlib
+      library:
+        type: nfs
+        server: 192.168.255.251
+        path: /mnt/tank/photos
+        existingClaim: immich-nfs
+        globalMounts:
+          - path: *mediaLocation
+      machine-learning-cache:
+        storageClass: iscsi
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+                subPath: geocoding
+              - path: /usr/src/app/.transformers_cache
+                subPath: transformers
+      # Intel GPU device for QSV transcoding
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        advancedMounts:
+          server:
+            main:
+              - path: /dev/dri

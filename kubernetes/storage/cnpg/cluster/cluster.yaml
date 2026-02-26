@@ -42,3 +42,10 @@ spec:
         createdb: false
         passwordSecret:
           name: cnpg-database-authentik
+      - name: immich
+        login: true
+        superuser: false
+        createdb: false
+        passwordSecret:
+          name: cnpg-database-immich
+
