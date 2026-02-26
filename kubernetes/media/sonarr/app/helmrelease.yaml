@@ -64,8 +64,11 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
-      nodeSelector:
-        location: home
+      tolerations:
+        - key: "location"
+          operator: "Equal"
+          value: "home"
+          effect: "NoSchedule"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

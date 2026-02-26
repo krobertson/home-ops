@@ -58,6 +58,11 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
+      tolerations:
+        - key: "location"
+          operator: "Equal"
+          value: "home"
+          effect: "NoSchedule"
       nodeSelector:
         location: home
       securityContext:

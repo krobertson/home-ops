@@ -5,4 +5,3 @@ metadata:
   name: _
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    scheduler.alpha.kubernetes.io/node-selector: location=house
