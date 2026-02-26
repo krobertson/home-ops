@@ -58,12 +58,6 @@ spec:
               limits:
                 memory: 4Gi
     defaultPodOptions:
-      nodeSelector:
-        location: house
-      tolerations:
-        - key: "location"
-          operator: "Equal"
-          value: "house"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
