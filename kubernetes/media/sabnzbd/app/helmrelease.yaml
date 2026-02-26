@@ -84,7 +84,9 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        accessMode: ReadWriteOnce
+        storageClass: iscsi-retain
+        size: 1Gi
         globalMounts:
           - path: /config
       media:

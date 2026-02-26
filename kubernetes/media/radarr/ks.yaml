@@ -6,7 +6,7 @@ metadata:
   name: radarr
 spec:
   dependsOn:
-    - name: openebs
+    - name: democratic-csi
       namespace: storage
   interval: 30m
   timeout: 15m

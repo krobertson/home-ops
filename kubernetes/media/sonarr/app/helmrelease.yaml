@@ -86,7 +86,6 @@ spec:
       config:
         accessMode: ReadWriteOnce
         storageClass: iscsi-retain
-        volumeName: sonarr-config
         size: 1Gi
         globalMounts:
           - path: /config
