@@ -26,6 +26,8 @@ spec:
       shared_buffers: 512MB
       pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
+    shared_preload_libraries:
+      - "vchord.so"
   monitoring:
     enablePodMonitor: true
 
