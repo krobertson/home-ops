@@ -62,9 +62,6 @@ spec:
         - key: "location"
           operator: "Equal"
           value: "home"
-          effect: "NoSchedule"
-      nodeSelector:
-        location: home
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

@@ -68,7 +68,6 @@ spec:
         - key: "location"
           operator: "Equal"
           value: "home"
-          effect: "NoSchedule"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
