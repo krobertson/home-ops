@@ -6,3 +6,4 @@ resources:
   - ./prometheusrule.yaml
   - ./service.yaml
   - ./databases/authentik.yaml
+  - ./databases/immich.yaml
