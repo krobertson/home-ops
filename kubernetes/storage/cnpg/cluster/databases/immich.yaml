@@ -35,4 +35,10 @@ spec:
     name: postgres17
   name: immich
   owner: immich
-
+  extensions:
+    - name: vchord
+      ensure: present
+    - name: vector
+      ensure: present
+    - name: earthdistance
+      ensure: present
