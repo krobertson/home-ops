@@ -84,10 +84,7 @@ spec:
             namespace: network
     persistence:
       config:
-        enabled: true
-        accessMode: ReadWriteOnce
-        storageClass: openebs-hostpath
-        size: 1Gi
+        existingClaim: "{{ .Release.Name }}"
         globalMounts:
           - path: /config
       media:
