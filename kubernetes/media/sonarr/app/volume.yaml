@@ -1,12 +1,22 @@
 ---
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: sonarr
-  annotations:
-    volume.kubernetes.io/selected-node: talos-gmp-14k
+  name: sonarr-config
 spec:
-  storageClassName: openebs-hostpath
+  storageClassName: iscsi-retain
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config
+spec:
+  storageClassName: iscsi-retain
+  volumeName: sonarr-config
   accessModes:
     - ReadWriteOnce
   resources:
