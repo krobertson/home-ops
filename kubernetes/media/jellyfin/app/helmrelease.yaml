@@ -67,13 +67,17 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: jellyfin.r7n.dev
         ports:
           http:
-            port: &port 8096
+            port: *port
+    route:
+      app:
+        hostnames:
+          - jellyfin.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}-config"
