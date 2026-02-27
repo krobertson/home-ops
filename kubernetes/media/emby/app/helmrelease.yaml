@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: emby
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: emby
+  interval: 30m
+  values:
+    controllers:
+      emby:
+        pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: emby-gpu
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/emby
+              tag: 4.9.3.0@sha256:7c33d88d0186ad7abcc6e53566e9db8766687daa5510cddc13094e25bc5a5dfb
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+                #gpu.intel.com/i915: 1
+              limits:
+                memory: 4Gi
+                #gpu.intel.com/i915: 1
+    service:
+      app:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8096
+    route:
+      app:
+        hostnames:
+          - emby.r7n.dev
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}-config"
+        globalMounts:
+          - path: /config
+      media:
+        type: nfs
+        server: 192.168.210.251
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          emby:
+            app:
+              - path: /transcode
+                subPath: transcode
+              - path: /config/logs
+                subPath: logs
+              - path: /cache
+                subPath: cache
+              - path: /tmp
+                subPath: tmp
