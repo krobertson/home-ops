@@ -35,10 +35,9 @@ spec:
               requests:
                 cpu: 100m
                 memory: 512Mi
-                #gpu.intel.com/i915: 1
               limits:
                 memory: 4Gi
-                #gpu.intel.com/i915: 1
+                amd.com/gpu: 1
     service:
       app:
         type: LoadBalancer
@@ -55,12 +54,14 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}-config"
+        accessMode: ReadWriteOnce
+        storageClass: iscsi-retain
+        size: 1Gi
         globalMounts:
           - path: /config
       media:
         type: nfs
-        server: 192.168.210.251
+        server: 192.168.255.251
         path: /mnt/tank/media
         globalMounts:
           - path: /media
