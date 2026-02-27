@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: radarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: radarr
+  interval: 1h
+  values:
+    controllers:
+      jellyfin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.6@sha256:25db4eb10143c1c12adb79ed978e31d94fc98dc499fbae2d38b2c935089ced3e
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_FFmpeg__probesize: 50000000
+              JELLYFIN_FFmpeg__analyzeduration: 50000000
+              TZ: America/Los_Angeles
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+                #gpu.intel.com/i915: 1
+              limits:
+                memory: 4Gi
+                #gpu.intel.com/i915: 1
+    defaultPodOptions:
+      nodeSelector:
+        location: house
+      tolerations:
+        - key: "location"
+          operator: "Equal"
+          value: "house"
+          effect: "NoSchedule"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: jellyfin.r7n.dev
+        ports:
+          http:
+            port: &port 8096
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}-config"
+        globalMounts:
+          - path: /config
+      media:
+        type: nfs
+        server: 192.168.210.251
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+          - path: /cache
+            subPath: cache
+          - path: /config/log
+            subPath: log
+          - path: /transcode
+            subPath: transcode
