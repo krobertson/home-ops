@@ -15,8 +15,9 @@ spec:
       dynamicPath: /var/cdi/dynamic
     kubeletPlugin:
       affinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: extensions.talos.dev/i915
-              operator: Exists
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: extensions.talos.dev/i915
+                  operator: Exists
