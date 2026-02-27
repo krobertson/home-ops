@@ -13,9 +13,6 @@ spec:
     controllers:
       emby:
         pod:
-          resourceClaims:
-            - name: gpu
-              resourceClaimTemplateName: emby-gpu
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
