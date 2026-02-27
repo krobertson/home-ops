@@ -72,8 +72,6 @@ patches:
           net.ipv4.tcp_slow_start_after_idle: "0"    # Preserve congestion window after idle
           user.max_user_namespaces: "11255"          # User Namespaces
 
-
-
   - name: Mount openebs-hostpath in kubelet
     inline:
       machine:
@@ -108,6 +106,23 @@ patches:
               nconnect=16
               noatime=True
 
+  - name: Update AdmissionController
+    inline:
+      cluster:
+        apiServer:
+          admissionControl:
+            - name: PodSecurity
+              configuration:
+                apiVersion: pod-security.admission.config.k8s.io/v1alpha1
+                kind: PodSecurityConfiguration
+                defaults:
+                  audit: privileged
+                  audit-version: latest
+                  enforce: privileged
+                  enforce-version: latest
+                  warn: privileged
+                  warn-version: latest
+
 ---
 kind: ControlPlane
 machines:
@@ -120,8 +135,27 @@ patches:
         allowSchedulingOnMasters: false
 ---
 kind: Workers
+name: Minisforum Workers
+systemExtensions:
+  - siderolabs/amdgpu
+  - siderolabs/amd-ucode
+  - siderolabs/iscsi-tools
+  - siderolabs/nfsd
+  - siderolabs/util-linux-tools
+machines:
+  - 6e8b1c00-c145-11f0-aa9c-d7f100434d00
+patches:
+  - name: Configure installation disk
+    inline:
+      machine:
+        install:
+          disk: /dev/nvme0n1
+---
+kind: Workers
 name: ThinkStation Tiny
 systemExtensions:
+  - siderolabs/amdgpu
+  - siderolabs/amd-ucode
   - siderolabs/iscsi-tools
   - siderolabs/nfsd
   - siderolabs/util-linux-tools
@@ -135,3 +169,20 @@ patches:
       machine:
         install:
           disk: /dev/nvme0n1
+#---
+#kind: Workers
+#name: House Workers
+#systemExtensions:
+#  - siderolabs/intel-ucode
+#  - siderolabs/iscsi-tools
+#  - siderolabs/nfsd
+#  - siderolabs/util-linux-tools
+#  - siderolabs/i915
+#machines:
+#  - cb9ff480-4c01-11ee-92c7-43deb1926200
+#patches:
+#  - name: Configure installation disk
+#    inline:
+#      machine:
+#        install:
+#          disk: /dev/nvme0n1

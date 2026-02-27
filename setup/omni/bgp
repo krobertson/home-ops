@@ -1,0 +1,27 @@
+router bgp 64553
+  bgp router-id 192.168.1.1
+  no bgp ebgp-requires-policy
+
+  neighbor k8s peer-group
+  neighbor k8s remote-as 64554
+
+  neighbor 192.168.210.241 peer-group k8s
+  neighbor 192.168.210.242 peer-group k8s
+  neighbor 192.168.210.243 peer-group k8s
+  neighbor 192.168.210.244 peer-group k8s
+  neighbor 192.168.210.245 peer-group k8s
+
+  neighbor 192.168.210.248 peer-group k8s
+  neighbor 192.168.210.249 peer-group k8s
+
+  address-family ipv4 unicast
+    neighbor k8s activate
+    neighbor k8s next-hop-self
+    neighbor k8s soft-reconfiguration inbound
+    neighbor k8s route-map ALLOW-ALL in
+    neighbor k8s route-map ALLOW-ALL out
+  exit-address-family
+exit
+
+route-map ALLOW-ALL permit 10
+exit

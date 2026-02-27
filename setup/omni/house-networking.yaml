@@ -1,0 +1,32 @@
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: eno1
+addresses:
+  - address: 192.168.210.245/24
+routes:
+  - gateway: 192.168.210.1
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.210.1
+searchDomains:
+  domains:
+    - r7n.dev
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: eno1.130
+vlanID: 130
+parent: eno1
+addresses:
+  - address: 192.168.130.245/24
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: eno1.1
+vlanID: 1
+parent: eno1
+addresses:
+  - address: 192.168.1.245/24
