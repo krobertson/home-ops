@@ -56,7 +56,7 @@ spec:
       config:
         accessMode: ReadWriteOnce
         storageClass: iscsi-retain
-        size: 1Gi
+        size: 10Gi
         globalMounts:
           - path: /config
       media:
