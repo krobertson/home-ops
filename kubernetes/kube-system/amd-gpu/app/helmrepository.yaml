@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: amd-gpu
+spec:
+  interval: 1h
+  url: https://rocm.github.io/k8s-device-plugin/
+  timeout: 3m

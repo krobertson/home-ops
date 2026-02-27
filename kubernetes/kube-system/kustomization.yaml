@@ -9,6 +9,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./amd-gpu/ks.yaml
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
