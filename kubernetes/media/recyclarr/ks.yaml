@@ -6,8 +6,8 @@ metadata:
   name: recyclarr
 spec:
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: democratic-csi
+      namespace: storage
   interval: 1h
   path: ./kubernetes/media/recyclarr/app
   prune: true
