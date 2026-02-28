@@ -111,3 +111,8 @@ spec:
           - path: /media
       tmp:
         type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+          - path: /transcode
+            subPath: transcode
