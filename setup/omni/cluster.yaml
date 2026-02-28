@@ -2,10 +2,12 @@
 ---
 kind: Cluster
 name: r7n-kubernetes
-kubernetes:
-  version: v1.35.1
 talos:
+  # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
   version: v1.12.2
+kubernetes:
+  # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+  version: v1.35.1
 patches:
   - name: Disable flannel, kube-proxy, and coredns
     inline:
