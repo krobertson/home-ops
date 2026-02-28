@@ -4,7 +4,7 @@ kind: Cluster
 name: r7n-kubernetes
 talos:
   # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-  version: v1.12.2
+  version: v1.12.4
 kubernetes:
   # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
   version: v1.35.1
