@@ -26,6 +26,8 @@ spec:
       news_feed_enabled: "false"
     plugins:
       plugin_admin_enabled: "false"
+    rendering:
+      server_url: http://localhost:8081/render
     security:
       angular_support_enabled: "true"
     server:
@@ -49,6 +51,8 @@ spec:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
                 capabilities: {drop: ["ALL"]}
+            - name: image-renderer
+              image: grafana/grafana-image-renderer:v5.6.0@sha256:ff3209c57a67faa164a9e5c91510b7c7c931d6edab3a457852737031bb3545a6
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
