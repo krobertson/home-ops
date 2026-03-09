@@ -12,7 +12,6 @@ spec:
     kind: OCIRepository
     name: minecraft
   values:
-    workloadAsStatefulSet: true
     strategyType: RollingUpdate
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
@@ -46,7 +45,6 @@ spec:
         group: services
     minecraftServer:
       eula: true
-      # renovate: datasource=custom.minecraft-release
       version: 1.20.1
       type: FABRIC
       whitelist: Zerimis
@@ -64,7 +62,7 @@ spec:
       modrinth:
         downloadDependencies: required
         projects:
-          - jei
+          - jei:beta
           - rubidium
           - patchouli
           - farmers-delight
