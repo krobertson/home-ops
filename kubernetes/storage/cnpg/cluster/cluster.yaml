@@ -44,6 +44,12 @@ spec:
         createdb: false
         passwordSecret:
           name: cnpg-database-authentik
+      - name: forgejo
+        login: true
+        superuser: false
+        createdb: false
+        passwordSecret:
+          name: cnpg-database-forgejo
       - name: immich
         login: true
         superuser: false

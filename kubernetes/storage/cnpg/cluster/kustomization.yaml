@@ -6,4 +6,5 @@ resources:
   - ./prometheusrule.yaml
   - ./service.yaml
   - ./databases/authentik.yaml
+  - ./databases/forgejo.yaml
   - ./databases/immich.yaml

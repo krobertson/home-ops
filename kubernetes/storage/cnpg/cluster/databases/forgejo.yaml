@@ -1,0 +1,38 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cnpg-database-forgejo
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    name: cnpg-database-forgejo
+    creationPolicy: Owner
+    template:
+      type: kubernetes.io/basic-auth
+      engineVersion: v2
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
+  data:
+    - secretKey: username
+      remoteRef:
+        key: forgejo
+        property: FORGEJO_POSTGRESQL__USER
+    - secretKey: password
+      remoteRef:
+        key: forgejo
+        property: FORGEJO_POSTGRESQL__PASSWORD
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: forgejo
+spec:
+  cluster:
+    name: postgres17
+  name: forgejo
+  owner: forgejo
+
