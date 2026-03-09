@@ -77,10 +77,10 @@ spec:
         webhook:
           ALLOWED_HOST_LIST: "*.r7n.dev"
       oauth:
-        - name: PocketID
+        - name: Authentik
           provider: openidConnect
           existingSecret: *secret
-          autoDiscoverUrl: https://authentik.r7n.dev/.well-known/openid-configuration
+          autoDiscoverUrl: https://authentik.r7n.dev/application/o/forgejo/.well-known/openid-configuration
           groupClaimName: groups
           adminGroup: ID-Admin
           iconUrl: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pocket-id.png
@@ -95,8 +95,8 @@ spec:
     persistence:
       enabled: true
       mount: true
-      create: false
-      claimName: *app
+      create: true
+      storageClass: nfs-retain
     service:
       ssh:
         type: LoadBalancer
