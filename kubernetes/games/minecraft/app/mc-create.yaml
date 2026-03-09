@@ -3,7 +3,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: minecraft-survival
+  name: minecraft-create
+  labels:
+    game: minecraft
 spec:
   interval: 1h
   chartRef:
@@ -33,20 +35,20 @@ spec:
       INIT_MEMORY: 25%
       MAX_MEMORY: 90%
     persistence:
-      storageClass: openebs-hostpath
+      storageClass: iscsi-retain
       dataDir:
         enabled: true
         # WTF: its Size and not size
-        Size: 5Gi
+        Size: 20Gi
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: mc-survival.r7n.dev
+      mc-router.itzg.me/externalServerName: mc-create.r7n.dev
       gatus.home-operations.com/endpoint: |-
         group: services
     minecraftServer:
       eula: true
       # renovate: datasource=custom.minecraft-release
       version: 1.21.11
-      type: PAPER
+      type: FABRIC
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
@@ -55,20 +57,38 @@ spec:
       gameMode: survival
       levelType: largebiomes
       viewDistance: 12
-      motd: "R7N Survival"
+      motd: "R7N Create"
       spigetResources:
-      - 36618  # Prom Exporter
       - 100301 # bigger barrels
-      - 84310  # tree feller
       - 60383  # angelchest
+      modrinth:
+        downloadDependencies: required
+        projects:
+          - jei
+          - rubidium
+          - patchouli
+          - create
+          - create-jetpack
+          - create-dreams-and-desires
+          - create-tfmg
+          - create-let-the-adventure-begin
+          - create-ratatouille
+          - create-transmission!
+          - createaddition
+          - slice-and-dice
+          - farmers-delight
+          - hypertube
+          - cgs
+      modUrl:
+        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.21.5-fabric-1.2.1/Prometheus-Exporter-1.21.5-fabric-1.2.1.jar
       rcon:
         enabled: true
       extraPorts:
         - name: metrics
-          containerPort: 9225
+          containerPort: 19565
           service:
             enabled: true
-            port: 9225
+            port: 19565
     #mcbackup:
     #  enabled: true
     #  resticHostname: minecraft-survival

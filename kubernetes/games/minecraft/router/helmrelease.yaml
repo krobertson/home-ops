@@ -20,4 +20,4 @@ spec:
       minecraft:
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mc-peaceful.r7n.dev, mc-survival.r7n.dev
+          external-dns.alpha.kubernetes.io/hostname: mc-create.r7n.dev, mc-thermal.r7n.dev

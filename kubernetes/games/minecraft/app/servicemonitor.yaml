@@ -3,15 +3,15 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: minecraft-survival
+  name: minecraft
 spec:
   endpoints:
     - port: metrics
       path: /metrics
-  jobLabel: minecraft-survival
+  jobLabel: minecraft
   namespaceSelector:
     matchNames:
       - games
   selector:
     matchLabels:
-      app: minecraft-survival
+      game: minecraft

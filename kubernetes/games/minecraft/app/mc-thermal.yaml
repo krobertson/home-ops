@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minecraft-thermal
+  labels:
+    game: minecraft
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: minecraft
+  values:
+    workloadAsStatefulSet: true
+    strategyType: RollingUpdate
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    image:
+      repository: itzg/minecraft-server
+      tag: 2026.2.1-java21@sha256:115f666dac309116d0921549a935f02c2f8e9114282590ad77423ac357319992
+    resources:
+      limits:
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    extraEnv:
+      TZ: "America/Los_Angeles"
+      INIT_MEMORY: 25%
+      MAX_MEMORY: 90%
+    persistence:
+      storageClass: iscsi-retain
+      dataDir:
+        enabled: true
+        # WTF: its Size and not size
+        Size: 20Gi
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: mc-thermal.r7n.dev
+      gatus.home-operations.com/endpoint: |-
+        group: services
+    minecraftServer:
+      eula: true
+      # renovate: datasource=custom.minecraft-release
+      version: 1.20.1
+      type: FABRIC
+      whitelist: Zerimis
+      ops: Zerimis
+      pvp: false
+      onlineMode: true
+      difficulty: easy
+      gameMode: survival
+      levelType: largebiomes
+      viewDistance: 12
+      motd: "R7N Thermal"
+      spigetResources:
+      - 100301 # bigger barrels
+      - 60383  # angelchest
+      modrinth:
+        downloadDependencies: required
+        projects:
+          - jei
+          - rubidium
+          - patchouli
+          - farmers-delight
+          - thermal-foundation
+          - thermal-expansion
+          - thermal-dynamics
+          - thermal-cultivation
+          - thermal-innovation
+          - thermal-locomotion
+          - thermal-endergy
+      modUrl:
+        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-fabric-1.2.1/Prometheus-Exporter-1.20.1-fabric-1.2.1.jar
+      rcon:
+        enabled: true
+      extraPorts:
+        - name: metrics
+          containerPort: 19565
+          service:
+            enabled: true
+            port: 19565
+    #mcbackup:
+    #  enabled: true
+    #  resticHostname: minecraft-survival
+    #  backupMethod: restic
+    #  backupInterval: 1h
+    #  pauseIfNoPlayers: "true"
+    #  pruneResticRetention: "--keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75"
+    #  envFrom:
+    #    - secretRef:
+    #      name: spaceengineers
