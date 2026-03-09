@@ -2,13 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
-
-components:
-  - ../../common/alerts
-
 resources:
-  - ./authentik/ks.yaml
-  - ./forgejo/ks.yaml
-  - ./glance/ks.yaml
-  - ./namespace.yaml
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml
+  - ./ocirepository.yaml
+
