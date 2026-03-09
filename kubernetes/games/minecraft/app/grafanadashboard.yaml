@@ -12,9 +12,5 @@ spec:
   datasources:
     - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
-    - datasourceName: Prometheus
-      inputName: datasource
   folder: games
-  url: https://grafana.com/api/dashboards/21835/revisions/1/download
-
-
+  url: https://grafana.com/api/dashboards/16508/revisions/1/download
