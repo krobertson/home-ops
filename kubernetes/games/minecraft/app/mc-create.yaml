@@ -17,12 +17,10 @@ spec:
       tag: 2026.2.1-java21@sha256:115f666dac309116d0921549a935f02c2f8e9114282590ad77423ac357319992
     resources:
       limits:
-        memory: 4Gi
+        memory: 8Gi
       requests:
         cpu: 1000m
-        memory: 2Gi
-    podLabels:
-      game: minecraft
+        memory: 4Gi
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -75,8 +73,10 @@ spec:
           - farmers-delight
           - hypertube:beta
           - cgs
-      modUrl:
-        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.21.5-fabric-1.2.1/Prometheus-Exporter-1.21.5-fabric-1.2.1.jar
+          - ntgl
+          - kotlin-for-forge
+      modUrls:
+        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
       rcon:
         enabled: true
       extraPorts:

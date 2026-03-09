@@ -3,15 +3,32 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: minecraft
+  name: minecraft-create
 spec:
   endpoints:
     - port: metrics
       path: /metrics
-  jobLabel: minecraft
+  jobLabel: minecraft-create
   namespaceSelector:
     matchNames:
       - games
   selector:
     matchLabels:
-      game: minecraft
+      release: minecraft-create
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-thermal
+spec:
+  endpoints:
+    - port: metrics
+      path: /metrics
+  jobLabel: minecraft-thermal
+  namespaceSelector:
+    matchNames:
+      - games
+  selector:
+    matchLabels:
+      release: minecraft-thermal
