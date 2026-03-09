@@ -31,7 +31,7 @@ spec:
       INIT_MEMORY: 25%
       MAX_MEMORY: 90%
       CURSEFORGE_FILES: |
-        framework
+        framework:0.8.0
     persistence:
       storageClass: iscsi-retain
       dataDir:
