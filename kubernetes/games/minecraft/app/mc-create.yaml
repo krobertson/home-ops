@@ -10,7 +10,6 @@ spec:
     kind: OCIRepository
     name: minecraft
   values:
-    strategyType: RollingUpdate
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     image:
