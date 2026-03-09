@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cnpg-cluster
       namespace: storage
-    - name: dragonfly
+    - name: dragonfly-cluster
       namespace: storage
   interval: 1h
   path: ./kubernetes/default/forgejo/app
