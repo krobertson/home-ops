@@ -45,7 +45,7 @@ spec:
     minecraftServer:
       eula: true
       version: 1.20.1
-      type: FORGE
+      type: NEOFORGE
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
