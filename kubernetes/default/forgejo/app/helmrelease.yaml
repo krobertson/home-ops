@@ -47,7 +47,7 @@ spec:
           MINIO_ENDPOINT: 192.168.210.251:30293
           MINIO_BUCKET: forgejo
           MINIO_LOCATION: us-east-1
-          MINIO_USE_SSL: true
+          MINIO_USE_SSL: false
         attachment: *s3storage
         mailer:
           ENABLED: false
