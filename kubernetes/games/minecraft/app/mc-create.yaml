@@ -73,7 +73,7 @@ spec:
           - createaddition
           - slice-and-dice
           - farmers-delight
-          - hypertube
+          - hypertube:beta
           - cgs
       modUrl:
         - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.21.5-fabric-1.2.1/Prometheus-Exporter-1.21.5-fabric-1.2.1.jar
