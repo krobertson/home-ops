@@ -75,10 +75,14 @@ spec:
           - cgs
           - ntgl
           - kotlin-for-forge
+          - geckolib
       modUrls:
         - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
       rcon:
         enabled: true
+      extraEnv:
+        CURSEFORGE_FILES: |
+          framework
       extraPorts:
         - name: metrics
           containerPort: 19565
