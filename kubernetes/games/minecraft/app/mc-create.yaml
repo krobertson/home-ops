@@ -80,15 +80,15 @@ spec:
         - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
       rcon:
         enabled: true
-      extraEnv:
-        CURSEFORGE_FILES: |
-          framework
       extraPorts:
         - name: metrics
           containerPort: 19565
           service:
             enabled: true
             port: 19565
+    extraEnv:
+      CURSEFORGE_FILES: |
+        framework
     #mcbackup:
     #  enabled: true
     #  resticHostname: minecraft-survival
