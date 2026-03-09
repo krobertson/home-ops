@@ -31,7 +31,7 @@ spec:
       INIT_MEMORY: 25%
       MAX_MEMORY: 90%
       CURSEFORGE_FILES: |
-        framework:0.8.0
+        framework
     persistence:
       storageClass: iscsi-retain
       dataDir:
@@ -45,7 +45,7 @@ spec:
     minecraftServer:
       eula: true
       version: 1.20.1
-      type: NEOFORGE
+      type: FORGE
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
@@ -65,7 +65,7 @@ spec:
           - rubidium
           - patchouli
           - create
-          - create-dreams-and-desires
+          #- create-dreams-and-desires
           - create-tfmg
           - create-let-the-adventure-begin
           - create-ratatouille
