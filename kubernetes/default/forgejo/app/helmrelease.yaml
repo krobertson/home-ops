@@ -8,6 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: forgejo
+  interval: 1h
   values:
     containerSecurityContext:
       capabilities:
