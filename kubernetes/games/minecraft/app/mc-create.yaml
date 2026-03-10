@@ -45,7 +45,7 @@ spec:
     minecraftServer:
       eula: true
       version: 1.20.1
-      type: FORGE
+      type: FABRIC
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
@@ -61,28 +61,16 @@ spec:
       modrinth:
         downloadDependencies: required
         projects:
-          - jei:beta
           - rubidium
           - patchouli
-          - create
-          #- create-dreams-and-desires
-          - create-tfmg
+          - jonklscreatemodpack
+          #- create-tfmg
           - create-let-the-adventure-begin
-          - create-ratatouille
           - create-transmission!
           - createaddition
           - slice-and-dice
-          - farmers-delight
-          - hypertube:beta
-          - cgs
-          - ntgl
-          - kotlin-for-forge
-          - geckolib
       modUrls:
-        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
-      autoCurseForge:
-        apiKey:
-          existingSecret: minecraft-secrets
+        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-fabric-1.2.1/Prometheus-Exporter-1.20.1-fabric-1.2.1.jar
       rcon:
         enabled: true
       extraPorts:
