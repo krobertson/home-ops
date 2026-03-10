@@ -61,7 +61,6 @@ spec:
       modrinth:
         downloadDependencies: required
         projects:
-          - rubidium
           - patchouli
           - jonklscreatemodpack
           #- create-tfmg
