@@ -30,8 +30,6 @@ spec:
       TZ: "America/Los_Angeles"
       INIT_MEMORY: 25%
       MAX_MEMORY: 90%
-      MODPACK_PLATFORM: MODRINTH
-      MODRINTH_MODPACK: https://modrinth.com/modpack/jonklscreatemodpack/version/3.1.1
     persistence:
       storageClass: iscsi-retain
       dataDir:
@@ -55,7 +53,7 @@ spec:
       levelType: largebiomes
       viewDistance: 12
       motd: "R7N Create"
-      downloadModpackUrl: "http://truenas.r7n.dev:30293/internal/minecraft/r7n_create.zip"
+      downloadModpackUrl: http://truenas.r7n.dev:30293/internal/minecraft/r7n_create.zip
       modUrls:
         - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
       rcon:
