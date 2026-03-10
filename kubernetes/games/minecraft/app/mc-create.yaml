@@ -45,7 +45,7 @@ spec:
     minecraftServer:
       eula: true
       version: 1.20.1
-      type: FABRIC
+      type: FORGE
       whitelist: Zerimis
       ops: Zerimis
       pvp: false
@@ -55,22 +55,9 @@ spec:
       levelType: largebiomes
       viewDistance: 12
       motd: "R7N Create"
-      spigetResources:
-      - 100301 # bigger barrels
-      - 60383  # angelchest
-      downloadModpackUrl: "https://cdn.modrinth.com/data/HqonU57y/versions/rlTgMYB4/Create%2B%203.1.1.mrpack"
-      modrinth:
-        downloadDependencies: required
-        projects:
-          - patchouli
-          #- jonklscreatemodpack
-          #- create-tfmg
-          - create-let-the-adventure-begin
-          #- create-transmission!:1.0.4+fabric-create6-1.20.1
-          - createaddition:fabric-1.20.1-1.2.6
-          - slice-and-dice
+      downloadModpackUrl: "http://truenas.r7n.dev:30293/internal/minecraft/r7n_create.zip"
       modUrls:
-        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-fabric-1.2.1/Prometheus-Exporter-1.20.1-fabric-1.2.1.jar
+        - https://github.com/cpburnz/minecraft-prometheus-exporter/releases/download/1.20.1-forge-1.0.0/Prometheus-Exporter-1.20.1-forge-1.0.0.jar
       rcon:
         enabled: true
       extraPorts:
