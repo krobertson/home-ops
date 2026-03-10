@@ -30,6 +30,7 @@ spec:
       TZ: "America/Los_Angeles"
       INIT_MEMORY: 25%
       MAX_MEMORY: 90%
+      MODPACK_PLATFORM: MODRINTH
       MODRINTH_MODPACK: http://truenas.r7n.dev:30293/internal/minecraft/r7n_create.mrpack
     persistence:
       storageClass: iscsi-retain
