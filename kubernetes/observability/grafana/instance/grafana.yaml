@@ -52,7 +52,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities: {drop: ["ALL"]}
             - name: image-renderer
-              image: grafana/grafana-image-renderer:v5.7.1@sha256:e20e38f2f634f2c6c5b05771b8cbde7ea6457207d1f480ec591439f8411a4ab0
+              image: grafana/grafana-image-renderer:v5.7.3@sha256:bdd4b9d3d529710406aa00fc567a0f3d637c94bdbfff569081ef88e8f157bee3
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
