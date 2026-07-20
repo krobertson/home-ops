@@ -25,6 +25,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
+          automountServiceAccountToken: true
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -61,7 +62,6 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 256Mi
-            automountServiceAccountToken: true
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
