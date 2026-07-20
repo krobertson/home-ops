@@ -28,11 +28,11 @@ pages:
                   - title: Emby
                     url: http://192.168.1.176:8096/
                   - title: Sonarr
-                    url: http://192.168.1.176:7878/
+                    url: https://sonarr.r7n.dev/
                   - title: Radarr
-                    url: http://192.168.1.176:8989/
+                    url: https://radarr.r7n.dev/
                   - title: SABnzbd
-                    url: http://192.168.1.176:8080/
+                    url: https://sabnzbd.r7n.dev/
               - title: Homelab Apps
                 links:
                   - title: Omni Tools
