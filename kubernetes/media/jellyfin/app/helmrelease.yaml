@@ -70,6 +70,16 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+      ext:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
+        hostnames:
+          - "jellyfin-external.r7n.dev"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     persistence:
       config:
         accessMode: ReadWriteOnce
