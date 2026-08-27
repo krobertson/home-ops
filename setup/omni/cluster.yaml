@@ -7,7 +7,7 @@ talos:
   version: v1.13.6
 kubernetes:
   # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-  version: v1.36.2
+  version: v1.37.0
 patches:
   - name: Disable flannel, kube-proxy, and coredns
     inline:
