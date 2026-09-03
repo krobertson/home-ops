@@ -14,7 +14,7 @@ spec:
       reloader.stakater.com/auto: "true"
     image:
       repository: itzg/minecraft-server
-      tag: 2026.7.0-java21@sha256:2619ad4eabfdd6da889c43cba203b87d63a8a9e8f51c8484be371c6f607c1426
+      tag: 2026.8.2-java21@sha256:41041d799cee7743867f9a25bf12f2deeeb5a2392f3e4433d188cac4ad5e1e3a
     resources:
       limits:
         memory: 8Gi
