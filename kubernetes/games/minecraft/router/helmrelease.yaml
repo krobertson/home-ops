@@ -12,7 +12,7 @@ spec:
   values:
     image:
       repository: ghcr.io/itzg/mc-router
-      tag: 1.44.1@sha256:d7caacfe1976e25e542a4c40811af6ab684f85d678f1b8e31494e73073f8d676
+      tag: 1.49.0@sha256:76697861c41e7d64880accf0d25e953a3c2d871e6f5f0922d7c830ffcb2b75ab
       pullPolicy: IfNotPresent
     extraArgs:
       - --in-kube-cluster
