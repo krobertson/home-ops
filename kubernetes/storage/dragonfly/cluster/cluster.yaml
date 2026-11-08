@@ -30,7 +30,7 @@ spec:
   serviceSpec:
     type: LoadBalancer
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: redis.r7n.dev
+      external-dns.kubernetes.io/hostname: redis.r7n.dev
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
